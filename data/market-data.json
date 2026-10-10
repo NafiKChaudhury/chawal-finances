@@ -1,0 +1,204 @@
+{
+  "updated_at": "2026-10-10T22:04:44.642801+00:00",
+  "stocks": {
+    "AAPL": {
+      "symbol": "AAPL",
+      "name": "Apple Inc.",
+      "currency": "USD",
+      "price": 336.6400146484375,
+      "price_date": "2026-10-09",
+      "dividend_rate": 1.08,
+      "last_dividend": {
+        "date": "2026-08-10",
+        "amount": 0.27
+      },
+      "dividend_history": [
+        {
+          "date": "2023-11-10",
+          "amount": 0.24
+        },
+        {
+          "date": "2024-02-09",
+          "amount": 0.24
+        },
+        {
+          "date": "2024-05-10",
+          "amount": 0.25
+        },
+        {
+          "date": "2024-08-12",
+          "amount": 0.25
+        },
+        {
+          "date": "2024-11-08",
+          "amount": 0.25
+        },
+        {
+          "date": "2025-02-10",
+          "amount": 0.25
+        },
+        {
+          "date": "2025-05-12",
+          "amount": 0.26
+        },
+        {
+          "date": "2025-08-11",
+          "amount": 0.26
+        },
+        {
+          "date": "2025-11-10",
+          "amount": 0.26
+        },
+        {
+          "date": "2026-02-09",
+          "amount": 0.26
+        },
+        {
+          "date": "2026-05-11",
+          "amount": 0.27
+        },
+        {
+          "date": "2026-08-10",
+          "amount": 0.27
+        }
+      ],
+      "next_dividend_date": null,
+      "source": "Yahoo Finance via yfinance",
+      "retrieved_at": "2026-10-10T22:04:43.819475+00:00"
+    },
+    "HYLD.TO": {
+      "symbol": "HYLD.TO",
+      "name": "HAMILTON ENHANCED US COVERED CA",
+      "currency": "CAD",
+      "price": 16.170000076293945,
+      "price_date": "2026-10-09",
+      "dividend_rate": null,
+      "last_dividend": {
+        "date": "2026-09-29",
+        "amount": 0.165
+      },
+      "dividend_history": [
+        {
+          "date": "2025-10-31",
+          "amount": 0.153
+        },
+        {
+          "date": "2025-11-28",
+          "amount": 0.153
+        },
+        {
+          "date": "2025-12-31",
+          "amount": 0.153
+        },
+        {
+          "date": "2026-01-30",
+          "amount": 0.153
+        },
+        {
+          "date": "2026-02-27",
+          "amount": 0.153
+        },
+        {
+          "date": "2026-03-31",
+          "amount": 0.153
+        },
+        {
+          "date": "2026-04-30",
+          "amount": 0.155
+        },
+        {
+          "date": "2026-05-29",
+          "amount": 0.16
+        },
+        {
+          "date": "2026-06-30",
+          "amount": 0.162
+        },
+        {
+          "date": "2026-07-31",
+          "amount": 0.163
+        },
+        {
+          "date": "2026-08-31",
+          "amount": 0.164
+        },
+        {
+          "date": "2026-09-29",
+          "amount": 0.165
+        }
+      ],
+      "next_dividend_date": null,
+      "source": "Yahoo Finance via yfinance",
+      "retrieved_at": "2026-10-10T22:04:44.090373+00:00"
+    },
+    "RY.TO": {
+      "symbol": "RY.TO",
+      "name": "ROYAL BANK OF CANADA",
+      "currency": "CAD",
+      "price": 273.7799987792969,
+      "price_date": "2026-10-09",
+      "dividend_rate": 7.04,
+      "last_dividend": {
+        "date": "2026-07-27",
+        "amount": 1.76
+      },
+      "dividend_history": [
+        {
+          "date": "2023-10-25",
+          "amount": 1.35
+        },
+        {
+          "date": "2024-01-24",
+          "amount": 1.38
+        },
+        {
+          "date": "2024-04-24",
+          "amount": 1.38
+        },
+        {
+          "date": "2024-07-25",
+          "amount": 1.42
+        },
+        {
+          "date": "2024-10-24",
+          "amount": 1.42
+        },
+        {
+          "date": "2025-01-27",
+          "amount": 1.48
+        },
+        {
+          "date": "2025-04-24",
+          "amount": 1.48
+        },
+        {
+          "date": "2025-07-24",
+          "amount": 1.54
+        },
+        {
+          "date": "2025-10-27",
+          "amount": 1.54
+        },
+        {
+          "date": "2026-01-26",
+          "amount": 1.64
+        },
+        {
+          "date": "2026-04-23",
+          "amount": 1.64
+        },
+        {
+          "date": "2026-07-27",
+          "amount": 1.76
+        }
+      ],
+      "next_dividend_date": null,
+      "source": "Yahoo Finance via yfinance",
+      "retrieved_at": "2026-10-10T22:04:44.524594+00:00"
+    }
+  },
+  "usd_cad": {
+    "rate": 1.4254000186920166,
+    "date": "2026-10-11"
+  }
+}
