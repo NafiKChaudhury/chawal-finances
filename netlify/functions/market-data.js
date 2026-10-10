@@ -8,6 +8,32 @@ exports.handler=async event=>{
   if(event.httpMethod!=='GET')return {statusCode:405,body:JSON.stringify({error:'GET required'})};
   const symbol=(event.queryStringParameters?.symbol||'').trim().toUpperCase();
   if(!/^[A-Z0-9][A-Z0-9.\-^]{0,19}$/.test(symbol))return {statusCode:400,body:JSON.stringify({error:'Invalid ticker symbol'})};
+  // Prefer the published yfinance cache. Do not fetch private repository data.
+  try {
+    const host=process.env.URL || process.env.DEPLOY_URL;
+    if(host){
+      const cacheResponse=await fetch(new URL('/data/market-data.json',host),{headers:{Accept:'application/json'},signal:AbortSignal.timeout(4500)});
+      if(cacheResponse.ok){
+        const cache=await cacheResponse.json();
+        const stock=cache?.stocks?.[symbol];
+        if(stock && (Number(stock.price)>0 || Number(stock.last_dividend?.amount)>0)){
+          const history=(stock.dividend_history||[]).map(x=>x.date).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)).sort();
+          const gaps=history.slice(1).map((d,i)=>(Date.parse(d)-Date.parse(history[i]))/86400000).filter(n=>n>10&&n<400).sort((a,b)=>a-b);
+          const median=gaps.length?gaps[Math.floor(gaps.length/2)]:null;
+          const frequency=median===null?null:median<46?12:median<135?4:median<245?2:1;
+          const currency=String(stock.currency||'').toUpperCase();
+          const rate=Number(cache?.usd_cad?.rate);
+          return {statusCode:200,headers:{'Content-Type':'application/json','Cache-Control':'no-store'},body:JSON.stringify({
+            symbol,fetchedAt:cache.updated_at||stock.retrieved_at||new Date().toISOString(),source:'Yahoo Finance via yfinance (daily cache)',
+            quote:{price:Number(stock.price)||null,currency,name:stock.name||null},
+            dividend:stock.last_dividend?{amount:Number(stock.last_dividend.amount)||null,exDate:validDate(stock.last_dividend.date),paymentDate:null,frequency}:null,
+            fx:currency==='CAD'?{cadPerUnit:1}:currency==='USD'&&rate>0?{cadPerUnit:rate}:null,
+            warnings:['Cached market data; prices may be delayed. Future payment dates are not provided.']
+          })};
+        }
+      }
+    }
+  }catch(e){/* Fall through to existing FMP lookup if cache is unavailable. */}
   const key=process.env.FMP_API_KEY;
   if(!key)return {statusCode:503,body:JSON.stringify({error:'FMP_API_KEY is not configured in Netlify environment variables'})};
   async function get(endpoint,params={}){
