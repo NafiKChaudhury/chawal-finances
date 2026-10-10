@@ -4186,24 +4186,27 @@ function updateHoldingEstimate(){
   document.getElementById('holding-estimate-payment').textContent=holdingMoney(estimate.net,currency);document.getElementById('holding-estimate-annual').textContent=holdingMoney(estimate.annualNet,currency);
   document.getElementById('holding-tax-label').textContent=`Withholding tax (${plainNumber(estimate.taxRate)}%)`;
 }
+let holdingLookupSource='';
 function showHoldingForm(){
+  holdingLookupSource='';
   cancelHoldingTransaction();document.getElementById('holding-edit-id').value='';document.getElementById('holding-owner').value=activeHoldingOwner==='COMBINED'?'Nafi':activeHoldingOwner;document.getElementById('holding-account').value=activeHoldingAccount==='TOTAL'?'RRSP':activeHoldingAccount;
   document.getElementById('holding-save-button').textContent='Add holding';document.getElementById('holding-form').classList.add('open');updateHoldingEstimate();document.getElementById('holding-name').focus();
 }
 function editHolding(account,id){
   const item=(D.dividend_holdings?.[account]||[]).find(value=>value.id===id);if(!item)return;
-  activeHoldingAccount=account;activeHoldingOwner=item.owner||'Nafi';document.getElementById('holding-edit-id').value=id;document.getElementById('holding-owner').value=item.owner||'Nafi';document.getElementById('holding-account').value=account;document.getElementById('holding-name').value=item.name||'';
+  holdingLookupSource=item.marketDataSource||'';activeHoldingAccount=account;activeHoldingOwner=item.owner||'Nafi';document.getElementById('holding-edit-id').value=id;document.getElementById('holding-owner').value=item.owner||'Nafi';document.getElementById('holding-account').value=account;document.getElementById('holding-name').value=item.name||'';
   document.getElementById('holding-shares').value=Number(item.shares)||'';document.getElementById('holding-rate').value=holdingRatePerPayment(item)||'';document.getElementById('holding-frequency').value=String(Number(item.frequency)||4);document.getElementById('holding-dividends').value=Number(item.dividends)||'';
   document.getElementById('holding-source').value=item.sourceCountry||'US';document.getElementById('holding-currency').value=item.currency||'USD';document.getElementById('holding-tax-rate').value=item.withholdingOverride??'';
   document.getElementById('holding-price').value=Number(item.currentPrice)||'';document.getElementById('holding-next-payment').value=item.nextPaymentDate||'';document.getElementById('holding-fx-rate').value=Number(item.fxRate)||'';
   document.getElementById('holding-ex-date').value=item.exDividendDate||'';document.getElementById('holding-quote-updated').value=item.marketDataUpdatedAt||'';document.getElementById('holding-market-status').textContent=item.marketDataSource?`Source: ${item.marketDataSource} · ${item.marketDataUpdatedAt||'unknown date'}`:'No API data saved for this holding';document.getElementById('holding-save-button').textContent='Save holding';document.getElementById('holding-form').classList.add('open');updateHoldingEstimate();document.getElementById('holding-name').focus();
 }
 function cancelHolding(){
+  holdingLookupSource='';
   document.getElementById('holding-form').classList.remove('open');document.getElementById('holding-edit-id').value='';document.getElementById('holding-owner').value='Nafi';document.getElementById('holding-name').value='';document.getElementById('holding-shares').value='';document.getElementById('holding-rate').value='';document.getElementById('holding-frequency').value='4';document.getElementById('holding-dividends').value='';document.getElementById('holding-source').value='US';document.getElementById('holding-currency').value='USD';document.getElementById('holding-tax-rate').value='';document.getElementById('holding-price').value='';document.getElementById('holding-next-payment').value='';document.getElementById('holding-fx-rate').value='';document.getElementById('holding-ex-date').value='';document.getElementById('holding-quote-updated').value='';document.getElementById('holding-market-status').textContent='Market data not loaded';document.getElementById('holding-save-button').textContent='Add holding';updateHoldingEstimate();
 }
 function saveHolding(){
   const account=document.getElementById('holding-account').value,owner=document.getElementById('holding-owner').value;const name=document.getElementById('holding-name').value.trim();if(!name){toast('Enter a holding name or ticker');return;}
-  const editId=document.getElementById('holding-edit-id').value,taxValue=document.getElementById('holding-tax-rate').value;const prior=editId?Object.values(D.dividend_holdings||{}).flat().find(item=>item.id===editId):null;const holding={...(prior||{}),id:editId||`holding-${Date.now()}`,owner,name,shares:parseFloat(document.getElementById('holding-shares').value)||0,dividendRatePerPayment:parseFloat(document.getElementById('holding-rate').value)||0,frequency:parseInt(document.getElementById('holding-frequency').value,10)||4,sourceCountry:document.getElementById('holding-source').value,currency:document.getElementById('holding-currency').value,withholdingOverride:taxValue===''?null:parseFloat(taxValue),dividends:parseFloat(document.getElementById('holding-dividends').value)||0,currentPrice:parseFloat(document.getElementById('holding-price').value)||0,nextPaymentDate:document.getElementById('holding-next-payment').value||'',fxRate:parseFloat(document.getElementById('holding-fx-rate').value)||0,exDividendDate:document.getElementById('holding-ex-date').value||'',marketDataUpdatedAt:document.getElementById('holding-quote-updated').value||'',marketDataSource:document.getElementById('holding-quote-updated').value?'Financial Modeling Prep':(prior?.marketDataSource||'')};
+  const editId=document.getElementById('holding-edit-id').value,taxValue=document.getElementById('holding-tax-rate').value;const prior=editId?Object.values(D.dividend_holdings||{}).flat().find(item=>item.id===editId):null;const holding={...(prior||{}),id:editId||`holding-${Date.now()}`,owner,name,shares:parseFloat(document.getElementById('holding-shares').value)||0,dividendRatePerPayment:parseFloat(document.getElementById('holding-rate').value)||0,frequency:parseInt(document.getElementById('holding-frequency').value,10)||4,sourceCountry:document.getElementById('holding-source').value,currency:document.getElementById('holding-currency').value,withholdingOverride:taxValue===''?null:parseFloat(taxValue),dividends:parseFloat(document.getElementById('holding-dividends').value)||0,currentPrice:parseFloat(document.getElementById('holding-price').value)||0,nextPaymentDate:document.getElementById('holding-next-payment').value||'',fxRate:parseFloat(document.getElementById('holding-fx-rate').value)||0,exDividendDate:document.getElementById('holding-ex-date').value||'',marketDataUpdatedAt:document.getElementById('holding-quote-updated').value||'',marketDataSource:document.getElementById('holding-quote-updated').value?(holdingLookupSource||prior?.marketDataSource||''):(prior?.marketDataSource||'')};
   D.dividend_holdings??={};['RRSP','FHSA','TFSA','CASH'].forEach(key=>{D.dividend_holdings[key]??=[];});
   if(editId){Object.keys(D.dividend_holdings).forEach(key=>{D.dividend_holdings[key]=D.dividend_holdings[key].filter(item=>item.id!==editId);});}
   D.dividend_holdings[account].push(holding);activeHoldingAccount=account;activeHoldingOwner=owner;cancelHolding();mark();renderDividends();renderDivChart();syncAllViews();toast(`${name} ${editId?'updated':`added to ${owner}'s ${account}`}`);
@@ -4366,6 +4369,29 @@ async function installApp() {
 }
 
 
+// Check whether the published daily market cache has changed while viewing Dividends.
+// This is a read-only check; it never changes holdings or unsaved form fields.
+let marketCacheLastUpdated='';
+async function checkMarketCacheFreshness(){
+  if(document.hidden||!document.getElementById('tab-dividends')?.classList.contains('active'))return;
+  try{
+    const response=await fetch('/data/market-data.json',{cache:'no-store'});
+    if(!response.ok)return;
+    const data=await response.json();
+    if(!data?.updated_at)return;
+    if(marketCacheLastUpdated&&marketCacheLastUpdated!==data.updated_at){
+      const status=document.getElementById('holding-market-status');
+      if(status&&!document.getElementById('holding-form')?.classList.contains('open')){
+        status.textContent='New market data available. Open a holding and select Fetch market data to review it.';
+      }
+    }
+    marketCacheLastUpdated=data.updated_at;
+  }catch(e){/* A failed background check must not interrupt finance entry. */}
+}
+setInterval(checkMarketCacheFreshness,5*60*1000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkMarketCacheFreshness();});
+document.addEventListener('click',event=>{if(event.target.closest('[data-tab="dividends"]'))queueMicrotask(checkMarketCacheFreshness);});
+
 // Market-data lookup is opt-in: no automatic modification of saved holdings.
 async function lookupHoldingMarketData(){
   const symbol=document.getElementById('holding-name').value.trim().toUpperCase();
@@ -4382,13 +4408,14 @@ async function lookupHoldingMarketData(){
     if(data.quote?.price!=null)setNumber('holding-price',data.quote.price,'share price');
     if(data.dividend?.amount!=null)setNumber('holding-rate',data.dividend.amount,'dividend per share');
     if(data.dividend?.frequency&&[1,2,4,12].includes(data.dividend.frequency)){document.getElementById('holding-frequency').value=String(data.dividend.frequency);changes.push('payment frequency');}
-    if(data.dividend?.paymentDate){document.getElementById('holding-next-payment').value=data.dividend.paymentDate;changes.push('payment date');}
+    if(data.dividend?.paymentDate && data.dividend.paymentDate>=new Date().toISOString().slice(0,10)){document.getElementById('holding-next-payment').value=data.dividend.paymentDate;changes.push('payment date');}
     if(data.dividend?.exDate){document.getElementById('holding-ex-date').value=data.dividend.exDate;changes.push('ex-dividend date');}
     if(['CAD','USD'].includes(data.quote?.currency)){document.getElementById('holding-currency').value=data.quote.currency;document.getElementById('holding-source').value=data.quote.currency==='CAD'?'CA':'US';changes.push('currency');}
     if(data.fx?.cadPerUnit!=null)setNumber('holding-fx-rate',data.fx.cadPerUnit,'CAD conversion');
     document.getElementById('holding-quote-updated').value=data.fetchedAt||new Date().toISOString();
+    holdingLookupSource=data.source||'Unknown provider';
     updateHoldingEstimate();
-    status.textContent=`FMP · ${symbol} · ${changes.length?`Updated ${changes.join(', ')}. `:'No supported quote/dividend fields returned. '}Review before saving. ${data.warnings?.join(' ')||''}`;
+    status.textContent=`${data.source||'Market data'} · ${symbol} · ${changes.length?`Updated ${changes.join(', ')}. `:'No supported quote/dividend fields returned. '}Review before saving. ${data.warnings?.join(' ')||''}`;
   }catch(error){status.textContent=`Market lookup unavailable: ${error.message}. Your manual values are unchanged.`;}
   finally{button.disabled=false;}
 }
