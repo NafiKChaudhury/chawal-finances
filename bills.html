@@ -662,7 +662,7 @@
     .status-dot { width:7px;height:7px;border-radius:50%;background:var(--positive); }
     .sidebar-status.pending .status-dot,.mobile-save-state.pending::before { background:var(--debt); }
     .sidebar-status.error .status-dot,.mobile-save-state.error::before { background:var(--negative); }
-    main { max-width:none;margin:0 0 0 var(--sidebar-width);padding:32px 40px 56px; }
+    main { width:calc(100% - var(--sidebar-width));max-width:1480px;margin:0 auto 0 var(--sidebar-width);padding:32px 40px 56px; }
     .page-intro { margin:0 0 26px;padding:0;display:flex;align-items:flex-end;justify-content:space-between;gap:18px; }
     .page-intro h2 { margin:4px 0 0;color:var(--ink)!important;font-size:30px;font-weight:750;letter-spacing:-.035em; }
     .page-kicker { color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase; }
@@ -807,19 +807,29 @@
     .payoff-input { border-color:var(--control-border)!important;background:var(--card)!important;color:var(--ink)!important; }
     .mobile-tab-bar,.mobile-more-overlay { display:none; }
     .overview-chart-stack { display:grid;gap:16px; }
-    .overview-mini-chart { min-height:145px; }
+    .overview-mini-chart { min-height:220px; }
     .overview-mini-chart + .overview-mini-chart { padding-top:14px;border-top:1px solid var(--line-soft); }
     .overview-mini-chart-head { min-height:28px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted);font-size:10px; }
     .overview-mini-chart-head strong { color:var(--ink);font-size:12px; }
-    .overview-mini-chart canvas { width:100%!important;height:112px!important; }
+    .overview-mini-chart canvas { width:100%!important;height:185px!important; }
     .overview-debt-outlook { display:grid;grid-template-columns:minmax(0,1fr) repeat(2,minmax(180px,.55fr));gap:14px;align-items:center; }
     .outlook-copy h2 { margin-bottom:5px;color:var(--ink);font-size:15px; }.outlook-copy p { color:var(--muted);font-size:11px;line-height:1.5; }
     .outlook-stat { padding:14px;border-radius:11px;background:var(--card-2); }
     .outlook-stat span { color:var(--muted);font-size:10px; }.outlook-stat strong { display:block;margin-top:5px;color:var(--ink);font-size:21px;font-variant-numeric:tabular-nums; }.outlook-stat small { display:block;margin-top:4px;color:var(--muted);font-size:9px; }
     .tracker-line-actions { display:flex;gap:8px; }
+    .tracker-tools-wrap { position:relative; }
+    .tracker-tools-trigger { display:none; }
+    .tracker-tools-menu { display:flex;gap:8px; }
+    .tracker-add-year-mobile { display:none; }
+    .tracker-row-label { min-height:44px;display:flex;align-items:center;gap:4px;white-space:nowrap; }
+    .tracker-row-label .row-menu-wrap { min-width:0;flex:1; }
+    .tracker-name-button { max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+    .tracker-mobile-edit { display:none; }
+    .tracker-edit-tools { display:inline-flex;align-items:center; }
     .tracker-inactive-toggle[aria-pressed="true"] { border-color:var(--accent);background:var(--tint);color:var(--tint-ink); }
     .tracker-select { width:18px;height:18px;margin:0 8px 0 0;vertical-align:middle;accent-color:var(--accent); }
-    .tracker-row-tools { display:inline-flex;align-items:center;gap:1px;margin-left:6px;vertical-align:middle; }
+    .tracker-row-tools { display:inline-flex;align-items:center;gap:1px;margin-left:2px;vertical-align:middle;opacity:0;transition:opacity .15s; }
+    .tracker-table tr:hover .tracker-row-tools,.tracker-row-label:focus-within .tracker-row-tools { opacity:1; }
     .tracker-move-btn { width:34px;height:34px;display:inline-grid;place-items:center;border:0;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer; }
     .tracker-move-btn:first-child .ui-icon { transform:rotate(90deg); }.tracker-move-btn:last-child .ui-icon { transform:rotate(90deg); }
     .tracker-move-btn:hover { background:var(--card-2);color:var(--ink); }.tracker-move-btn:disabled { color:var(--faint);cursor:not-allowed; }
@@ -830,7 +840,8 @@
     .tracker-category-field[hidden] { display:none!important; }
     .year-delta { display:block;margin-top:2px;color:var(--muted);font-size:9px;font-weight:650; }
     .apr-needed { display:block;margin-top:6px;color:var(--danger);font-size:9px;line-height:1.35; }
-    .payoff-grid { grid-template-columns:repeat(4,minmax(0,1fr))!important; }
+    .payoff-grid { grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:16px!important; }
+    .payoff-mobile-balance,.payoff-mobile-date,.payoff-mobile-toggle { display:none; }
     .payoff-tools { margin:0 0 18px;padding:15px;display:grid;grid-template-columns:minmax(190px,.8fr) minmax(240px,1.2fr) minmax(190px,.8fr);gap:18px;align-items:center;border-radius:11px;background:var(--card-2); }
     .payoff-tools label,.payoff-tools span { color:var(--muted);font-size:10px; }.payoff-tools strong { display:block;margin-top:5px;color:var(--ink);font-size:13px; }.payoff-tools input[type="range"] { width:100%;min-height:30px;border:0!important;background:transparent!important;accent-color:var(--accent); }
     .dividend-analysis-grid { display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.85fr);gap:18px; }
@@ -845,12 +856,12 @@
       .dividend-analysis-grid { grid-template-columns:minmax(0,1fr); }.dividend-analysis-grid>.section { min-width:0; }
     }
     @media (max-width:899px) {
-      body { padding-bottom:calc(72px + env(safe-area-inset-bottom)); }
+      body { padding-bottom:calc(132px + env(safe-area-inset-bottom));font-size:14px; }
       .app-sidebar { display:none; }
-      main { margin:0;padding:24px 16px 28px; }
+      main { width:100%;margin:0;padding:24px 16px 72px; }
       .page-intro { align-items:center;margin-bottom:20px; }.page-intro h2 { font-size:26px; }
       #overview-actions { display:none!important; }
-      .sum-grid { grid-template-columns:repeat(2,minmax(0,1fr));gap:10px; }.sum-card { padding:16px; }.sum-card .v { font-size:21px; }
+      .sum-grid { grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-inline:0; }.sum-card { padding:16px; }.sum-card .v { font-size:21px; }
       .section { padding:17px;border-radius:13px; }.overview-visual-grid { gap:12px; }.overview-visual-grid .section { min-height:270px; }
       .growth-card .sec-head { align-items:flex-start;flex-direction:column; }.growth-card-head { width:100%;align-items:flex-start;flex-direction:column; }.chart-mode-toggle { width:100%; }.chart-mode-toggle button { flex:1; }.growth-insights { grid-template-columns:1fr; }
       .debt-mix-block { grid-template-columns:128px minmax(0,1fr);gap:14px; }.debt-mix-chart { width:122px;height:122px; }
@@ -858,26 +869,56 @@
       .mobile-tab { min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:0;background:transparent!important;color:var(--muted);font-size:10px;font-weight:500; }.mobile-tab .ui-icon { width:20px;height:20px; }.mobile-tab.active { color:var(--tint-ink);font-weight:700; }
       html[data-theme] .mobile-tab.active { background:transparent!important;color:var(--tint-ink)!important;box-shadow:none!important; }
       .mobile-more-overlay { align-items:flex-end; }.mobile-more-overlay.open { display:flex; }.mobile-more-sheet { width:100%;padding:10px 16px calc(18px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0!important; }.mobile-more-grid { display:grid;grid-template-columns:1fr;gap:8px; }.mobile-more-item { justify-content:flex-start;display:flex;align-items:center;gap:12px;padding:0 14px; }
-      .mobile-more-item { font-size:13px!important;font-weight:600; }.mobile-more-item .ui-icon { width:19px;height:19px; }
-      .quick-add-fab { display:grid!important;place-items:center;right:18px;bottom:calc(76px + env(safe-area-inset-bottom));width:48px;height:48px;border:0;border-radius:50%;background:var(--accent);color:#fff; }
-      .tracker-topbar { margin-top:0;justify-content:stretch; }.year-manager { width:100%;justify-content:space-between; }.year-manager .btn-secondary { flex:1; }.goal-widget { grid-template-columns:1fr;gap:14px; }.tracker-controls .btn-secondary { width:100%; }.tracker-segments { width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible; }.tracker-segments button { min-width:0;white-space:normal; }
-      .tracker-line-actions { width:100%; }.tracker-line-actions .btn-secondary { flex:1; }.tracker-row-tools { margin-left:2px; }.tracker-move-btn { width:30px;height:30px; }
-      .mobile-month-picker { margin-bottom:12px;display:flex;justify-content:space-between; }.mobile-month-picker strong { min-width:160px; }
+      .mobile-more-item { min-height:56px;font-size:14px!important;font-weight:600;justify-content:flex-start!important;flex-direction:row!important; }.mobile-more-item span { font-size:14px!important; }.mobile-more-item .ui-icon { width:20px;height:20px; }.mobile-more-item .mobile-more-chevron { margin-left:auto;width:18px;height:18px; }
+      .quick-add-fab { display:none!important; }
+      .tracker-topbar { display:none; }
+      .goal-widget { margin-bottom:10px;padding:13px 15px;grid-template-columns:1fr;gap:10px; }.goal-widget h3 { font-size:12px; }.goal-amount { font-size:20px; }
+      .tracker-controls { position:relative;gap:8px;margin-bottom:8px;flex-direction:row;align-items:center; }
+      .tracker-segments { width:calc(100% - 50px);min-height:48px;display:flex;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;white-space:nowrap; }.tracker-segments::-webkit-scrollbar { display:none; }.tracker-segments button { flex:0 0 auto;min-width:max-content;white-space:nowrap;font-size:12px; }
+      .tracker-line-actions { width:44px;flex:0 0 44px; }
+      .tracker-tools-trigger { width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--control-border);border-radius:10px;background:var(--card);color:var(--ink-2); }
+      .tracker-tools-menu { position:absolute;z-index:30;right:0;top:50px;width:230px;padding:6px;display:grid;gap:4px;border:1px solid var(--line);border-radius:12px;background:var(--card); }
+      .tracker-tools-menu:not(.open) { display:none!important; }
+      .tracker-tools-menu .btn-secondary { width:100%;justify-content:flex-start;border:0;background:transparent; }
+      .tracker-tools-menu .btn-secondary:hover { background:var(--card-2); }
+      .tracker-add-year-mobile { display:flex; }
+      .mobile-month-picker { height:64px;margin-bottom:10px;display:grid;grid-template-columns:44px minmax(0,1fr) 44px;justify-content:stretch; }.mobile-month-picker strong { min-width:0;font-size:14px; }.tracker-period-title { min-width:0;text-align:center; }.tracker-period-title select { width:auto;min-width:74px;min-height:26px;height:26px;margin-top:0;padding:0 22px 0 8px;border:0!important;background:transparent!important;color:var(--muted)!important;font-size:12px;font-weight:650; }
       html[data-theme] .mobile-month-picker strong { color:var(--ink)!important; }
-      .tracker-table { min-width:0; }.tracker-wrap { overflow:visible; }.tracker-table th,.tracker-table td { display:none; }.tracker-table th:first-child,.tracker-table td:first-child,.tracker-table th.mobile-active,.tracker-table td.mobile-active { display:table-cell!important; }.tracker-table th:first-child,.tracker-table td:first-child { position:static;width:70%;box-shadow:none!important; }.tracker-table th.mobile-active,.tracker-table td.mobile-active { width:30%; }.tracker-table thead th.mobile-active { text-align:right; }.tracker-table tr { min-height:48px; }.tracker-table tr.section-header td { display:table-cell!important; }.tracker-table tr.section-header td:not(:first-child) { display:none!important; }.tracker-table .section-total td { display:none!important; }.tracker-table .section-total td:first-child,.tracker-table .section-total td.mobile-active { display:table-cell!important; }.tracker-table .cell-display { min-height:48px;display:flex;align-items:center;justify-content:flex-end;padding:0; }
-      .debt-legend { grid-template-columns:1fr; }.debt-account { grid-template-columns:minmax(0,1fr) 110px 44px;gap:10px; }.debt-account-bar { display:none; }.debt-account-share { grid-column:1;text-align:left;margin-top:-20px; }.debt-account-balance { grid-column:2;grid-row:1/3; }.row-menu-wrap { grid-column:3;grid-row:1/3; }.debt-account-name { align-self:start;padding-top:8px; }
+      .tracker-panel { padding:14px 12px; }.tracker-panel .sec-head { margin-bottom:4px;padding-bottom:10px; }
+      .tracker-wrap { overflow:visible; }.tracker-table { min-width:0;font-size:13px;table-layout:fixed; }.tracker-table th,.tracker-table td { display:none; }.tracker-table th:first-child,.tracker-table td:first-child,.tracker-table th.mobile-active,.tracker-table td.mobile-active { display:table-cell!important; }.tracker-table th:first-child,.tracker-table td:first-child { position:static;width:auto;padding:0 4px 0 10px;box-shadow:none!important; }.tracker-table th.mobile-active,.tracker-table td.mobile-active { width:104px; }.tracker-table thead th { position:sticky;top:0;z-index:4;background:var(--card); }.tracker-table thead th.mobile-active { text-align:right; }.tracker-table tr { height:52px; }.tracker-table tr.section-header { height:34px; }.tracker-table tr.section-header td { display:table-cell!important; }.tracker-table tr.section-header td:not(:first-child) { display:none!important; }.tracker-table .section-total td { display:none!important; }.tracker-table .section-total td:first-child,.tracker-table .section-total td.mobile-active { display:table-cell!important; }.tracker-table .cell-display { min-height:52px;display:flex;align-items:center;justify-content:flex-end;padding:0 8px 0 0;font-size:13px; }.tracker-row-label { min-height:52px;gap:6px; }.tracker-name-button { min-width:0;flex:1;font-size:14px;font-weight:650; }.tracker-mobile-edit { display:none; }.tracker-edit-tools { display:none; }.tracker-row-label.editing { min-height:96px;flex-wrap:wrap; }.tracker-row-label.editing .tracker-edit-tools { width:100%;display:flex;align-items:center;justify-content:flex-start; }.tracker-select { width:44px;height:44px;margin:0;appearance:none;display:grid;place-items:center;border:1px solid var(--control-border)!important;border-radius:9px!important;background:var(--card-2)!important; }.tracker-select:checked { border-color:var(--accent)!important;background:var(--tint)!important; }.tracker-row-tools { margin-left:4px;opacity:1; }.tracker-move-btn { width:44px;height:44px; }.tracker-table tr.group-subtotal { height:42px; }.tracker-table tr.group-subtotal .tracker-row-label { min-height:42px; }
+      .debt-legend { grid-template-columns:repeat(3,minmax(0,1fr));gap:8px; }.debt-legend div { font-size:12px; }.debt-category { margin-inline:0;padding:0 14px; }.debt-account { min-height:76px;grid-template-columns:minmax(0,1fr) minmax(88px,auto) 44px;grid-template-rows:auto 7px auto;gap:5px 8px;padding:8px 0; }.debt-account-name { min-width:0;align-self:center;padding:0;font-size:13px;line-height:1.25;overflow-wrap:anywhere; }.debt-account-balance { grid-column:2;grid-row:1;font-size:13px; }.debt-account .row-menu-wrap { grid-column:3;grid-row:1/4;align-self:center; }.debt-account-bar { grid-column:1/3;grid-row:2;display:block;height:7px; }.debt-account-share { grid-column:1/3;grid-row:3;margin:0;text-align:left;font-size:12px; }.debt-summary-card { margin-inline:0; }.debt-summary-top strong { font-size:32px; }
+      .section.debt-list-shell { padding:0; }
       .dividend-stats { grid-template-columns:repeat(2,minmax(0,1fr));gap:10px; }.dividend-stat { padding:16px; }.dividend-stat strong { font-size:20px; }.dividend-stat:last-child { grid-column:1/-1; }
-      .payoff-tools { grid-template-columns:1fr; }.payoff-grid { grid-template-columns:1fr!important; }
+      .payoff-tools { grid-template-columns:1fr; }.payoff-grid { grid-template-columns:1fr!important;gap:8px!important; }.payoff-card { min-height:64px;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto 44px;gap:4px 10px;align-items:center;cursor:pointer; }.payoff-card-title { min-width:0;margin:0;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }.payoff-mobile-balance { display:block;color:var(--ink);font-size:13px;font-weight:700;text-align:right; }.payoff-mobile-date { grid-column:1/3;display:block;color:var(--muted);font-size:12px; }.payoff-mobile-toggle { grid-column:3;grid-row:1/3;width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:9px;background:transparent;color:var(--muted); }.payoff-mobile-toggle .ui-icon { transform:rotate(90deg); }.payoff-card>.payoff-row,.payoff-card>.apr-needed,.payoff-card>.payoff-date-row,.payoff-card>.payoff-bar-bg,.payoff-card>.payoff-meta { display:none; }.payoff-card.expanded { padding:14px;display:block; }.payoff-card.expanded .payoff-card-title { margin-bottom:12px;white-space:normal; }.payoff-card.expanded>.payoff-row { display:flex; }.payoff-card.expanded>.apr-needed { display:block; }.payoff-card.expanded>.payoff-date-row { display:flex; }.payoff-card.expanded>.payoff-bar-bg,.payoff-card.expanded>.payoff-meta { display:flex; }.payoff-card.expanded .payoff-mobile-balance,.payoff-card.expanded .payoff-mobile-date { display:none; }.payoff-card.expanded .payoff-mobile-toggle { float:right; }.payoff-card.expanded .payoff-mobile-toggle .ui-icon { transform:rotate(270deg); }
       .setting-row,.setting-action { align-items:flex-start;flex-direction:column;gap:10px; }.setting-row select,.settings-theme-picker { width:100%; }.settings-theme-picker button { flex:1; }.setting-action .btn-secondary { width:100%; }.pay-source-item { grid-template-columns:minmax(0,1fr) 44px; }.pay-source-amount { grid-column:1;text-align:left; }.pay-source-item .row-menu-wrap { grid-column:2;grid-row:1/3; }
-      .history-toolbar { align-items:stretch;flex-direction:column; }.history-filters { overflow:auto; }.history-entry-main { grid-template-columns:1fr;gap:8px; }.history-values { flex-wrap:wrap; }.history-actions { grid-column:auto; }.history-actions button { width:100%; }
+      .pay-source-list { display:grid;gap:10px; }.pay-source-item { border:1px solid var(--line-soft);border-radius:10px;padding:12px; }
+      .history-toolbar { align-items:stretch;flex-direction:column; }.history-filters { overflow:auto;scrollbar-width:none;mask-image:linear-gradient(to right,#000 calc(100% - 24px),transparent); }.history-filters::-webkit-scrollbar { display:none; }.history-day { padding:12px 14px; }.history-entry { min-height:58px;padding:10px 0; }.history-entry-main { grid-template-columns:minmax(0,1fr) auto;gap:5px 10px; }.history-entry h3 { font-size:13px;line-height:1.35; }.history-meta { font-size:12px; }.history-values { grid-column:1;display:flex;flex-wrap:wrap;font-size:12px; }.history-actions { grid-column:2;grid-row:1/3;align-self:center; }.history-actions button { width:auto;min-height:44px;padding:0 8px;border:0;background:transparent;color:var(--tint-ink);font-size:12px; }
+      .table-scroll { scrollbar-width:none;mask-image:linear-gradient(to right,#000 calc(100% - 18px),transparent); }.table-scroll::-webkit-scrollbar { display:none; }.ann-table th:first-child,.ann-table td:first-child,.dividend-table th:first-child,.dividend-table td:first-child { position:sticky;left:0;z-index:3;background:var(--card); }
       #save-bar { left:10px;right:10px;bottom:calc(72px + env(safe-area-inset-bottom)); }
       .search-overlay { padding:16px; }.quick-add-overlay.open,.mobile-cell-overlay.open { align-items:flex-end; }.quick-add-sheet,.mobile-cell-sheet { width:100%!important;border-radius:18px 18px 0 0!important; }
+      .chart-wrap-lg { min-height:240px; }.donut-center strong,.debt-mix-center strong { font-size:17px; }.debt-mix-chart canvas { max-width:100%; }
+      .muted-note,.table-note,.chart-legend,.growth-note,.growth-insight span,.growth-insight small,.debt-mix-label,.debt-mix-row,.sum-card .l,.sum-card .s,.dividend-stat span,.dividend-stat small,.setting-row small,.setting-action small,.pay-source-meta,.pay-source-amount small,.outlook-copy p,.outlook-stat span,.outlook-stat small,.year-delta,.apr-needed { font-size:12px!important; }
     }
     @media (max-width:480px) {
       .sum-grid { gap:8px; }.sum-card .v { font-size:19px; }.sum-card .s { min-height:28px; }
       .debt-summary-top strong { font-size:29px; }.page-actions .btn-primary { padding:0 12px; }
       .overview-debt-outlook { grid-template-columns:1fr; }.outlook-copy { grid-column:auto; }
     }
+
+    #save-bar:not(.visible) { visibility:hidden;pointer-events:none; }
+    .chart-wrap-lg { min-height:260px; }
+    .growth-insight { border:0;background:var(--card-2); }
+    .debt-account-bar { height:7px; }
+    .year-delta.delta-good { color:var(--positive); }
+    .year-delta.delta-bad { color:var(--muted); }
+    body { font-size:14px; }
+    .sidebar-status,.sum-card .l,.sum-card .s,.muted-note,.table-note,.chart-legend,.growth-insight span,.growth-insight small,.growth-note { font-size:12px; }
+    .ann-table th,.tracker-table th,.dividend-table th { font-size:12px;letter-spacing:.06em; }
+    .tracker-table thead th { position:sticky;top:0;z-index:3;background:var(--card); }
+    .tracker-table tr.section-header td { font-size:12px;letter-spacing:.08em; }
+    .debt-summary-top strong { font-size:40px; }
+    @media (max-width:899px) { .debt-summary-top strong { font-size:32px; } }
+    @media (max-width:480px) { .debt-summary-top strong { font-size:29px; } }
 
     @media print {
       header .print-btn, #save-bar, .page-tabs, .mobile-tab-bar, .mobile-more-overlay, .quick-add-fab, .quick-add-overlay, .mobile-cell-overlay, .btn-add, .btn-sm, .btn-edit, .btn-del, #toast,
@@ -1119,14 +1160,21 @@
         <button data-section="income" onclick="setTrackerSection('income',this)">Income and cashflow</button>
       </div>
       <div class="tracker-line-actions">
-        <button class="btn-secondary tracker-inactive-toggle" id="tracker-inactive-toggle" type="button" aria-pressed="false" onclick="toggleInactiveTrackerLines()"><svg class="ui-icon"><use href="#i-eye"/></svg><span>Show inactive lines</span></button>
-        <button class="btn-secondary" onclick="addLineForActiveTracker()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add line</button>
-        <button class="btn-secondary btn-del" id="tracker-remove-line" onclick="removeSelectedTrackerLine()" disabled><svg class="ui-icon"><use href="#i-trash"/></svg>Remove line</button>
+        <div class="tracker-tools-wrap">
+          <button class="tracker-tools-trigger" type="button" aria-label="Tracker options" onclick="toggleTrackerTools(event)"><svg class="ui-icon"><use href="#i-more"/></svg></button>
+          <div class="tracker-tools-menu" id="tracker-tools-menu">
+            <button class="btn-secondary tracker-inactive-toggle" id="tracker-inactive-toggle" type="button" aria-pressed="false" onclick="toggleInactiveTrackerLines();closeTrackerTools()"><svg class="ui-icon"><use href="#i-eye"/></svg><span>Show inactive lines</span></button>
+            <button class="btn-secondary tracker-edit-mode" id="tracker-edit-mode" type="button" aria-pressed="false" onclick="toggleTrackerEditMode()"><svg class="ui-icon"><use href="#i-edit"/></svg><span>Edit lines</span></button>
+            <button class="btn-secondary" onclick="addLineForActiveTracker();closeTrackerTools()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add line</button>
+            <button class="btn-secondary btn-del" id="tracker-remove-line" onclick="removeSelectedTrackerLine();closeTrackerTools()" disabled><svg class="ui-icon"><use href="#i-trash"/></svg>Remove line</button>
+            <button class="btn-secondary tracker-add-year-mobile" onclick="openAddYear();closeTrackerTools()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add year</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="mobile-month-picker stepper">
       <button onclick="changeMobileMonth(-1)" aria-label="Previous month"><svg class="ui-icon"><use href="#i-chevron-left"/></svg></button>
-      <strong id="mobile-month-name">January 2027</strong>
+      <div class="tracker-period-title"><strong id="mobile-month-name">January</strong><select id="mobile-year-select" aria-label="Tracker year" onchange="setYear(this.value)"></select></div>
       <button onclick="changeMobileMonth(1)" aria-label="Next month"><svg class="ui-icon"><use href="#i-chevron-right"/></svg></button>
       <span id="mobile-month-year" hidden></span>
     </div>
@@ -1332,8 +1380,9 @@
     <div class="mobile-more-grabber"></div>
     <div class="mobile-more-head"><strong>More</strong><button onclick="closeMobileMore()">Done</button></div>
     <div class="mobile-more-grid">
-      <button class="mobile-more-item" onclick="mobileSwitchTab('history')"><svg class="ui-icon"><use href="#i-history"/></svg><span>History</span></button>
-      <button class="mobile-more-item" onclick="mobileSwitchTab('settings')"><svg class="ui-icon"><use href="#i-settings"/></svg><span>Settings</span></button>
+      <button class="mobile-more-item" onclick="mobileSwitchTab('history')"><svg class="ui-icon"><use href="#i-history"/></svg><span>History</span><svg class="ui-icon mobile-more-chevron"><use href="#i-chevron-right"/></svg></button>
+      <button class="mobile-more-item" onclick="mobileSwitchTab('settings')"><svg class="ui-icon"><use href="#i-settings"/></svg><span>Settings</span><svg class="ui-icon mobile-more-chevron"><use href="#i-chevron-right"/></svg></button>
+      <button class="mobile-more-item" onclick="closeMobileMore();openQuickAdd()"><svg class="ui-icon"><use href="#i-plus"/></svg><span>Quick add</span><svg class="ui-icon mobile-more-chevron"><use href="#i-chevron-right"/></svg></button>
     </div>
     <div id="mobile-save-state" class="mobile-save-state">Saved on this device</div>
   </div>
@@ -1402,6 +1451,8 @@ let D = null, ORIG = null, dirty = false;
 let activeYear = String(new Date().getFullYear());
 let activeMobileMonth = new Date().getMonth();
 let mobileCellTarget = null;
+let trackerEditingRow = null;
+let trackerEditMode = false;
 let autoSaveTimer = null;
 let lastHistorySnapshot = null;
 let historyFilter = 'all';
@@ -2943,11 +2994,14 @@ function payoffCardHTML(id, label, balance, pay, auto, apr, orig, result, isFixe
       <input class="payoff-input" type="number" step="0.01" min="0" max="99" value="${apr > 0 ? apr : ''}" placeholder="Enter APR" onchange="${onAprChange}this.value)"/></div>${apr>0?'':'<span class="apr-needed">Add the APR for an interest-aware payoff estimate.</span>'}`;
 
   return `
-  <div class="payoff-card${isFixed ? ' fixed-loan' : ''}">
+  <div class="payoff-card${isFixed ? ' fixed-loan' : ''}" onclick="togglePayoffCard(event,this)">
     <div class="payoff-card-title">
       <span class="payoff-cat-dot" style="background:${dot}"></span>
       ${label}${extraBadge || ''}
     </div>
+    <span class="payoff-mobile-balance">${fmtF(balance)}</span>
+    <span class="payoff-mobile-date">Payoff ${dLabel}</span>
+    <button class="payoff-mobile-toggle" type="button" aria-label="Show payoff details">${uiIcon('chevron-right')}</button>
     <div class="payoff-row"><span class="payoff-lbl">Balance</span><span style="color:#f87171;font-weight:700">${fmtF(balance)}</span></div>
     ${payRow}${aprRow}
     ${extraRows || ''}
@@ -2959,6 +3013,11 @@ function payoffCardHTML(id, label, balance, pay, auto, apr, orig, result, isFixe
     <div class="payoff-meta"><span>${pct.toFixed(0)}% paid off</span><span>${fmtF(balance)} left</span></div>` : ''}
     ${moreInfo}
   </div>`;
+}
+
+function togglePayoffCard(event,card) {
+  if(window.innerWidth>=900||event.target.closest('input,button,select'))return;
+  card.classList.toggle('expanded');
 }
 
 function renderPayoffProjections() {
@@ -3559,8 +3618,9 @@ function annualViewRow(year) {
 }
 
 function annualDelta(value,previous,inverse=false) {
-  if(!(previous>0)||!(value>=0))return'';const change=(value-previous)/previous*100;if(Math.abs(change)<.05)return'<span class="year-delta">No change</span>';
-  const improved=inverse?change<0:change>0;return`<span class="year-delta">${change>0?'Up':'Down'} ${Math.abs(change).toFixed(1)}%${improved?'':' '}</span>`;
+  if(!(previous>0)||!(value>0))return'';const change=(value-previous)/previous*100;if(Math.abs(change)<.05)return'<span class="year-delta">No change</span>';
+  const improved=inverse?change<0:change>0;const amount=Math.abs(change)>999?'999%+':`${Math.abs(change).toFixed(1)}%`;
+  return`<span class="year-delta ${improved?'delta-good':'delta-bad'}">${change>0?'Up':'Down'} ${amount}</span>`;
 }
 
 function renderSummary() {
@@ -3579,7 +3639,7 @@ function renderSummary() {
   document.getElementById('summary').innerHTML=`
     <article class="sum-card"><div class="l">Total debt</div><div class="v">${fmt(totalDebt)}</div><div class="s">${activeDebtCount} active account${activeDebtCount===1?'':'s'}</div></article>
     <article class="sum-card"><div class="l">Debt payments</div><div class="v">${fmt(current.debtPayments)}</div><div class="s">Scheduled for ${currentMonthLabel()}</div></article>
-    <article class="sum-card"><div class="l">Dividends in ${year}</div><div class="v">${fmtF(currentDividends)}</div><div class="s">${previous} through ${currentMonthLabel()}: ${fmtF(previousDividends)}</div></article>
+    <article class="sum-card"><div class="l">Dividends in ${year}</div><div class="v">${fmt(currentDividends)}</div><div class="s">${previous} through ${currentMonthLabel()}: ${fmt(previousDividends)}</div></article>
     <article class="sum-card"><div class="l">${year} investment goal</div><div class="v">${pct.toFixed(1)}%</div><div class="sum-progress"><i style="width:${pct}%"></i></div><div class="s">${fmt(invested)} of ${fmt(goal)}</div></article>`;
 }
 
@@ -3589,13 +3649,12 @@ function renderMonthlyPicture() {
   const year=String(new Date().getFullYear());
   const current=getCurrentTrackerSnapshot();
   const incomeEntered=current.income>0;
-  const mix={credit:0,loans:0,cars:0,investments:getYearTotalInv(year)};
+  const mix={credit:0,loans:0,cars:0};
   (D.debt_items||[]).forEach(item=>{const amount=Math.max(0,Number(item.amount)||0);const key=categoryInfo(item.category).key;if(Object.hasOwn(mix,key))mix[key]+=amount;});
   const mixRows=[
     {key:'credit',label:'Credit cards',color:cssValue('--aqua')},
     {key:'loans',label:'Loans and LOC',color:cssValue('--debt')},
-    {key:'cars',label:'Car loans',color:cssValue('--sun')},
-    {key:'investments',label:'Investments',color:cssValue('--violet')}
+    {key:'cars',label:'Car loans',color:cssValue('--sun')}
   ].filter(item=>mix[item.key]>0);
   const totalDebt=mix.credit+mix.loans+mix.cars;
   document.getElementById('debt-mix-count').textContent=fmt(totalDebt);
@@ -3647,7 +3706,7 @@ function renderAnnualCharts(ann,years) {
   const rows=years.map(annualViewRow);const income=rows.map(row=>row.income>0?row.income:null);const bills=rows.map(row=>row.billsPaid>0?row.billsPaid:null);
   const missingIncome=years.filter((year,index)=>income[index]==null);
   document.getElementById('income-chart-note').textContent=missingIncome.length?`${missingIncome.join(', ')} income not entered`:'All years have income data';
-  const chartOptions=label=>({responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>context.raw==null?' Not entered':` ${label}: ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted')}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}});
+  const chartOptions=label=>({responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>context.raw==null?' Not entered':` ${label}: ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0,callback:function(value){return `'${String(this.getLabelForValue(value)).slice(-2)}`;}}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}});
   if (annIncChart) annIncChart.destroy();if(annBillsChart)annBillsChart.destroy();
   annIncChart=new Chart(incomeCanvas.getContext('2d'),{type:'bar',data:{labels:years,datasets:[{label:'Income',data:income,backgroundColor:cssValue('--chart'),borderWidth:0,borderRadius:4}]},options:chartOptions('Income')});
   annBillsChart=new Chart(billsCanvas.getContext('2d'),{type:'bar',data:{labels:years,datasets:[{label:'Bills paid',data:bills,backgroundColor:cssValue('--debt'),borderWidth:0,borderRadius:4}]},options:chartOptions('Bills paid')});
@@ -3681,7 +3740,8 @@ function renderSpendingInvestmentChart(years) {
   const spending=ordered.map(getYearSpending);
   const investing=ordered.map(getYearTotalInv);
   const lastDataIndex=Math.max(0,ordered.reduce((last,year,index)=>(spending[index]||investing[index])?index:last,0));
-  const latestIndex=ordered[lastDataIndex]===currentYear&&new Date().getMonth()<11&&lastDataIndex>0?lastDataIndex-1:lastDataIndex;
+  const currentIndex=ordered.indexOf(currentYear);
+  const latestIndex=currentIndex>=0&&(spending[currentIndex]>0||investing[currentIndex]>0)?currentIndex:lastDataIndex;
   const previousIndex=Math.max(0,latestIndex-1);
   const latestYear=ordered[latestIndex]||currentYear;
   const previousYear=ordered[previousIndex]||String(Number(latestYear)-1);
@@ -3703,11 +3763,11 @@ function renderSpendingInvestmentChart(years) {
   if (annualGrowthChart) annualGrowthChart.destroy();
   annualGrowthChart=new Chart(canvas.getContext('2d'),{
     type:growthMode?'line':'bar',
-    data:{labels:ordered.map(year=>year===currentYear?`${year} YTD`:year),datasets},
+    data:{labels:ordered.map(year=>`'${String(year).slice(-2)}`),datasets},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>growthMode?` ${context.dataset.label}: ${Number(context.raw).toFixed(1)}%`:` ${context.dataset.label}: ${fmtF(context.raw)}`}}},scales:growthMode?{
-      x:{grid:{display:false},ticks:{color:cssValue('--muted')}},
+      x:{grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0}},
       y:{grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>`${value}%`}}
-    }:{x:{grid:{display:false},ticks:{color:cssValue('--muted')}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}}
+    }:{x:{grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}}
   });
   document.getElementById('growth-note').textContent=growthMode
     ? 'Each point shows the percentage change from the year before it. Current-year figures include entries recorded so far.'
@@ -3745,7 +3805,7 @@ function debtEditForm(item) {
 
 function renderDebtList() {
   const list=document.getElementById('debt-list');
-  if (!list) return;
+  if (!list||!D) return;
   const items=D.debt_items||[];
   const debtItems=items.filter(item=>categoryInfo(item.category).key!=='housing');
   const total=debtItems.reduce((sum,item)=>sum+(Number(item.amount)||0),0);
@@ -3782,13 +3842,15 @@ function renderYearTabs() {
   if (!years.includes(activeYear)) activeYear=years.includes(String(new Date().getFullYear()))?String(new Date().getFullYear()):(years.at(-1)||String(new Date().getFullYear()));
   const index=years.indexOf(activeYear);
   document.getElementById('year-tabs').innerHTML=`<button aria-label="Previous year" ${index<=0?'disabled':''} onclick="stepYear(-1)">${uiIcon('chevron-left')}</button><select id="tracker-year-select" aria-label="Tracker year" onchange="setYear(this.value)">${[...years].reverse().map(year=>`<option value="${year}" ${year===activeYear?'selected':''}>${year}</option>`).join('')}</select><button aria-label="Next year" ${index>=years.length-1?'disabled':''} onclick="stepYear(1)">${uiIcon('chevron-right')}</button>`;
+  const mobileSelect=document.getElementById('mobile-year-select');
+  if(mobileSelect)mobileSelect.innerHTML=[...years].reverse().map(year=>`<option value="${year}" ${year===activeYear?'selected':''}>${year}</option>`).join('');
 }
 
 function stepYear(direction) {
   const years=Object.keys(D.monthly_tracker||{}).sort((a,b)=>Number(a)-Number(b));
   const next=years[years.indexOf(activeYear)+direction]; if(next) setYear(next);
 }
-function setYear(year) { activeYear=String(year);trackerSelectedRow=null;showInactiveTrackerLines=false;renderYearTabs();renderTracker(activeYear); }
+function setYear(year) { activeYear=String(year);trackerSelectedRow=null;trackerEditingRow=null;showInactiveTrackerLines=false;renderYearTabs();renderTracker(activeYear); }
 
 function ensureYearRecords(year) {
   const value=String(year);
@@ -3894,6 +3956,23 @@ function addLineForActiveTracker() {
   showTrackerRowForm(activeTrackerSection);
 }
 
+function toggleTrackerTools(event) {
+  event?.stopPropagation();
+  const menu=document.getElementById('tracker-tools-menu');if(menu)menu.classList.toggle('open');
+}
+
+function closeTrackerTools() {
+  const menu=document.getElementById('tracker-tools-menu');if(menu)menu.classList.remove('open');
+}
+
+function toggleTrackerEditMode() {
+  trackerEditMode=!trackerEditMode;
+  trackerEditingRow=null;
+  if(!trackerEditMode)trackerSelectedRow=null;
+  closeTrackerTools();
+  renderTracker(activeYear);
+}
+
 function trackerGroup(row,section) {
   if (section==='debt_payments'||section==='debt_balances') {
     if (/affirm/i.test(row.label)) return 'Loans and lines of credit';
@@ -3909,7 +3988,16 @@ function trackerRowLabel(row,section,tableId='tracker') {
   const sameGroup=rows.map((item,itemIndex)=>({item,itemIndex})).filter(entry=>trackerGroup(entry.item,section)===group);
   const groupIndex=sameGroup.findIndex(entry=>entry.item.id===row.id);
   const selected=trackerSelectedRow?.section===section&&trackerSelectedRow?.id===row.id;
-  return `<input class="tracker-select" type="radio" name="tracker-line-${section}" aria-label="Select ${escapeHtml(row.label)}" ${selected?'checked':''} onclick="selectTrackerRow('${section}','${row.id}')"/><div class="row-menu-wrap"><button class="tracker-name-button" onclick="toggleRowMenu('${menuId}',event)">${escapeHtml(row.label)}</button><div class="row-menu" id="${menuId}" hidden><button onclick="renameTrackerRow('${section}','${row.id}')">${uiIcon('edit')}Rename</button><button class="danger" onclick="removeTrackerRow('${section}','${row.id}',${row.custom?'true':'false'})">${uiIcon('trash')}Delete</button></div></div><span class="tracker-row-tools"><button class="tracker-move-btn" aria-label="Move ${escapeHtml(row.label)} up" ${groupIndex<=0?'disabled':''} onclick="moveTrackerRow('${section}','${row.id}',-1,event)">${uiIcon('chevron-left')}</button><button class="tracker-move-btn" aria-label="Move ${escapeHtml(row.label)} down" ${groupIndex<0||groupIndex>=sameGroup.length-1?'disabled':''} onclick="moveTrackerRow('${section}','${row.id}',1,event)">${uiIcon('chevron-right')}</button></span>`;
+  const editing=trackerEditMode||trackerEditingRow?.section===section&&trackerEditingRow?.id===row.id;
+  return `<div class="tracker-row-label ${editing?'editing':''}"><div class="row-menu-wrap"><button class="tracker-name-button" onclick="toggleRowMenu('${menuId}',event)">${escapeHtml(row.label)}</button><div class="row-menu" id="${menuId}" hidden><button onclick="renameTrackerRow('${section}','${row.id}')">${uiIcon('edit')}Rename</button><button class="danger" onclick="removeTrackerRow('${section}','${row.id}',${row.custom?'true':'false'})">${uiIcon('trash')}Delete</button></div></div><button class="tracker-mobile-edit" type="button" onclick="toggleTrackerRowEdit('${section}','${row.id}',event)">${editing?'Done':'Edit'}</button><span class="tracker-edit-tools"><input class="tracker-select" type="radio" name="tracker-line-${section}" aria-label="Select ${escapeHtml(row.label)}" ${selected?'checked':''} onclick="selectTrackerRow('${section}','${row.id}')"/><span class="tracker-row-tools"><button class="tracker-move-btn" aria-label="Move ${escapeHtml(row.label)} up" ${groupIndex<=0?'disabled':''} onclick="moveTrackerRow('${section}','${row.id}',-1,event)">${uiIcon('chevron-left')}</button><button class="tracker-move-btn" aria-label="Move ${escapeHtml(row.label)} down" ${groupIndex<0||groupIndex>=sameGroup.length-1?'disabled':''} onclick="moveTrackerRow('${section}','${row.id}',1,event)">${uiIcon('chevron-right')}</button></span></span></div>`;
+}
+
+function toggleTrackerRowEdit(section,id,event) {
+  event?.stopPropagation();
+  const same=trackerEditingRow?.section===section&&trackerEditingRow?.id===id;
+  trackerEditingRow=same?null:{section,id};
+  if(!same)trackerSelectedRow={section,id};
+  renderTracker(activeYear);
 }
 
 function selectTrackerRow(section,id) {
@@ -3997,6 +4085,7 @@ function renderTracker(year) {
   const saved=getYearTotalInv(year); const pct=Math.min(100,goal?saved/goal*100:0); const remaining=Math.max(0,goal-saved);
   document.getElementById('goal-widget-wrap').innerHTML=`<div class="goal-widget"><div><h3>${year} investment goal</h3><div class="goal-amount">${fmt(saved)} <span class="goal-target">of ${fmt(goal)}</span></div></div><div><div class="goal-bar-bg"><div class="goal-bar-fill" style="width:${pct}%"></div></div><div class="goal-meta"><span>${pct.toFixed(1)}% complete</span><span>${fmt(remaining)} to go</span></div></div></div>`;
   buildPaymentsTable('tbl-debt-pay',year);buildBalancesTable('tbl-debt-bal',year);buildTable('tbl-invest',year,'investments',visibleTrackerRows(year,'investments'));buildIncomeTable('tbl-income',year);
+  const editButton=document.getElementById('tracker-edit-mode');if(editButton){editButton.setAttribute('aria-pressed',String(trackerEditMode));editButton.querySelector('span').textContent=trackerEditMode?'Done editing':'Edit lines';}
   setTrackerSection(activeTrackerSection,document.querySelector(`#tracker-segments [data-section="${activeTrackerSection}"]`));
   applyMobileMonthView();
 }
@@ -4004,7 +4093,8 @@ function renderTracker(year) {
 function changeMobileMonth(direction) { activeMobileMonth=(activeMobileMonth+direction+12)%12;applyMobileMonthView(); }
 function applyMobileMonthView() {
   const name=new Intl.DateTimeFormat('en-CA',{month:'long'}).format(new Date(Number(activeYear),activeMobileMonth,1));
-  const label=document.getElementById('mobile-month-name');if(label) label.textContent=`${name} ${activeYear}`;
+  const label=document.getElementById('mobile-month-name');if(label) label.textContent=name;
+  const select=document.getElementById('mobile-year-select');if(select)select.value=activeYear;
   document.querySelectorAll('#tab-tracker .tracker-table').forEach(table=>{
     table.querySelectorAll('tr').forEach(row=>[...row.children].forEach((cell,index)=>cell.classList.toggle('mobile-active',index===activeMobileMonth+1)));
   });
@@ -4129,7 +4219,7 @@ function renderHistory() {
   list.innerHTML=[...groups.values()].map(group=>`<section class="history-day"><div class="history-day-title">${historyDayLabel(group[0].timestamp)}</div>${group.map(entry=>{
     const presentation=historyEntryPresentation(entry),change=presentation.change,time=new Date(entry.timestamp).toLocaleTimeString('en-CA',{hour:'numeric',minute:'2-digit'});
     const values=presentation.badge?`<span class="history-pill">${escapeHtml(presentation.badge)}</span>`:change?`<span class="history-old">${escapeHtml(historyChangeValue(change,'before'))}</span><span>to</span><span class="history-new">${escapeHtml(historyChangeValue(change,'after'))}</span>`:'<span class="history-pill">Changed</span>';
-    return `<article class="history-entry"><div class="history-entry-main"><div><h3>${escapeHtml(presentation.title)}</h3><div class="history-meta">${escapeHtml(presentation.area)}, ${time}</div></div><div class="history-values">${values}</div><div class="history-actions"><button onclick="restoreHistory('${entry.id}')">${uiIcon('undo')}${presentation.badge==='Added'?'Undo':'Restore'}</button></div></div></article>`;
+    return `<article class="history-entry"><div class="history-entry-main"><div><h3>${escapeHtml(presentation.title)}</h3><div class="history-meta">${escapeHtml(presentation.area)}, ${time}</div></div><div class="history-values">${values}</div><div class="history-actions"><button onclick="restoreHistory('${entry.id}')">${presentation.badge==='Added'?'Undo':'Restore'}</button></div></div></article>`;
   }).join('')}</section>`).join('');
 }
 
@@ -4177,7 +4267,7 @@ function mobileSwitchTab(name){switchTab(name);}
 function closeMobileMore(){document.getElementById('mobile-more').classList.remove('open');document.body.style.overflow='';syncActiveNavigation();}
 
 matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',()=>{if((localStorage.getItem('chawal_theme')||'system')==='system')setTheme('system');});
-document.addEventListener('click',()=>document.querySelectorAll('.row-menu').forEach(menu=>menu.hidden=true));
+document.addEventListener('click',()=>{document.querySelectorAll('.row-menu').forEach(menu=>menu.hidden=true);closeTrackerTools();});
 
 // ── Installable phone app ────────────────────────────────────────────────────
 let deferredInstallPrompt = null;
