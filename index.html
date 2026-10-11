@@ -628,18 +628,22 @@
       --bg:#f3f2f9;--card:#ffffff;--card-2:#f8f8fc;--ink:#192033;--ink-2:#485168;
       --muted:#6f7890;--faint:#a7aec0;--line:#dfe3ec;--line-soft:#edf0f5;
       --accent:#5266e8;--accent-hover:#4054d2;--tint:#eef0ff;--tint-ink:#4255cf;
-      --seg:#eef0f5;--seg-on:#ffffff;--positive:#16885b;--danger:#b33d46;
-      --chart:#16b8b1;--debt:#ed7168;--neutral-bar:#aab2c4;--control-border:#cfd5e2;
-      --violet:#7769ef;--aqua:#16b8b1;--sun:#efb92e;--coral:#ed7168;--rose:#d85da8;
+      --seg:#eef0f5;--seg-on:#ffffff;--positive:#6f962f;--danger:#b33d46;
+      --income:#16a6a3;--outflow:#e56f67;--investment:#9a7fd9;
+      --debt-credit:#4f6f9f;--debt-loans:#7088ad;--debt-cars:#99a9c3;
+      --chart:#16a6a3;--debt:#e56f67;--neutral-bar:#aab2c4;--neutral-bar-soft:#d4d9e4;--control-border:#cfd5e2;
+      --violet:#9a7fd9;--aqua:#16a6a3;--sun:#efb92e;--coral:#e56f67;--rose:#d85da8;
       --overlay:rgba(22,27,41,.48);--sidebar-width:232px;
     }
     html[data-theme="dark"] {
-      --bg:#080a1c;--card:#11162e;--card-2:#171d3a;--ink:#f2f4fb;--ink-2:#c2c8da;
-      --muted:#949db7;--faint:#69728d;--line:#2a324c;--line-soft:#222a41;
+      --bg:#080a1c;--card:#151b36;--card-2:#1b2342;--ink:#f2f4fb;--ink-2:#c2c8da;
+      --muted:#9aa4bd;--faint:#707a95;--line:#303852;--line-soft:#252d48;
       --accent:#7184ff;--accent-hover:#8494ff;--tint:#222c57;--tint-ink:#aeb9ff;
-      --seg:#101526;--seg-on:#252d48;--positive:#61d7a2;--danger:#ff858d;
-      --chart:#39c8c2;--debt:#f18478;--neutral-bar:#77819e;--control-border:#3a4462;
-      --violet:#8390ff;--aqua:#39c8c2;--sun:#f1c64e;--coral:#f18478;--rose:#e277b9;
+      --seg:#101526;--seg-on:#293251;--positive:#a5d65c;--danger:#ff858d;
+      --income:#3bc4bf;--outflow:#f18478;--investment:#b49aee;
+      --debt-credit:#7190c2;--debt-loans:#8da4c9;--debt-cars:#aebbd1;
+      --chart:#3bc4bf;--debt:#f18478;--neutral-bar:#77819e;--neutral-bar-soft:#4e5874;--control-border:#414b69;
+      --violet:#b49aee;--aqua:#3bc4bf;--sun:#f1c64e;--coral:#f18478;--rose:#e277b9;
       --overlay:rgba(4,6,14,.72);
     }
     html { color-scheme:light; }
@@ -678,10 +682,7 @@
     .btn-del { border:1px solid var(--line);background:var(--card);color:var(--danger); }
     .sum-grid { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0 0 22px;border:0;background:transparent; }
     .sum-card { min-width:0;padding:20px;border:1px solid var(--line)!important;border-radius:14px;background:var(--card)!important;box-shadow:none!important; }
-    .sum-card:nth-child(1) { border-top:3px solid var(--coral)!important; }
-    .sum-card:nth-child(2) { border-top:3px solid var(--sun)!important; }
-    .sum-card:nth-child(3) { border-top:3px solid var(--aqua)!important; }
-    .sum-card:nth-child(4) { border-top:3px solid var(--violet)!important; }
+    .sum-card:nth-child(n) { border-top:1px solid var(--line)!important; }
     .sum-card .l { margin:0 0 12px;color:var(--muted);font-size:11px;font-weight:650;letter-spacing:.04em;text-transform:none; }
     .sum-card .v { color:var(--ink)!important;font-size:28px;font-weight:750;line-height:1.05;font-variant-numeric:tabular-nums; }
     .sum-card .s { margin-top:7px;color:var(--muted);font-size:11px; }
@@ -697,10 +698,10 @@
     .chart-legend { display:flex;align-items:center;gap:14px;color:var(--muted);font-size:10px; }
     .chart-legend span { display:flex;align-items:center;gap:6px; }
     .chart-legend b { font-weight:600; }
-    .legend-dot { width:9px;height:9px;border-radius:3px;background:var(--chart); }
-    .legend-dot.debt-dot { background:var(--debt); }
+    .legend-dot { width:9px;height:9px;border-radius:3px;background:var(--income); }
+    .legend-dot.debt-dot { background:var(--outflow); }
     .legend-dot.neutral-dot { background:var(--neutral-bar); }
-    .legend-dot.investment-dot { background:var(--violet); }
+    .legend-dot.investment-dot { background:var(--investment); }
     .growth-card .sec-head { display:flex;align-items:center;justify-content:space-between;gap:18px; }
     .growth-card-head { display:flex;align-items:center;gap:14px; }
     .chart-mode-toggle { min-height:38px;padding:3px;display:flex;border-radius:9px;background:var(--seg); }
@@ -742,7 +743,7 @@
     .debt-summary-top strong { display:block;margin-top:4px;font-size:34px;line-height:1;font-variant-numeric:tabular-nums; }
     .debt-stack { height:14px;display:flex;overflow:hidden;border-radius:99px;background:var(--seg); }
     .debt-stack i { height:100%; }
-    .cat-credit { background:var(--chart)!important; }.cat-loans { background:var(--debt)!important; }.cat-cars { background:var(--sun)!important; }
+    .cat-credit { background:var(--debt-credit)!important; }.cat-loans { background:var(--debt-loans)!important; }.cat-cars { background:var(--debt-cars)!important; }
     .debt-legend { display:grid;grid-template-columns:repeat(3,1fr);gap:12px; }
     .debt-legend div { color:var(--muted);font-size:11px; }.debt-legend strong { display:block;margin-top:3px;color:var(--ink);font-size:13px; }
     .debt-list-shell { padding:0;border:0!important;background:transparent!important; }
@@ -812,6 +813,8 @@
     .overview-mini-chart-head { min-height:28px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted);font-size:10px; }
     .overview-mini-chart-head strong { color:var(--ink);font-size:12px; }
     .overview-mini-chart canvas { width:100%!important;height:185px!important; }
+    .overview-comparison-note { min-height:20px;margin:-7px 0 8px;color:var(--muted);font-size:12px; }
+    .overview-comparison-chart { min-height:285px; }
     .overview-debt-outlook { display:grid;grid-template-columns:minmax(0,1fr) repeat(2,minmax(180px,.55fr));gap:14px;align-items:center; }
     .outlook-copy h2 { margin-bottom:5px;color:var(--ink);font-size:15px; }.outlook-copy p { color:var(--muted);font-size:11px;line-height:1.5; }
     .outlook-stat { padding:14px;border-radius:11px;background:var(--card-2); }
@@ -1034,11 +1037,9 @@
   <div id="tab-annual" class="tab-content active">
     <div class="overview-visual-grid">
       <div class="section overview-chart-card">
-        <div class="sec-head"><h2>Yearly income and bills paid</h2><span class="muted-note">Separate scales for a clearer comparison</span></div>
-        <div class="overview-chart-stack">
-          <div class="overview-mini-chart"><div class="overview-mini-chart-head"><strong>Income</strong><span id="income-chart-note"></span></div><canvas id="ann-income-chart"></canvas></div>
-          <div class="overview-mini-chart"><div class="overview-mini-chart-head"><strong>Bills paid</strong><span>Uses visible Tracker entries when available</span></div><canvas id="ann-bills-chart"></canvas></div>
-        </div>
+        <div class="sec-head"><h2>Income and bills paid</h2><div class="chart-legend"><span><i class="legend-dot"></i>Income</span><span><i class="legend-dot debt-dot"></i>Bills paid</span></div></div>
+        <div class="overview-comparison-note" id="income-chart-note"></div>
+        <div class="chart-wrap-lg overview-comparison-chart"><canvas id="ann-income-chart"></canvas></div>
       </div>
       <div class="section this-month-card">
         <div class="sec-head"><h2>This month</h2></div>
@@ -2896,7 +2897,6 @@ function ord(n){ const s=['th','st','nd','rd'],v=n%100; return n+(s[(v-20)%10]||
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
 window.addEventListener('resize',applyMobileMonthView);
 syncThemeControls();
-load();
 
 // ── Payoff Projections ────────────────────────────────────────────────────────
 // Debts excluded from projections (paid off / historical only)
@@ -2905,10 +2905,10 @@ const PAYOFF_EXCLUDED = new Set(['lowes','paybright','affirm','canadian-tire']);
 const FIXED_LOAN_IDS  = new Set(['g70','tucson','osap','fabs-osap']);
 
 const PAYOFF_DOT = {
-  'amex-primary':'var(--chart)','amex-joint':'var(--chart)','pc-financial':'var(--chart)',
-  'td-visa-1548':'var(--chart)','td-visa-1354':'var(--chart)','bmo-cc':'var(--chart)',
-  'loc':'var(--debt)','fabs-loc':'var(--debt)','fabs-osap':'var(--debt)',
-  'g70':'var(--sun)','tucson':'var(--sun)','osap':'var(--debt)'
+  'amex-primary':'var(--debt-credit)','amex-joint':'var(--debt-credit)','pc-financial':'var(--debt-credit)',
+  'td-visa-1548':'var(--debt-credit)','td-visa-1354':'var(--debt-credit)','bmo-cc':'var(--debt-credit)',
+  'loc':'var(--debt-loans)','fabs-loc':'var(--debt-loans)','fabs-osap':'var(--debt-loans)',
+  'g70':'var(--debt-cars)','tucson':'var(--debt-cars)','osap':'var(--debt-loans)'
 };
 
 function getPayoffBalance(id) {
@@ -3569,6 +3569,32 @@ function renderPlanTab() {
 const uiIcon = name => `<svg class="ui-icon" aria-hidden="true"><use href="#i-${name}"/></svg>`;
 const plainNumber = value => new Intl.NumberFormat('en-CA',{minimumFractionDigits:2,maximumFractionDigits:2}).format(value);
 const cssValue = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const axisMoney = value => new Intl.NumberFormat('en-CA',{style:'currency',currency:activeCurrency(),notation:'compact',maximumFractionDigits:0}).format(value);
+function colorAlpha(variable,alpha) {
+  const value=cssValue(variable);
+  if(/^#[0-9a-f]{6}$/i.test(value)){
+    const number=parseInt(value.slice(1),16);
+    return `rgba(${number>>16},${number>>8&255},${number&255},${alpha})`;
+  }
+  return value;
+}
+const latestValuePlugin={
+  id:'latestValue',
+  afterDatasetsDraw(chart,args,options){
+    if(!options?.enabled)return;
+    const ctx=chart.ctx;
+    chart.data.datasets.forEach((dataset,datasetIndex)=>{
+      let index=-1;
+      dataset.data.forEach((value,itemIndex)=>{if(value!=null&&Number(value)>0)index=itemIndex;});
+      const element=index>=0?chart.getDatasetMeta(datasetIndex).data[index]:null;
+      if(!element)return;
+      const point=element.tooltipPosition(),label=options.formatter?options.formatter(dataset.data[index]):fmt(dataset.data[index]);
+      ctx.save();ctx.fillStyle=cssValue('--ink');ctx.font='700 11px Manrope, sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';
+      const halfWidth=ctx.measureText(label).width/2,x=Math.max(halfWidth+4,Math.min(chart.width-halfWidth-4,point.x));
+      ctx.fillText(label,x,Math.max(14,point.y-6));ctx.restore();
+    });
+  }
+};
 const currentMonthLabel = () => new Intl.DateTimeFormat('en-CA',{month:'long'}).format(new Date());
 
 function renderAll() {
@@ -3652,9 +3678,9 @@ function renderMonthlyPicture() {
   const mix={credit:0,loans:0,cars:0};
   (D.debt_items||[]).forEach(item=>{const amount=Math.max(0,Number(item.amount)||0);const key=categoryInfo(item.category).key;if(Object.hasOwn(mix,key))mix[key]+=amount;});
   const mixRows=[
-    {key:'credit',label:'Credit cards',color:cssValue('--aqua')},
-    {key:'loans',label:'Loans and LOC',color:cssValue('--debt')},
-    {key:'cars',label:'Car loans',color:cssValue('--sun')}
+    {key:'credit',label:'Credit cards',color:cssValue('--debt-credit')},
+    {key:'loans',label:'Loans and LOC',color:cssValue('--debt-loans')},
+    {key:'cars',label:'Car loans',color:cssValue('--debt-cars')}
   ].filter(item=>mix[item.key]>0);
   const totalDebt=mix.credit+mix.loans+mix.cars;
   document.getElementById('debt-mix-count').textContent=fmt(totalDebt);
@@ -3701,15 +3727,24 @@ function renderAnnualSummary() {
 }
 
 function renderAnnualCharts(ann,years) {
-  const incomeCanvas=document.getElementById('ann-income-chart');const billsCanvas=document.getElementById('ann-bills-chart');
-  if (!incomeCanvas||!billsCanvas||typeof Chart==='undefined') return;
-  const rows=years.map(annualViewRow);const income=rows.map(row=>row.income>0?row.income:null);const bills=rows.map(row=>row.billsPaid>0?row.billsPaid:null);
-  const missingIncome=years.filter((year,index)=>income[index]==null);
-  document.getElementById('income-chart-note').textContent=missingIncome.length?`${missingIncome.join(', ')} income not entered`:'All years have income data';
-  const chartOptions=label=>({responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>context.raw==null?' Not entered':` ${label}: ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0,callback:function(value){return `'${String(this.getLabelForValue(value)).slice(-2)}`;}}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}});
+  const incomeCanvas=document.getElementById('ann-income-chart');
+  if (!incomeCanvas||typeof Chart==='undefined') return;
+  const currentYear=String(new Date().getFullYear());
+  const chartYears=years.filter(year=>{const row=annualViewRow(year);return Number(year)<=Number(currentYear)&&row.income>0&&row.billsPaid>0;});
+  const rows=chartYears.map(annualViewRow),income=rows.map(row=>row.income>0?row.income:null),bills=rows.map(row=>row.billsPaid>0?row.billsPaid:null);
+  const missingIncome=chartYears.filter((year,index)=>income[index]==null);
+  document.getElementById('income-chart-note').textContent=missingIncome.length?`${missingIncome.join(', ')} income not entered. ${currentYear} is shown as a partial year.`:`${currentYear} is shown as a partial year.`;
+  const labels=chartYears.map(year=>year===currentYear?`'${year.slice(-2)} so far`:`'${year.slice(-2)}`);
   if (annIncChart) annIncChart.destroy();if(annBillsChart)annBillsChart.destroy();
-  annIncChart=new Chart(incomeCanvas.getContext('2d'),{type:'bar',data:{labels:years,datasets:[{label:'Income',data:income,backgroundColor:cssValue('--chart'),borderWidth:0,borderRadius:4}]},options:chartOptions('Income')});
-  annBillsChart=new Chart(billsCanvas.getContext('2d'),{type:'bar',data:{labels:years,datasets:[{label:'Bills paid',data:bills,backgroundColor:cssValue('--debt'),borderWidth:0,borderRadius:4}]},options:chartOptions('Bills paid')});
+  annIncChart=new Chart(incomeCanvas.getContext('2d'),{
+    type:'bar',
+    plugins:[latestValuePlugin],
+    data:{labels,datasets:[
+      {label:'Income',data:income,backgroundColor:chartYears.map(year=>year===currentYear?colorAlpha('--income',.5):cssValue('--income')),borderWidth:0,borderRadius:4,barPercentage:.76,categoryPercentage:.72},
+      {label:'Bills paid',data:bills,backgroundColor:chartYears.map(year=>year===currentYear?colorAlpha('--outflow',.5):cssValue('--outflow')),borderWidth:0,borderRadius:4,barPercentage:.76,categoryPercentage:.72}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{legend:{display:false},latestValue:{enabled:true,formatter:value=>axisMoney(value)},tooltip:{callbacks:{label:context=>context.raw==null?' Not entered':` ${context.dataset.label}: ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}
+  });
   renderSpendingInvestmentChart(years);
 }
 
@@ -3736,7 +3771,7 @@ function renderSpendingInvestmentChart(years) {
   const canvas=document.getElementById('annual-growth-chart');
   if (!canvas||typeof Chart==='undefined') return;
   const currentYear=String(new Date().getFullYear());
-  const ordered=[...years].sort((a,b)=>Number(a)-Number(b));
+  const ordered=[...years].filter(year=>Number(year)<=Number(currentYear)&&(getYearSpending(year)>0||getYearTotalInv(year)>0)).sort((a,b)=>Number(a)-Number(b));
   const spending=ordered.map(getYearSpending);
   const investing=ordered.map(getYearTotalInv);
   const lastDataIndex=Math.max(0,ordered.reduce((last,year,index)=>(spending[index]||investing[index])?index:last,0));
@@ -3754,24 +3789,25 @@ function renderSpendingInvestmentChart(years) {
   const investingGrowth=investing.map((value,index)=>index===0?null:yearChange(value,investing[index-1]));
   const growthMode=growthChartMode==='growth';
   const datasets=growthMode?[
-    {label:'Spending growth',data:spendingGrowth,borderColor:cssValue('--debt'),backgroundColor:cssValue('--debt'),borderWidth:3,pointRadius:3,pointHoverRadius:5,tension:.3,spanGaps:true},
-    {label:'Investment growth',data:investingGrowth,borderColor:cssValue('--violet'),backgroundColor:cssValue('--violet'),borderWidth:3,pointRadius:3,pointHoverRadius:5,tension:.3,spanGaps:true}
+    {label:'Spending growth',data:spendingGrowth,borderColor:cssValue('--outflow'),backgroundColor:cssValue('--outflow'),borderWidth:3,pointRadius:3,pointHoverRadius:5,tension:.3,spanGaps:true},
+    {label:'Investment growth',data:investingGrowth,borderColor:cssValue('--investment'),backgroundColor:cssValue('--investment'),borderWidth:3,pointRadius:3,pointHoverRadius:5,tension:.3,spanGaps:true}
   ]:[
-    {label:'Bills paid',data:spending,backgroundColor:cssValue('--debt'),borderWidth:0,borderRadius:4},
-    {label:'Investments',data:investing,backgroundColor:cssValue('--violet'),borderWidth:0,borderRadius:4}
+    {type:'bar',label:'Bills paid',data:spending,backgroundColor:ordered.map(year=>year===currentYear?colorAlpha('--outflow',.5):cssValue('--outflow')),borderWidth:0,borderRadius:4,yAxisID:'y'},
+    {type:'line',label:'Investments',data:investing,borderColor:cssValue('--investment'),backgroundColor:cssValue('--investment'),borderWidth:3,pointRadius:4,pointHoverRadius:6,tension:.3,yAxisID:'y1'}
   ];
   if (annualGrowthChart) annualGrowthChart.destroy();
   annualGrowthChart=new Chart(canvas.getContext('2d'),{
     type:growthMode?'line':'bar',
-    data:{labels:ordered.map(year=>`'${String(year).slice(-2)}`),datasets},
-    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>growthMode?` ${context.dataset.label}: ${Number(context.raw).toFixed(1)}%`:` ${context.dataset.label}: ${fmtF(context.raw)}`}}},scales:growthMode?{
+    plugins:[latestValuePlugin],
+    data:{labels:ordered.map(year=>year===currentYear?`'${String(year).slice(-2)} so far`:`'${String(year).slice(-2)}`),datasets},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},latestValue:{enabled:!growthMode,formatter:value=>axisMoney(value)},tooltip:{callbacks:{label:context=>growthMode?` ${context.dataset.label}: ${Number(context.raw).toFixed(1)}%`:` ${context.dataset.label}: ${fmtF(context.raw)}`}}},scales:growthMode?{
       x:{grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0}},
-      y:{grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>`${value}%`}}
-    }:{x:{grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}}
+      y:{grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:value=>`${value}%`}}
+    }:{x:{grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0}},y:{beginAtZero:true,position:'left',grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}},y1:{beginAtZero:true,position:'right',grid:{drawOnChartArea:false},ticks:{maxTicksLimit:4,color:cssValue('--investment'),callback:axisMoney}}}}
   });
   document.getElementById('growth-note').textContent=growthMode
     ? 'Each point shows the percentage change from the year before it. Current-year figures include entries recorded so far.'
-    : 'Bills paid and investments both use visible Tracker entries and share one scale for a direct comparison.';
+    : 'Bills paid use the left scale. Investments use the right scale so smaller contributions remain visible. The current year is partial.';
 }
 
 function setGrowthChartMode(mode) {
@@ -4125,14 +4161,26 @@ function saveDiv(year,index){const cell=document.getElementById(`mc-${year}-${in
 
 function renderDivChart() {
   const canvas=document.getElementById('div-chart');if(!canvas||!D||typeof Chart==='undefined')return;
-  const year=String(new Date().getFullYear()),previous=String(Number(year)-1);
-  document.getElementById('div-legend-current').textContent=year;document.getElementById('div-legend-previous').textContent=previous;
+  const now=new Date(),year=String(now.getFullYear()),previous=String(Number(year)-1),currentMonth=now.getMonth();
+  const currentValues=dividendProjectionSeries(year).map((value,index)=>index<=currentMonth?value:null);
+  const previousValues=dividendProjectionSeries(previous);
+  document.getElementById('div-legend-current').textContent=`${year} so far`;document.getElementById('div-legend-previous').textContent=previous;
   if(divChart)divChart.destroy();
-  divChart=new Chart(canvas.getContext('2d'),{type:'bar',data:{labels:MONTHS,datasets:[{label:year,data:dividendProjectionSeries(year),backgroundColor:cssValue('--chart'),borderWidth:0,borderRadius:{topLeft:4,topRight:4}},{label:previous,data:D.dividends?.[previous]||Array(12).fill(0),backgroundColor:cssValue('--neutral-bar'),borderWidth:0,borderRadius:{topLeft:4,topRight:4}}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>` ${context.dataset.label}: ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted')}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}}});
+  divChart=new Chart(canvas.getContext('2d'),{
+    type:'bar',plugins:[latestValuePlugin],data:{labels:MONTHS,datasets:[
+      {label:`${year} so far`,data:currentValues,backgroundColor:colorAlpha('--income',.72),borderWidth:0,borderRadius:{topLeft:4,topRight:4},barPercentage:.82,categoryPercentage:.78,order:1},
+      {label:previous,data:previousValues,backgroundColor:cssValue('--neutral-bar-soft'),borderWidth:0,borderRadius:{topLeft:4,topRight:4},barPercentage:.48,categoryPercentage:.78,order:2}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},latestValue:{enabled:true,formatter:value=>axisMoney(value)},tooltip:{callbacks:{label:context=>context.raw==null?'':` ${context.dataset.label}: ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}
+  });
   const annualCanvas=document.getElementById('div-annual-chart');if(!annualCanvas)return;
-  const years=Object.keys(D.dividends||{}).sort((a,b)=>Number(a)-Number(b));const totals=years.map(value=>dividendProjectionSeries(value).reduce((sum,item)=>sum+(Number(item)||0),0));
+  const years=Object.keys(D.dividends||{}).sort((a,b)=>Number(a)-Number(b)).filter(value=>dividendProjectionSeries(value).some(item=>Number(item)>0));
+  const totals=years.map(value=>dividendProjectionSeries(value).reduce((sum,item)=>sum+(Number(item)||0),0));
   if(annualDivChart)annualDivChart.destroy();
-  annualDivChart=new Chart(annualCanvas.getContext('2d'),{type:'bar',data:{labels:years,datasets:[{label:'Dividends',data:totals,backgroundColor:cssValue('--chart'),borderWidth:0,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>` ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted')}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}}});
+  annualDivChart=new Chart(annualCanvas.getContext('2d'),{
+    type:'bar',plugins:[latestValuePlugin],data:{labels:years.map(value=>value===year?`'${value.slice(-2)} so far`:`'${value.slice(-2)}`),datasets:[{label:'Dividends',data:totals,backgroundColor:years.map(value=>value===year?colorAlpha('--income',.5):cssValue('--income')),borderWidth:0,borderRadius:4,barPercentage:.62,categoryPercentage:.72}]},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{legend:{display:false},latestValue:{enabled:true,formatter:value=>axisMoney(value)},tooltip:{callbacks:{label:context=>` Dividends: ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}
+  });
 }
 
 function historyDayLabel(date) {
@@ -4313,6 +4361,8 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') {
 if (/iPhone|iPad|iPod/i.test(navigator.userAgent) && !isInstalledApp()) {
   showInstallButton();
 }
+
+load();
 </script>
 </body>
 </html>
