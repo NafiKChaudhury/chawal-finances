@@ -840,6 +840,13 @@
     .holding-account-stat span,.holding-account-stat small { display:block;color:var(--muted);font-size:9px; }
     .holding-account-stat strong { display:block;margin:5px 0 3px;color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums; }
     .holding-account-stat.active { border-color:var(--accent);background:var(--tint); }
+    .holding-drip-settings { margin:0 0 14px;padding:12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;border:1px solid var(--line);border-radius:11px;background:var(--card-2); }
+    .holding-drip-toggle { min-height:52px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);text-align:left;cursor:pointer; }
+    .holding-drip-toggle strong,.holding-drip-toggle small { display:block; }.holding-drip-toggle strong { font-size:11px; }.holding-drip-toggle small { margin-top:3px;color:var(--muted);font-size:9px; }
+    .holding-drip-switch { width:38px;height:22px;padding:2px;display:block;flex:0 0 auto;border-radius:99px;background:var(--seg);transition:background .2s ease; }
+    .holding-drip-switch i { width:18px;height:18px;display:block;border-radius:50%;background:var(--card);border:1px solid var(--line);transition:transform .2s ease; }
+    .holding-drip-toggle.on { border-color:var(--accent);background:var(--tint); }.holding-drip-toggle.on .holding-drip-switch { background:var(--accent); }.holding-drip-toggle.on .holding-drip-switch i { transform:translateX(16px);border-color:transparent; }
+    .holding-drip-note { grid-column:1/-1;margin:0;color:var(--muted);font-size:10px;line-height:1.45; }
     .holding-transaction-form { margin-bottom:14px;display:none; }.holding-transaction-form.open { display:block; }
     .holding-transaction-toggle { margin-bottom:12px;padding:4px;display:grid;grid-template-columns:1fr 1fr;gap:4px;border-radius:11px;background:var(--seg); }
     .holding-transaction-toggle button { min-height:40px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-weight:650;cursor:pointer; }
@@ -874,6 +881,7 @@
     @media (max-width:899px) {
       .holding-row { grid-template-columns:minmax(0,1fr) repeat(3,92px); }.holding-actions { grid-column:1/-1; }.holding-estimate-preview,.holding-transaction-preview { grid-template-columns:repeat(2,minmax(0,1fr)); }
       .holding-account-summary { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .holding-drip-settings { grid-template-columns:1fr; }
       body { padding-bottom:calc(72px + env(safe-area-inset-bottom)); }
       .app-sidebar { display:none; }
       main { margin:0;padding:24px 16px 28px; }
@@ -1265,6 +1273,7 @@
           <button data-account="FHSA" onclick="setHoldingAccount('FHSA',this)">FHSA</button>
         </div>
         <div class="holding-account-summary" id="holding-account-summary"></div>
+        <div class="holding-drip-settings" id="holding-drip-settings"></div>
         <div class="edit-form holding-form" id="holding-form">
           <input id="holding-edit-id" type="hidden"/>
           <div class="form-row">
@@ -1817,6 +1826,11 @@ function ensureDataShape() {
   ['RRSP','FHSA','TFSA','CASH'].forEach(account=>{
     if(!Array.isArray(D.dividend_holdings[account])) D.dividend_holdings[account]=[];
     D.dividend_holdings[account].forEach(item=>{if(item.owner!=='Fabliha')item.owner='Nafi';});
+  });
+  D.dividend_drip = D.dividend_drip && typeof D.dividend_drip === 'object' ? D.dividend_drip : {};
+  ['Nafi','Fabliha'].forEach(owner=>{
+    D.dividend_drip[owner] = D.dividend_drip[owner] && typeof D.dividend_drip[owner] === 'object' ? D.dividend_drip[owner] : {};
+    ['RRSP','TFSA','FHSA'].forEach(account=>{D.dividend_drip[owner][account]=D.dividend_drip[owner][account]===true;});
   });
   D.dividend_transactions = Array.isArray(D.dividend_transactions) ? D.dividend_transactions : [];
   D.dividend_transactions.forEach(transaction=>{
@@ -2643,7 +2657,7 @@ function collectHistoryChanges(before, after, path=[], out=[]) {
 
 const HISTORY_AREAS = {
   debt_items:'Debts', payoff_settings:'Debt payoff', payoff_custom_loans:'Debt payoff',
-  monthly_bills:'Bills', income:'Income', pay_sources:'Pay schedules', dividends:'Dividends', dividend_holdings:'Dividend holdings', dividend_transactions:'Dividend transactions',
+  monthly_bills:'Bills', income:'Income', pay_sources:'Pay schedules', dividends:'Dividends', dividend_holdings:'Dividend holdings', dividend_transactions:'Dividend transactions', dividend_drip:'Dividend reinvestment',
   monthly_tracker:'Tracker', tracker_rows:'Tracker', annual_summary:'Overview',
   investment_goal:'Investment goal', settings:'Settings'
 };
@@ -2674,7 +2688,7 @@ function captureHistory() {
 }
 
 function readablePath(path) {
-  const labels = {debt_items:'Debts',monthly_bills:'Bills',income:'Income',pay_sources:'Pay schedules',dividends:'Dividends',dividend_holdings:'Dividend holdings',dividend_transactions:'Dividend transactions',monthly_tracker:'Tracker',tracker_rows:'Tracker lines',annual_summary:'Overview',settings:'Settings',amount:'Amount',name:'Name',due_day:'Due day',frequency:'Frequency'};
+  const labels = {debt_items:'Debts',monthly_bills:'Bills',income:'Income',pay_sources:'Pay schedules',dividends:'Dividends',dividend_holdings:'Dividend holdings',dividend_transactions:'Dividend transactions',dividend_drip:'DRIP',monthly_tracker:'Tracker',tracker_rows:'Tracker lines',annual_summary:'Overview',settings:'Settings',amount:'Amount',name:'Name',due_day:'Due day',frequency:'Frequency'};
   return path.map((part,index) => {
     if (labels[part]) return labels[part];
     if (/^\d+$/.test(part)) {
@@ -4089,20 +4103,35 @@ function holdingSharesAtDate(item,targetDate){
   });
   return Math.max(0,shares);
 }
-function estimatedHoldingDividendForMonth(year,index){
-  return holdingEntries('TOTAL','COMBINED').reduce((sum,{account,item})=>{
-    const payments=holdingPaymentDatesForYear(item,Number(year)).filter(date=>date.getMonth()===index);if(!payments.length)return sum;
-    const conversion=holdingConversionRate(item);if(!conversion)return sum;
-    return sum+payments.reduce((paymentTotal,payment)=>{const estimate=holdingEstimate({...item,shares:holdingSharesAtDate(item,payment)},account);return paymentTotal+estimate.net*conversion;},0);
-  },0);
+function accountDripEnabled(owner,account){
+  return D.dividend_drip?.[owner]?.[account]===true;
+}
+function projectedHoldingDividendSeries(year){
+  const targetYear=Number(year),totals=Array(12).fill(0),now=new Date(),start=new Date(now.getFullYear(),now.getMonth(),1,12);
+  if(targetYear<now.getFullYear())return totals;
+  holdingEntries('TOTAL','COMBINED').forEach(({account,owner,item})=>{
+    const conversion=holdingConversionRate(item);if(!conversion)return;
+    const price=Number(item.currentPrice)||0,drip=accountDripEnabled(owner,account),rate=holdingRatePerPayment(item);
+    let reinvestedShares=0;
+    for(let projectionYear=now.getFullYear();projectionYear<=targetYear;projectionYear++){
+      holdingPaymentDatesForYear(item,projectionYear).filter(payment=>payment>=start).sort((a,b)=>a-b).forEach(payment=>{
+        const shares=holdingSharesAtDate(item,payment)+reinvestedShares;
+        const estimate=holdingEstimate({...item,shares,dividendRatePerPayment:rate},account);
+        if(payment.getFullYear()===targetYear)totals[payment.getMonth()]+=estimate.net*conversion;
+        if(drip&&price>0)reinvestedShares+=estimate.net/price;
+      });
+    }
+  });
+  return totals;
 }
 function dividendProjectionSeries(year){
   const actual=(D.dividends?.[year]||Array(12).fill(0)).map(value=>Number(value)||0),now=new Date(),currentYear=now.getFullYear(),currentMonth=now.getMonth(),numericYear=Number(year);
-  return actual.map((value,index)=>numericYear<currentYear||(numericYear===currentYear&&index<currentMonth)?value:estimatedHoldingDividendForMonth(year,index));
+  const estimated=projectedHoldingDividendSeries(year);
+  return actual.map((value,index)=>numericYear<currentYear||(numericYear===currentYear&&index<currentMonth)?value:estimated[index]);
 }
 function holdingProjectionIssues(){
-  const entries=holdingEntries('TOTAL','COMBINED'),missingSchedule=entries.filter(({item})=>!item.nextPaymentDate).length,missingRate=entries.filter(({item})=>(item.currency||activeCurrency())!==activeCurrency()&&!holdingConversionRate(item)).length;
-  return {missingSchedule,missingRate};
+  const entries=holdingEntries('TOTAL','COMBINED'),missingSchedule=entries.filter(({item})=>!item.nextPaymentDate).length,missingRate=entries.filter(({item})=>(item.currency||activeCurrency())!==activeCurrency()&&!holdingConversionRate(item)).length,missingDripPrice=entries.filter(({account,owner,item})=>accountDripEnabled(owner,account)&&!(Number(item.currentPrice)>0)).length;
+  return {missingSchedule,missingRate,missingDripPrice};
 }
 
 function renderDividends() {
@@ -4114,7 +4143,8 @@ function renderDividends() {
   let recentIndex=-1;values.slice(0,currentMonth).forEach((value,index)=>{if(Number(value)>0)recentIndex=index;});if(recentIndex<0)recentIndex=Math.max(0,currentMonth-1);
   const recent=Number(values[recentIndex])||0,prior=Number(previousValues[recentIndex])||0;
   const change=prior>0?(recent-prior)/prior*100:null;
-  const issueText=issues.missingSchedule||issues.missingRate?`${issues.missingSchedule?`${issues.missingSchedule} holding${issues.missingSchedule===1?' needs':'s need'} a payment date`:''}${issues.missingSchedule&&issues.missingRate?' · ':''}${issues.missingRate?`${issues.missingRate} foreign holding${issues.missingRate===1?' needs':'s need'} a CAD rate`:''}`:`Actual through ${MONTHS[Math.max(0,currentMonth-1)]}, then holdings estimates`;
+  const issueParts=[];if(issues.missingSchedule)issueParts.push(`${issues.missingSchedule} holding${issues.missingSchedule===1?' needs':'s need'} a payment date`);if(issues.missingRate)issueParts.push(`${issues.missingRate} foreign holding${issues.missingRate===1?' needs':'s need'} a CAD rate`);if(issues.missingDripPrice)issueParts.push(`${issues.missingDripPrice} DRIP holding${issues.missingDripPrice===1?' needs':'s need'} a share price`);
+  const issueText=issueParts.length?issueParts.join(' · '):`Actual through ${MONTHS[Math.max(0,currentMonth-1)]}, then holdings estimates${Object.values(D.dividend_drip||{}).some(accounts=>Object.values(accounts||{}).some(Boolean))?' with DRIP compounding':''}`;
   document.getElementById('dividend-stats').innerHTML=`<article class="dividend-stat"><span>${year} received</span><strong>${fmtF(total)}</strong><small class="${ytdChange!=null&&ytdChange>0?'up':''}">${ytdChange==null?'No prior-year comparison':`${ytdChange>=0?'Up':'Down'} ${Math.abs(ytdChange).toFixed(1)}% on ${previous} through ${MONTHS[Math.max(0,currentMonth-1)]}`}</small></article><article class="dividend-stat"><span>Projected full year</span><strong>${fmtF(projection)}</strong><small>${issueText}</small></article><article class="dividend-stat"><span>${MONTHS[recentIndex]} ${year}</span><strong>${fmtF(recent)}</strong><small class="${change!=null&&change>0?'up':''}">${change==null?'No comparison available':`${change>=0?'Up':'Down'} ${Math.abs(change).toFixed(0)}% on ${MONTHS[recentIndex]} ${previous}`}</small></article>`;
   const years=Object.keys(D.dividends||{}).sort((a,b)=>Number(b)-Number(a));
   let html='<thead><tr><th>Year</th>'+MONTHS.map(month=>`<th>${month}</th>`).join('')+'<th>Total</th></tr></thead><tbody>';
@@ -4148,6 +4178,16 @@ function setHoldingOwner(owner){
 }
 const HOLDING_ACCOUNTS=['RRSP','TFSA','FHSA'];
 const HOLDING_OWNERS=['Nafi','Fabliha'];
+function toggleAccountDrip(owner,account){
+  if(owner==='COMBINED'){toast('Select Nafi or Fabliha to change DRIP');return;}
+  D.dividend_drip??={};D.dividend_drip[owner]??={};D.dividend_drip[owner][account]=!accountDripEnabled(owner,account);
+  mark();renderDividends();renderDivChart();syncAllViews();toast(`${owner}'s ${account} DRIP turned ${D.dividend_drip[owner][account]?'on':'off'}`);
+}
+function renderAccountDripSettings(){
+  const target=document.getElementById('holding-drip-settings');if(!target)return;
+  if(activeHoldingOwner==='COMBINED'){target.innerHTML='<p class="holding-drip-note">Select Nafi or Fabliha above to change account-level DRIP settings.</p>';return;}
+  target.innerHTML=HOLDING_ACCOUNTS.map(account=>{const enabled=accountDripEnabled(activeHoldingOwner,account);return `<button class="holding-drip-toggle ${enabled?'on':''}" type="button" aria-pressed="${enabled}" onclick="toggleAccountDrip('${activeHoldingOwner}','${account}')"><span><strong>${account} DRIP</strong><small>${enabled?'Reinvest future dividends':'Pay future dividends as cash'}</small></span><span class="holding-drip-switch" aria-hidden="true"><i></i></span></button>`;}).join('')+'<p class="holding-drip-note">DRIP applies to every holding in the account. Estimated reinvestment uses each holding’s saved net dividend and current share price; past actual dividends are never changed.</p>';
+}
 function holdingFrequencyLabel(frequency){return ({52:'weekly',26:'every 2 weeks',12:'monthly',6:'every 2 months',4:'quarterly',2:'twice yearly',1:'yearly'})[Number(frequency)]||`${Number(frequency)||4} payments yearly`;}
 function holdingRatePerPayment(item){
   if(Number.isFinite(Number(item.dividendRatePerPayment)))return Number(item.dividendRatePerPayment);
@@ -4253,6 +4293,7 @@ function renderHoldingAccountSummary(){
   const target=document.getElementById('holding-account-summary');if(!target)return;
   const ownerLabel=activeHoldingOwner==='COMBINED'?'Both portfolios':`${activeHoldingOwner}'s portfolio`;
   target.innerHTML=['TOTAL',...HOLDING_ACCOUNTS].map(account=>{const entries=holdingEntries(account),monthly=holdingTotalsText(holdingEntryTotals(entries,(item,estimate)=>estimate.annualNet/12)),annual=holdingTotalsText(holdingEntryTotals(entries,(item,estimate)=>estimate.annualNet));return `<button class="holding-account-stat ${activeHoldingAccount===account?'active':''}" onclick="setHoldingAccount('${account}')"><span>${account==='TOTAL'?ownerLabel:account}</span><strong>${monthly}</strong><small>${annual} annual net</small></button>`;}).join('');
+  renderAccountDripSettings();
 }
 function renderHoldingTransactions(){
   const target=document.getElementById('holding-transaction-list');if(!target)return;const accounts=activeHoldingAccount==='TOTAL'?HOLDING_ACCOUNTS:[activeHoldingAccount],owners=activeHoldingOwner==='COMBINED'?HOLDING_OWNERS:[activeHoldingOwner];
@@ -4266,7 +4307,7 @@ function renderDividendHoldings(){
   const portfolioLabel=activeHoldingOwner==='COMBINED'?'Combined portfolio':`${activeHoldingOwner}'s portfolio`;
   document.getElementById('holding-list-summary').textContent=`${portfolioLabel} · ${entries.length} holding${entries.length===1?'':'s'} · ${marketTotal} market value · ${monthlyTotal} monthly average · ${estimatedTotal} estimated annual net · ${paidTotal} dividends received`;
   renderHoldingAccountSummary();
-  list.innerHTML=entries.length?entries.map(({account,owner,item})=>{const estimate=holdingEstimate(item,account),frequency=Number(item.frequency)||4,currency=item.currency||'USD',marketValue=(Number(item.shares)||0)*(Number(item.currentPrice)||0),schedule=item.nextPaymentDate?`next ${new Date(`${item.nextPaymentDate}T12:00:00`).toLocaleDateString('en-CA',{month:'short',day:'numeric'})}`:'add next payment date';return `<div class="holding-row"><strong>${escapeHtml(item.name)}<small class="holding-name-meta">${owner} · ${account} · ${plainNumber(Number(item.shares)||0)} shares · ${holdingMoney(holdingRatePerPayment(item),currency)} per share · ${holdingFrequencyLabel(frequency)} · ${plainNumber(estimate.taxRate)}% withholding · ${schedule}</small></strong><div class="holding-value"><b>${holdingMoney(marketValue,currency)}</b><small>stock value</small></div><div class="holding-value"><b>${holdingMoney(estimate.annualNet/12,currency)}</b><small>monthly average</small></div><div class="holding-value holding-paid"><b>${holdingMoney(Number(item.dividends)||0,currency)}</b><small>total dividends received</small></div><div class="holding-actions"><button class="icon-button" aria-label="Buy or sell ${escapeHtml(item.name)}" onclick="showHoldingTransaction('${account}','${item.id}','${owner}')">${uiIcon('transfer')}</button><button class="icon-button" aria-label="Edit ${escapeHtml(item.name)}" onclick="editHolding('${account}','${item.id}')">${uiIcon('edit')}</button><button class="icon-button" aria-label="Remove ${escapeHtml(item.name)}" onclick="deleteHolding('${account}','${item.id}')">${uiIcon('trash')}</button></div></div>`;}).join(''):`<div class="holding-empty">No holdings in this portfolio view yet.</div>`;
+  list.innerHTML=entries.length?entries.map(({account,owner,item})=>{const estimate=holdingEstimate(item,account),frequency=Number(item.frequency)||4,currency=item.currency||'USD',marketValue=(Number(item.shares)||0)*(Number(item.currentPrice)||0),schedule=item.nextPaymentDate?`next ${new Date(`${item.nextPaymentDate}T12:00:00`).toLocaleDateString('en-CA',{month:'short',day:'numeric'})}`:'add next payment date',drip=accountDripEnabled(owner,account)?'DRIP on':'DRIP off';return `<div class="holding-row"><strong>${escapeHtml(item.name)}<small class="holding-name-meta">${owner} · ${account} · ${drip} · ${plainNumber(Number(item.shares)||0)} shares · ${holdingMoney(holdingRatePerPayment(item),currency)} per share · ${holdingFrequencyLabel(frequency)} · ${plainNumber(estimate.taxRate)}% withholding · ${schedule}</small></strong><div class="holding-value"><b>${holdingMoney(marketValue,currency)}</b><small>stock value</small></div><div class="holding-value"><b>${holdingMoney(estimate.annualNet/12,currency)}</b><small>monthly average</small></div><div class="holding-value holding-paid"><b>${holdingMoney(Number(item.dividends)||0,currency)}</b><small>total dividends received</small></div><div class="holding-actions"><button class="icon-button" aria-label="Buy or sell ${escapeHtml(item.name)}" onclick="showHoldingTransaction('${account}','${item.id}','${owner}')">${uiIcon('transfer')}</button><button class="icon-button" aria-label="Edit ${escapeHtml(item.name)}" onclick="editHolding('${account}','${item.id}')">${uiIcon('edit')}</button><button class="icon-button" aria-label="Remove ${escapeHtml(item.name)}" onclick="deleteHolding('${account}','${item.id}')">${uiIcon('trash')}</button></div></div>`;}).join(''):`<div class="holding-empty">No holdings in this portfolio view yet.</div>`;
   renderHoldingTransactions();
 }
 

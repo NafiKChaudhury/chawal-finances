@@ -18,3 +18,5 @@ Yahoo Finance prices can be delayed. Dividend payment dates returned by the app 
 ## Dividend projections
 
 Past months remain saved actuals. The current and future months are estimated from shares, dividend per share, frequency, withholding tax, currency conversion and dated buy/sell transactions. Weekly, biweekly, monthly, every-two-months, quarterly, twice-yearly and yearly schedules are supported.
+
+DRIP is configured per portfolio owner and account for RRSP, TFSA and FHSA. When enabled, future net dividend estimates are reinvested at the holding's saved share price and compound later estimated payments. Historical actuals and saved share counts are not rewritten.
