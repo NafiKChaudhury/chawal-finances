@@ -660,6 +660,8 @@
     .side-link.active { background:var(--tint);color:var(--tint-ink);font-weight:700; }
     .sidebar-status { margin-top:auto;padding:15px 11px 4px;display:flex;align-items:center;gap:8px;border-top:1px solid var(--line-soft);color:var(--muted);font-size:11px; }
     .status-dot { width:7px;height:7px;border-radius:50%;background:var(--positive); }
+    .sidebar-status.pending .status-dot,.mobile-save-state.pending::before { background:var(--debt); }
+    .sidebar-status.error .status-dot,.mobile-save-state.error::before { background:var(--negative); }
     main { max-width:none;margin:0 0 0 var(--sidebar-width);padding:32px 40px 56px; }
     .page-intro { margin:0 0 26px;padding:0;display:flex;align-items:flex-end;justify-content:space-between;gap:18px; }
     .page-intro h2 { margin:4px 0 0;color:var(--ink)!important;font-size:30px;font-weight:750;letter-spacing:-.035em; }
@@ -792,6 +794,9 @@
     .history-toolbar { min-height:52px;margin-bottom:16px; }.history-filters { min-height:52px;padding:4px;gap:2px;border-radius:11px;background:var(--seg); }.history-filters button { min-height:44px;padding:0 13px;border:0;border-radius:8px;background:transparent;color:var(--muted); }.history-filters button.active { background:var(--seg-on);color:var(--ink);font-weight:700; }.history-count { color:var(--muted); }
     .history-list { gap:16px;border:0; }.history-day { padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--card); }.history-day-title { margin-bottom:7px;color:var(--muted);font-size:10px;font-weight:750;letter-spacing:.1em;text-transform:uppercase; }.history-entry { min-height:70px;padding:12px 0;border-bottom:1px solid var(--line-soft); }.history-entry:last-child { border-bottom:0; }.history-entry-main { display:grid;grid-template-columns:minmax(180px,1fr) auto 100px;gap:18px;align-items:center; }.history-entry h3 { color:var(--ink);font-size:13px; }.history-meta { color:var(--muted); }.history-values { display:flex;align-items:center;gap:8px;color:var(--ink-2);font-size:12px; }.history-old { color:var(--muted);text-decoration:line-through; }.history-new { color:var(--ink);font-weight:700; }.history-pill { padding:4px 8px;border-radius:99px;background:var(--tint);color:var(--tint-ink);font-size:10px;font-weight:700; }.history-empty { padding:56px 20px;border:1px solid var(--line);border-radius:14px;background:var(--card); }.history-empty strong { display:block;color:var(--ink);font-size:16px; }
     .search-overlay,.quick-add-overlay.open,.mobile-cell-overlay.open,.cloud-modal-overlay.open,.mobile-more-overlay.open { background:var(--overlay)!important;backdrop-filter:none; }.search-dialog,.quick-add-sheet,.mobile-cell-sheet,.cloud-modal,.mobile-more-sheet { border:1px solid var(--line)!important;border-radius:14px!important;background:var(--card)!important;color:var(--ink)!important;box-shadow:none!important; }.search-head,.search-result { border-color:var(--line-soft)!important; }.search-result:hover { background:var(--card-2)!important; }.quick-add-choice,.mobile-more-item { min-height:52px;border:1px solid var(--line)!important;border-radius:10px!important;background:var(--card-2)!important;color:var(--ink-2)!important; }.quick-add-choice { display:flex;align-items:center;gap:12px; }.sheet-cancel { width:100%;border:1px solid var(--control-border);background:var(--card);color:var(--ink-2); }
+    .dividend-analysis-grid.single { grid-template-columns:1fr; }
+    .mobile-save-state { display:flex;align-items:center;gap:8px;margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--card-2);color:var(--muted);font-size:12px;font-weight:650; }
+    .mobile-save-state::before { content:"";width:7px;height:7px;border-radius:50%;background:var(--positive); }
     input,select { min-height:44px;border:1px solid var(--control-border)!important;border-radius:10px!important;background:var(--card)!important;color:var(--ink)!important; }.edit-form { padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--card-2); }
     #save-bar { left:calc(var(--sidebar-width) + 24px);right:24px;bottom:20px;padding:10px 12px 10px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);box-shadow:none; }.save-bar p,#save-bar p { display:flex;align-items:center;gap:8px;color:var(--ink-2); }
     body:has(#save-bar.visible) main { padding-bottom:130px; }
@@ -1042,7 +1047,7 @@
         <div class="debt-mix-block">
           <div class="debt-mix-chart">
             <canvas id="debt-mix-chart"></canvas>
-            <div class="debt-mix-center"><strong id="debt-mix-count">$0</strong><span>tracked total</span></div>
+            <div class="debt-mix-center"><strong id="debt-mix-count">$0</strong><span>total debt</span></div>
           </div>
           <div><div class="debt-mix-label">Debt mix</div><div class="debt-mix-legend" id="debt-mix-legend"></div></div>
         </div>
@@ -1254,12 +1259,12 @@
       <div class="sec-head"><h2>Month by month</h2><div class="chart-legend"><span><i class="legend-dot chart-dot"></i><b id="div-legend-current"></b></span><span><i class="legend-dot neutral-dot"></i><b id="div-legend-previous"></b></span></div></div>
       <div class="chart-wrap-lg"><canvas id="div-chart"></canvas></div>
     </div>
-    <div class="dividend-analysis-grid">
+    <div class="dividend-analysis-grid single">
       <div class="section">
         <div class="sec-head"><h2>Annual totals</h2><span class="muted-note">Dividend growth by year</span></div>
         <div class="chart-wrap-lg"><canvas id="div-annual-chart"></canvas></div>
       </div>
-      <div class="section">
+      <div class="section" hidden aria-hidden="true">
         <div class="sec-head"><h2>Holdings</h2><div class="holding-head-actions"><button class="btn-secondary" onclick="showHoldingForm()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add holding</button><button class="btn-primary" onclick="showHoldingTransaction()"><svg class="ui-icon"><use href="#i-transfer"/></svg>Buy or sell</button></div></div>
         <div class="dividend-owner-tabs" id="dividend-owner-tabs" aria-label="Portfolio owner">
           <button class="active" data-owner="Nafi" onclick="setHoldingOwner('Nafi')">Nafi</button>
@@ -1431,6 +1436,7 @@
       <button class="mobile-more-item" onclick="mobileSwitchTab('history')"><svg class="ui-icon"><use href="#i-history"/></svg><span>History</span></button>
       <button class="mobile-more-item" onclick="mobileSwitchTab('settings')"><svg class="ui-icon"><use href="#i-settings"/></svg><span>Settings</span></button>
     </div>
+    <div id="mobile-save-state" class="mobile-save-state">Saved on this device</div>
   </div>
 </div>
 
@@ -1752,7 +1758,8 @@ async function cloudConnect() {
     ensureDataShape(); ensure2027(); ensurePaySources(); ensureTrackerRows(); ensureTrackerYearMetadata();
     lastHistorySnapshot = historySnapshot();
     ORIG = JSON.parse(JSON.stringify(D));
-    document.getElementById('last-saved').textContent = 'Saved on this device';
+    try { localStorage.setItem('bills_local_data',JSON.stringify(D)); } catch(_) {}
+    updateSaveStatus('Synced','synced');
     renderAll();
   } catch(e) { toast(e.message); }
 }
@@ -1761,6 +1768,10 @@ function cloudDisconnect() {
   localStorage.removeItem(CLOUD_TOKEN_KEY);
   localStorage.removeItem(CLOUD_GIST_KEY);
   document.getElementById('cloud-btn')?.classList.remove('connected');
+  ORIG=JSON.parse(JSON.stringify(D));dirty=false;
+  try { localStorage.setItem('bills_local_data',JSON.stringify(D)); } catch(_) {}
+  document.getElementById('save-bar').classList.remove('visible');
+  updateSaveStatus('Saved on this device','device');
   toast('Disconnected from cloud');
   hideCloudModal();
 }
@@ -1768,9 +1779,11 @@ function cloudDisconnect() {
 // ── Load ─────────────────────────────────────────────────────────────────────
 async function load() {
   const creds = getCloudCreds();
+  let loadedFromCloud = false;
   if (creds) {
     try {
       D = await ghGistLoad(creds.token, creds.gistId);
+      loadedFromCloud = true;
       document.getElementById('cloud-btn')?.classList.add('connected');
     } catch(e) {
       toast('Cloud load failed: ' + e.message);
@@ -1798,7 +1811,7 @@ async function load() {
   ensureTrackerYearMetadata();
   lastHistorySnapshot = historySnapshot();
   ORIG = JSON.parse(JSON.stringify(D));
-  document.getElementById('last-saved').textContent = 'Saved on this device';
+  updateSaveStatus(loadedFromCloud?'Synced':'Saved on this device',loadedFromCloud?'synced':'device');
   renderAll();
   const firstTab = ['annual','tracker','debt','dividends'].includes(D.settings.default_tab) ? D.settings.default_tab : 'annual';
   if (firstTab !== 'annual') switchTab(firstTab);
@@ -2656,10 +2669,10 @@ function collectHistoryChanges(before, after, path=[], out=[]) {
 }
 
 const HISTORY_AREAS = {
-  debt_items:'Debts', payoff_settings:'Debt payoff', payoff_custom_loans:'Debt payoff',
+  debt_items:'Debts', payoff_settings:'Debt payoff', payoff_rates:'Debt payoff', payoff_overrides:'Debt payoff', payoff_custom_loans:'Debt payoff', credit_limits:'Debts',
   monthly_bills:'Bills', income:'Income', pay_sources:'Pay schedules', dividends:'Dividends', dividend_holdings:'Dividend holdings', dividend_transactions:'Dividend transactions', dividend_drip:'Dividend reinvestment',
-  monthly_tracker:'Tracker', tracker_rows:'Tracker', annual_summary:'Overview',
-  investment_goal:'Investment goal', settings:'Settings'
+  monthly_tracker:'Tracker', tracker_rows:'Tracker', tracker_year_meta:'Tracker', annual_summary:'Overview',
+  investment_goal:'Investment goal', investment_goals:'Investment goal', settings:'Settings'
 };
 
 function historySummary(changes) {
@@ -2884,38 +2897,41 @@ function quickAdd(type) {
 }
 
 // ── Save ──────────────────────────────────────────────────────────────────────
-function updateMobileSaveState(text, saving=false) {
-  const state = document.getElementById('mobile-save-state');
-  if (!state) return;
-  state.textContent = text;
-  state.classList.toggle('saving',saving);
+function updateSaveStatus(text,state='device') {
+  const desktop=document.querySelector('.sidebar-status'),mobile=document.getElementById('mobile-save-state'),label=document.getElementById('last-saved');
+  if(label)label.textContent=text;
+  [desktop,mobile].forEach(element=>{if(!element)return;element.classList.remove('pending','error','synced','device','saving');element.classList.add(state);});
+  if(mobile)mobile.textContent=text;
+}
+function updateMobileSaveState(text,saving=false) {
+  updateSaveStatus(text,saving?'pending':text==='Synced'?'synced':text==='Saved on this device'?'device':'error');
 }
 
 function mark() {
   captureHistory();
   dirty=true;
+  D.last_updated=new Date().toISOString();
   try { localStorage.setItem('bills_local_data',JSON.stringify(D)); } catch(_) {}
+  const creds=getCloudCreds();
+  if (!creds) {
+    ORIG=JSON.parse(JSON.stringify(D));
+    dirty=false;
+    document.getElementById('save-bar').classList.remove('visible');
+    updateSaveStatus('Saved on this device','device');
+    return;
+  }
+  updateSaveStatus('Changes waiting to sync','pending');
   if (window.innerWidth >= 900) {
     document.getElementById('save-bar').classList.add('visible');
     return;
   }
   document.getElementById('save-bar').classList.remove('visible');
-  updateMobileSaveState('Saving…',true);
   clearTimeout(autoSaveTimer);
   autoSaveTimer=setTimeout(async()=>{
-    if (getCloudCreds()) {
-      await saveAll(true);
-      return;
-    }
-    D.last_updated=new Date().toISOString();
-    ORIG=JSON.parse(JSON.stringify(D));
-    dirty=false;
-    try { localStorage.setItem('bills_local_data',JSON.stringify(D)); } catch(_) {}
-    document.getElementById('last-saved').textContent='Saved on this device';
-    updateMobileSaveState('Saved on this device');
+    await saveAll(true);
   },700);
 }
-function discard() { D=JSON.parse(JSON.stringify(ORIG)); lastHistorySnapshot=historySnapshot(); dirty=false; document.getElementById('save-bar').classList.remove('visible'); renderAll(); }
+function discard() { D=JSON.parse(JSON.stringify(ORIG)); lastHistorySnapshot=historySnapshot(); dirty=false; try { localStorage.setItem('bills_local_data',JSON.stringify(D)); } catch(_) {} document.getElementById('save-bar').classList.remove('visible'); updateSaveStatus(getCloudCreds()?'Synced':'Saved on this device',getCloudCreds()?'synced':'device'); renderAll(); }
 async function saveAll(quiet=false) {
   const btn = document.getElementById('save-btn');
   btn.textContent='Saving…'; btn.disabled=true;
@@ -2931,12 +2947,11 @@ async function saveAll(quiet=false) {
     ORIG = JSON.parse(JSON.stringify(D)); dirty = false;
     try { localStorage.setItem('bills_local_data',JSON.stringify(D)); } catch(_) {}
     document.getElementById('save-bar').classList.remove('visible');
-    document.getElementById('last-saved').textContent = 'Saved on this device';
-    updateMobileSaveState(creds?'Saved to cloud':'Saved on this device');
+    updateSaveStatus(creds?'Synced':'Saved on this device',creds?'synced':'device');
     // Signal the Dashboard (index.html) to reload bills data if it's open
     try { localStorage.setItem('bills_updated', Date.now()); } catch(_) {}
     if (!quiet) toast('Saved');
-  } catch(e) { updateMobileSaveState('Save needs attention'); if (!quiet) toast(e.message); }
+  } catch(e) { updateSaveStatus('Changes waiting to sync','pending'); if (!quiet) toast(e.message); }
   finally { btn.textContent='Save changes'; btn.disabled=false; }
 }
 function toast(msg) {
@@ -3700,8 +3715,8 @@ function renderMonthlyPicture() {
     {key:'cars',label:'Car loans',color:cssValue('--sun')},
     {key:'investments',label:'Investments',color:cssValue('--violet')}
   ].filter(item=>mix[item.key]>0);
-  const trackedTotal=mixRows.reduce((sum,item)=>sum+mix[item.key],0);
-  document.getElementById('debt-mix-count').textContent=fmt(trackedTotal);
+  const totalDebt=mix.credit+mix.loans+mix.cars;
+  document.getElementById('debt-mix-count').textContent=fmt(totalDebt);
   document.getElementById('debt-mix-legend').innerHTML=mixRows.map(item=>`<div class="debt-mix-row"><i style="background:${item.color}"></i><span>${item.label}</span><strong>${fmt(mix[item.key])}</strong></div>`).join('');
   const canvas=document.getElementById('debt-mix-chart');
   if (canvas && typeof Chart!=='undefined') {
@@ -4125,9 +4140,7 @@ function projectedHoldingDividendSeries(year){
   return totals;
 }
 function dividendProjectionSeries(year){
-  const actual=(D.dividends?.[year]||Array(12).fill(0)).map(value=>Number(value)||0),now=new Date(),currentYear=now.getFullYear(),currentMonth=now.getMonth(),numericYear=Number(year);
-  const estimated=projectedHoldingDividendSeries(year);
-  return actual.map((value,index)=>numericYear<currentYear||(numericYear===currentYear&&index<currentMonth)?value:estimated[index]);
+  return (D.dividends?.[year]||Array(12).fill(0)).map(value=>Number(value)||0);
 }
 function holdingProjectionIssues(){
   const entries=holdingEntries('TOTAL','COMBINED'),missingSchedule=entries.filter(({item})=>!item.nextPaymentDate).length,missingRate=entries.filter(({item})=>(item.currency||activeCurrency())!==activeCurrency()&&!holdingConversionRate(item)).length,missingDripPrice=entries.filter(({account,owner,item})=>accountDripEnabled(owner,account)&&!(Number(item.currentPrice)>0)).length;
@@ -4137,20 +4150,17 @@ function holdingProjectionIssues(){
 function renderDividends() {
   const table=document.getElementById('dividend-table');if(!table||!D)return;
   const now=new Date(),year=String(now.getFullYear()),previous=String(Number(year)-1),currentMonth=now.getMonth();
-  const values=(D.dividends?.[year]||Array(12).fill(0)).map(value=>Number(value)||0),previousValues=(D.dividends?.[previous]||Array(12).fill(0)).map(value=>Number(value)||0),projectedValues=dividendProjectionSeries(year);
+  const values=dividendProjectionSeries(year),previousValues=dividendProjectionSeries(previous);
   const total=values.slice(0,currentMonth).reduce((sum,value)=>sum+value,0),priorYtd=previousValues.slice(0,currentMonth).reduce((sum,value)=>sum+value,0),ytdChange=priorYtd>0?(total-priorYtd)/priorYtd*100:null;
-  const projection=projectedValues.reduce((sum,value)=>sum+value,0),average=projection/12,issues=holdingProjectionIssues();
+  const enteredMonths=values.slice(0,currentMonth).filter(value=>Number(value)>0),average=enteredMonths.length?total/enteredMonths.length:0;
   let recentIndex=-1;values.slice(0,currentMonth).forEach((value,index)=>{if(Number(value)>0)recentIndex=index;});if(recentIndex<0)recentIndex=Math.max(0,currentMonth-1);
   const recent=Number(values[recentIndex])||0,prior=Number(previousValues[recentIndex])||0;
   const change=prior>0?(recent-prior)/prior*100:null;
-  const issueParts=[];if(issues.missingSchedule)issueParts.push(`${issues.missingSchedule} holding${issues.missingSchedule===1?' needs':'s need'} a payment date`);if(issues.missingRate)issueParts.push(`${issues.missingRate} foreign holding${issues.missingRate===1?' needs':'s need'} a CAD rate`);if(issues.missingDripPrice)issueParts.push(`${issues.missingDripPrice} DRIP holding${issues.missingDripPrice===1?' needs':'s need'} a share price`);
-  const issueText=issueParts.length?issueParts.join(' · '):`Actual through ${MONTHS[Math.max(0,currentMonth-1)]}, then holdings estimates${Object.values(D.dividend_drip||{}).some(accounts=>Object.values(accounts||{}).some(Boolean))?' with DRIP compounding':''}`;
-  document.getElementById('dividend-stats').innerHTML=`<article class="dividend-stat"><span>${year} received</span><strong>${fmtF(total)}</strong><small class="${ytdChange!=null&&ytdChange>0?'up':''}">${ytdChange==null?'No prior-year comparison':`${ytdChange>=0?'Up':'Down'} ${Math.abs(ytdChange).toFixed(1)}% on ${previous} through ${MONTHS[Math.max(0,currentMonth-1)]}`}</small></article><article class="dividend-stat"><span>Projected full year</span><strong>${fmtF(projection)}</strong><small>${issueText}</small></article><article class="dividend-stat"><span>${MONTHS[recentIndex]} ${year}</span><strong>${fmtF(recent)}</strong><small class="${change!=null&&change>0?'up':''}">${change==null?'No comparison available':`${change>=0?'Up':'Down'} ${Math.abs(change).toFixed(0)}% on ${MONTHS[recentIndex]} ${previous}`}</small></article>`;
+  document.getElementById('dividend-stats').innerHTML=`<article class="dividend-stat"><span>${year} received</span><strong>${fmtF(total)}</strong><small class="${ytdChange!=null&&ytdChange>0?'up':''}">${ytdChange==null?'No prior-year comparison':`${ytdChange>=0?'Up':'Down'} ${Math.abs(ytdChange).toFixed(1)}% on ${previous} through ${MONTHS[Math.max(0,currentMonth-1)]}`}</small></article><article class="dividend-stat"><span>Monthly average</span><strong>${fmtF(average)}</strong><small>${enteredMonths.length} month${enteredMonths.length===1?'':'s'} with dividends entered</small></article><article class="dividend-stat"><span>${MONTHS[recentIndex]} ${year}</span><strong>${fmtF(recent)}</strong><small class="${change!=null&&change>0?'up':''}">${change==null?'No comparison available':`${change>=0?'Up':'Down'} ${Math.abs(change).toFixed(0)}% on ${MONTHS[recentIndex]} ${previous}`}</small></article>`;
   const years=Object.keys(D.dividends||{}).sort((a,b)=>Number(b)-Number(a));
   let html='<thead><tr><th>Year</th>'+MONTHS.map(month=>`<th>${month}</th>`).join('')+'<th>Total</th></tr></thead><tbody>';
-  years.forEach(yr=>{const actual=D.dividends[yr]||Array(12).fill(0),vals=dividendProjectionSeries(yr),numericYear=Number(yr);html+=`<tr><td>${yr}</td>${vals.map((value,index)=>{const estimated=numericYear>now.getFullYear()||(numericYear===now.getFullYear()&&index>=currentMonth);return estimated?`<td><div class="dividend-cell estimated ${Number(value)===0?'empty':''}" title="Estimated from holdings">${Number(value)?plainNumber(Number(value)):'—'}</div></td>`:`<td id="mc-${yr}-${index}"><div class="dividend-cell ${Number(value)===0?'empty':''}" onclick="editDiv('${yr}',${index})">${Number(value)?plainNumber(Number(value)):'—'}</div><input type="number" step="0.01" value="${Number(actual[index])||0}" onblur="saveDiv('${yr}',${index})" onkeydown="if(event.key==='Enter')saveDiv('${yr}',${index})" hidden/></td>`;}).join('')}<td><strong>${fmtF(vals.reduce((sum,value)=>sum+(Number(value)||0),0))}</strong></td></tr>`;});
+  years.forEach(yr=>{const vals=dividendProjectionSeries(yr);html+=`<tr><td>${yr}</td>${vals.map((value,index)=>`<td id="mc-${yr}-${index}"><div class="dividend-cell ${Number(value)===0?'empty':''}" onclick="editDiv('${yr}',${index})">${Number(value)?plainNumber(Number(value)):'—'}</div><input type="number" step="0.01" value="${Number(value)||0}" onblur="saveDiv('${yr}',${index})" onkeydown="if(event.key==='Enter')saveDiv('${yr}',${index})" hidden/></td>`).join('')}<td><strong>${fmtF(vals.reduce((sum,value)=>sum+(Number(value)||0),0))}</strong></td></tr>`;});
   table.innerHTML=html+'</tbody>';
-  renderDividendHoldings();
 }
 
 function editDiv(year,index){const cell=document.getElementById(`mc-${year}-${index}`);if(!cell)return;cell.querySelector('.dividend-cell').hidden=true;const input=cell.querySelector('input');input.hidden=false;input.focus();input.select();}
@@ -4159,13 +4169,13 @@ function saveDiv(year,index){const cell=document.getElementById(`mc-${year}-${in
 function renderDivChart() {
   const canvas=document.getElementById('div-chart');if(!canvas||!D||typeof Chart==='undefined')return;
   const year=String(new Date().getFullYear()),previous=String(Number(year)-1);
-  document.getElementById('div-legend-current').textContent=`${year} actual + estimate`;document.getElementById('div-legend-previous').textContent=previous;
+  document.getElementById('div-legend-current').textContent=year;document.getElementById('div-legend-previous').textContent=previous;
   if(divChart)divChart.destroy();
-  divChart=new Chart(canvas.getContext('2d'),{type:'bar',data:{labels:MONTHS,datasets:[{label:`${year} actual + estimate`,data:dividendProjectionSeries(year),backgroundColor:cssValue('--chart'),borderWidth:0,borderRadius:{topLeft:4,topRight:4}},{label:previous,data:D.dividends?.[previous]||Array(12).fill(0),backgroundColor:cssValue('--neutral-bar'),borderWidth:0,borderRadius:{topLeft:4,topRight:4}}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>` ${context.dataset.label}: ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted')}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}}});
+  divChart=new Chart(canvas.getContext('2d'),{type:'bar',data:{labels:MONTHS,datasets:[{label:year,data:dividendProjectionSeries(year),backgroundColor:cssValue('--chart'),borderWidth:0,borderRadius:{topLeft:4,topRight:4}},{label:previous,data:D.dividends?.[previous]||Array(12).fill(0),backgroundColor:cssValue('--neutral-bar'),borderWidth:0,borderRadius:{topLeft:4,topRight:4}}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>` ${context.dataset.label}: ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted')}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}}});
   const annualCanvas=document.getElementById('div-annual-chart');if(!annualCanvas)return;
   const years=Object.keys(D.dividends||{}).sort((a,b)=>Number(a)-Number(b));const totals=years.map(value=>dividendProjectionSeries(value).reduce((sum,item)=>sum+(Number(item)||0),0));
   if(annualDivChart)annualDivChart.destroy();
-  annualDivChart=new Chart(annualCanvas.getContext('2d'),{type:'bar',data:{labels:years.map(value=>value===year?`${value} projected`:value),datasets:[{label:'Dividends',data:totals,backgroundColor:cssValue('--chart'),borderWidth:0,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>` ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted')}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}}});
+  annualDivChart=new Chart(annualCanvas.getContext('2d'),{type:'bar',data:{labels:years,datasets:[{label:'Dividends',data:totals,backgroundColor:cssValue('--chart'),borderWidth:0,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>` ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted')}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}}});
 }
 
 function setHoldingAccount(account,button) {
@@ -4315,6 +4325,77 @@ function historyDayLabel(date) {
   const today=new Date();today.setHours(0,0,0,0);const day=new Date(date);day.setHours(0,0,0,0);const diff=Math.round((today-day)/86400000);
   if(diff===0)return'Today';if(diff===1)return'Yesterday';return day.toLocaleDateString('en-CA',{weekday:'long',month:'long',day:'numeric'});
 }
+function historyWords(value) {
+  return String(value||'').replaceAll('_',' ').replace(/\b\w/g,letter=>letter.toUpperCase());
+}
+function historyArrayDelta(change) {
+  if(!Array.isArray(change.before)||!Array.isArray(change.after))return null;
+  const key=item=>item&&typeof item==='object'?(item.id||item.name||item.label||JSON.stringify(item)):JSON.stringify(item);
+  const beforeKeys=new Set(change.before.map(key)),afterKeys=new Set(change.after.map(key));
+  const added=change.after.find(item=>!beforeKeys.has(key(item))),removed=change.before.find(item=>!afterKeys.has(key(item)));
+  if(added)return{type:'Added',item:added};if(removed)return{type:'Removed',item:removed};return null;
+}
+function historyItemName(root,index,change) {
+  const current=Array.isArray(D?.[root])?D[root][Number(index)]:null;
+  if(current?.name)return current.name;if(current?.company)return current.company;if(current?.label)return current.label;
+  const candidate=change?.after&&typeof change.after==='object'?change.after:change?.before&&typeof change.before==='object'?change.before:null;
+  return candidate?.name||candidate?.company||candidate?.label||'';
+}
+function historyDebtName(id) {
+  return (D.debt_items||[]).find(item=>item.id===id)?.name||historyWords(id);
+}
+function historyTrackerLine(year,section,id) {
+  const row=D.tracker_year_meta?.[year]?.sections?.[section]?.find(item=>item.id===id);
+  return row?.label||(D.debt_items||[]).find(item=>item.id===id)?.name||historyWords(id);
+}
+function historyFieldName(field) {
+  const labels={amount:'balance',apr:'APR',payment:'monthly payment',payment_monthly:'monthly payment',credit_limit:'credit limit',limit:'credit limit',name:'name',company:'company name',category:'category',type:'type',due_day:'due date',frequency:'frequency',next_date:'next payday',schedule:'pay schedule',currency:'currency',default_tab:'start screen',history_retention:'history retention'};
+  return labels[field]||String(field||'details').replaceAll('_',' ');
+}
+function historyChangeValue(change,side) {
+  const exists=side==='before'?change.beforeExists:change.afterExists,value=side==='before'?change.before:change.after,root=change.path?.[0],field=change.path?.at(-1);
+  if(!exists)return'Not entered';if(value==null||value==='')return'Empty';if(typeof value==='boolean')return value?'On':'Off';
+  if(typeof value==='number'){
+    if(field==='apr'||field==='withholdingOverride'||root==='payoff_rates')return`${plainNumber(value)}%`;
+    const moneyRoot=['monthly_tracker','dividends','debt_items','monthly_bills','income','pay_sources','annual_summary','credit_limits','investment_goals','investment_goal','payoff_settings'].includes(root);
+    return moneyRoot&&field!=='due_day'&&field!=='frequency'&&field!=='history_retention'?fmtF(value):plainNumber(value);
+  }
+  if(Array.isArray(value))return`${value.length} line${value.length===1?'':'s'}`;
+  if(typeof value==='object')return value.name||value.label||value.company||'Updated details';
+  return String(value);
+}
+function historyEntryPresentation(entry) {
+  const changes=entry.changes||[];
+  if(!changes.length)return{title:entry.summary||'Finances updated',area:'Finances',badge:'Changed'};
+  const arrayChange=changes.find(change=>historyArrayDelta(change));
+  const change=arrayChange||changes.find(item=>!['id','category'].includes(item.path?.at(-1)))||changes[0];
+  const path=change.path||[],root=path[0],area=HISTORY_AREAS[root]||'Finances',delta=historyArrayDelta(change);
+  if(delta){
+    const name=delta.item?.name||delta.item?.label||delta.item?.company||area.replace(/s$/,'');
+    return{title:name,area,badge:delta.type};
+  }
+  if(root==='tracker_year_meta'){
+    const sectionIndex=path.indexOf('sections'),section=sectionIndex>=0?path[sectionIndex+1]:'';
+    return{title:`${path[1]||''} ${historyWords(section).toLowerCase()} lines reordered`.trim(),area:'Tracker',badge:'Reordered'};
+  }
+  if(root==='monthly_tracker'){
+    const [,year,section,id,month]=path,label=historyTrackerLine(year,section,id),nouns={debt_payments:'payment',debt_balances:'balance',investments:'investment',income:'income and cashflow'};
+    const title=month!==undefined&&/^\d+$/.test(month)?`${label}, ${MONTHS[Number(month)]} ${nouns[section]||'amount'}`:`${label}, ${year} ${nouns[section]||'tracker line'}`;
+    return{title,area:'Tracker',change,badge:changes.length>1?`${changes.length} changes`:''};
+  }
+  if(root==='dividends')return{title:`${MONTHS[Number(path[2])]||''} ${path[1]||''} dividend`.trim(),area:'Dividends',change};
+  if(root==='debt_items')return{title:`${historyItemName(root,path[1],change)||'Debt account'} ${historyFieldName(path.at(-1))}`,area:'Debts',change,badge:changes.length>1?`${changes.length} changes`:''};
+  if(root==='payoff_rates')return{title:`${historyDebtName(path[1])} APR`,area:'Debt payoff',change};
+  if(root==='payoff_overrides')return{title:`${historyDebtName(path[1])} monthly payment`,area:'Debt payoff',change};
+  if(root==='payoff_settings'||root==='credit_limits')return{title:`${historyDebtName(path[1])} ${root==='credit_limits'?'credit limit':historyFieldName(path.at(-1))}`,area:root==='credit_limits'?'Debts':'Debt payoff',change,badge:changes.length>1?`${changes.length} changes`:''};
+  if(['monthly_bills','income','pay_sources'].includes(root)){
+    const fallback={monthly_bills:'Bill',income:'Income source',pay_sources:'Pay schedule'}[root],name=historyItemName(root,path[1],change)||fallback;
+    return{title:`${name} ${historyFieldName(path.at(-1))}`,area,change,badge:changes.length>1?`${changes.length} changes`:''};
+  }
+  if(root==='settings')return{title:historyFieldName(path[1]),area:'Settings',change};
+  if(root==='investment_goals')return{title:`${path[1]} investment goal`,area:'Tracker',change};
+  return{title:`${area} ${historyFieldName(path.at(-1))}`.trim(),area,change,badge:changes.length>1?`${changes.length} changes`:''};
+}
 function renderHistory() {
   const list=document.getElementById('history-list');if(!list||!D)return;pruneHistory();
   const entries=(D.change_history||[]).filter(entry=>historyFilter==='all'||entry.kind===historyFilter);
@@ -4322,10 +4403,9 @@ function renderHistory() {
   if(!entries.length){list.innerHTML='<div class="history-empty"><strong>No changes yet</strong><div style="margin-top:7px">Edits you make will appear here and can be restored.</div></div>';return;}
   const groups=new Map();entries.forEach(entry=>{const key=new Date(entry.timestamp).toDateString();if(!groups.has(key))groups.set(key,[]);groups.get(key).push(entry);});
   list.innerHTML=[...groups.values()].map(group=>`<section class="history-day"><div class="history-day-title">${historyDayLabel(group[0].timestamp)}</div>${group.map(entry=>{
-    const change=(entry.changes||[])[0]||{};const structural=entry.kind==='structure';const added=structural&&!change.beforeExists;const removed=structural&&!change.afterExists;
-    const title=change.path?.length?readablePath(change.path):entry.summary;const area=HISTORY_AREAS[change.path?.[0]]||'Finances';const time=new Date(entry.timestamp).toLocaleTimeString('en-CA',{hour:'numeric',minute:'2-digit'});
-    const values=structural?`<span class="history-pill">${added?'Added':removed?'Removed':'Changed'}</span>`:`<span class="history-old">${escapeHtml(historyValue(change.before,change.beforeExists))}</span><span>to</span><span class="history-new">${escapeHtml(historyValue(change.after,change.afterExists))}</span>`;
-    return `<article class="history-entry"><div class="history-entry-main"><div><h3>${escapeHtml(title)}</h3><div class="history-meta">${area}, ${time}</div></div><div class="history-values">${values}</div><div class="history-actions"><button onclick="restoreHistory('${entry.id}')">${uiIcon('undo')}${added?'Undo':'Restore'}</button></div></div></article>`;
+    const presentation=historyEntryPresentation(entry),change=presentation.change,time=new Date(entry.timestamp).toLocaleTimeString('en-CA',{hour:'numeric',minute:'2-digit'});
+    const values=presentation.badge?`<span class="history-pill">${escapeHtml(presentation.badge)}</span>`:change?`<span class="history-old">${escapeHtml(historyChangeValue(change,'before'))}</span><span>to</span><span class="history-new">${escapeHtml(historyChangeValue(change,'after'))}</span>`:'<span class="history-pill">Changed</span>';
+    return `<article class="history-entry"><div class="history-entry-main"><div><h3>${escapeHtml(presentation.title)}</h3><div class="history-meta">${escapeHtml(presentation.area)}, ${time}</div></div><div class="history-values">${values}</div><div class="history-actions"><button onclick="restoreHistory('${entry.id}')">${uiIcon('undo')}${presentation.badge==='Added'?'Undo':'Restore'}</button></div></div></article>`;
   }).join('')}</section>`).join('');
 }
 

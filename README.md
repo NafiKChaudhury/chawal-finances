@@ -2,21 +2,12 @@
 
 Personal finance, debt, investment and dividend dashboard deployed on Netlify.
 
-## Market data
+## Dividend tracking
 
-The Holdings form can look up any CAD or USD stock or ETF available through Yahoo Finance. Lookups happen on demand through `netlify/functions/market-data.js`; symbols do not need to be added to `data/tickers.json` first.
+Dividends are entered manually by month on the Dividends page. The dashboard calculates year-to-date totals, monthly averages, year-over-year comparisons and annual totals from those entries.
 
-- U.S. examples: `AAPL`, `MSFT`, `APLY`, `SCHD`
-- Toronto Stock Exchange examples: `RY.TO`, `VDY.TO`, `VFV.TO`
-- TSX Venture examples use `.V`
-- Cboe Canada/NEO examples generally use `.NE`
+Previously saved holdings data remains in local or cloud storage for compatibility, but it is no longer displayed or included in dividend calculations.
 
-Yahoo Finance prices can be delayed. Dividend payment dates returned by the app are estimates based on historical distribution timing and must be reviewed before saving.
+## Saving and sync
 
-`data/tickers.json` controls only the small daily fallback cache refreshed by GitHub Actions. Financial Modeling Prep remains an optional final fallback when `FMP_API_KEY` is configured in Netlify.
-
-## Dividend projections
-
-Past months remain saved actuals. The current and future months are estimated from shares, dividend per share, frequency, withholding tax, currency conversion and dated buy/sell transactions. Weekly, biweekly, monthly, every-two-months, quarterly, twice-yearly and yearly schedules are supported.
-
-DRIP is configured per portfolio owner and account for RRSP, TFSA and FHSA. When enabled, future net dividend estimates are reinvested at the holding's saved share price and compound later estimated payments. Historical actuals and saved share counts are not rewritten.
+The navigation displays one clear state: `Saved on this device`, `Synced`, or `Changes waiting to sync`. Device-only changes save automatically. When GitHub Gist sync is connected, phone changes sync automatically and desktop changes can be reviewed before syncing.
