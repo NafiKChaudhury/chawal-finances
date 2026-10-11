@@ -11,7 +11,8 @@ DATA_DIR = ROOT / "data"
 CACHE_FILE = DATA_DIR / "market-data.json"
 TICKERS_FILE = DATA_DIR / "tickers.json"
 
-# Initial test tickers. Add others through data/tickers.json.
+# Small daily fallback cache. Normal lookups query Yahoo Finance on demand,
+# so a symbol does not need to be listed here before it can be used.
 DEFAULT_TICKERS = ["AAPL", "RY.TO", "HYLD.TO"]
 
 

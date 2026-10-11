@@ -1270,12 +1270,12 @@
           <div class="form-row">
             <div class="fg"><label>Portfolio owner</label><select id="holding-owner"><option>Nafi</option><option>Fabliha</option></select></div>
             <div class="fg"><label>Account</label><select id="holding-account" onchange="updateHoldingEstimate()"><option>RRSP</option><option>TFSA</option><option>FHSA</option></select></div>
-            <div class="fg"><label>Holding name or ticker</label><input id="holding-name" placeholder="e.g. VDY or VDY.TO" autocomplete="off"/><button type="button" class="btn-sm btn-edit" id="holding-lookup-btn" onclick="lookupHoldingMarketData()" style="margin-top:5px">↻ Fetch market data</button></div>
+            <div class="fg"><label>Holding name or ticker</label><input id="holding-name" placeholder="e.g. AAPL or VDY.TO" autocomplete="off"/><button type="button" class="btn-sm btn-edit" id="holding-lookup-btn" onclick="lookupHoldingMarketData()" style="margin-top:5px"><svg class="ui-icon"><use href="#i-search"/></svg>Fetch market data</button></div>
             <div class="fg"><label>Shares on record date</label><input id="holding-shares" type="number" min="0" step="0.0001" placeholder="0" oninput="updateHoldingEstimate()"/></div>
           </div>
           <div class="form-row">
             <div class="fg"><label>Gross dividend rate per share</label><input id="holding-rate" type="number" min="0" step="0.0001" placeholder="0.00" oninput="updateHoldingEstimate()"/></div>
-            <div class="fg"><label>Payment frequency</label><select id="holding-frequency" onchange="updateHoldingEstimate()"><option value="12">Monthly</option><option value="4" selected>Quarterly</option><option value="2">Twice yearly</option><option value="1">Yearly</option></select></div>
+            <div class="fg"><label>Payment frequency</label><select id="holding-frequency" onchange="updateHoldingEstimate()"><option value="52">Weekly</option><option value="26">Every 2 weeks</option><option value="12">Monthly</option><option value="6">Every 2 months</option><option value="4" selected>Quarterly</option><option value="2">Twice yearly</option><option value="1">Yearly</option></select></div>
             <div class="fg"><label>Total dividends received</label><input id="holding-dividends" type="number" min="0" step="0.01" placeholder="0.00"/></div>
           </div>
           <div class="form-row">
@@ -1288,7 +1288,7 @@
             <div class="fg"><label>Next payment date</label><input id="holding-next-payment" type="date"/></div>
             <div class="fg"><label>CAD value per 1 unit</label><input id="holding-fx-rate" type="number" min="0" step="0.0001" placeholder="1.00"/></div>
           </div>
-          <div id="holding-market-status" class="holding-form-note" role="status" aria-live="polite">Market lookup requires deployment on Netlify and an FMP_API_KEY environment variable. Your manual entries always remain editable.</div>
+          <div id="holding-market-status" class="holding-form-note" role="status" aria-live="polite">Enter any Yahoo Finance U.S. ticker, or a Canadian ticker with its Yahoo suffix such as .TO, .V or .NE. Market values may be delayed and remain editable before saving.</div>
           <div class="form-row"><div class="fg"><label>Announced ex-dividend date (reference)</label><input id="holding-ex-date" type="date"/></div><div class="fg"><label>Market data last checked</label><input id="holding-quote-updated" readonly placeholder="Not fetched"/></div></div>
           <div class="holding-estimate-preview" aria-live="polite"><div><span>Total stock value</span><strong id="holding-estimate-value">$0.00 USD</strong></div><div><span>Gross dividend</span><strong id="holding-estimate-gross">$0.00 USD</strong></div><div><span id="holding-tax-label">Withholding tax</span><strong id="holding-estimate-tax">$0.00 USD</strong></div><div><span>Net dividend</span><strong id="holding-estimate-payment">$0.00 USD</strong></div><div><span>Estimated annual net</span><strong id="holding-estimate-annual">$0.00 USD</strong></div></div>
           <p class="holding-form-note">The next payment date places estimates into future months. For USD holdings, enter the CAD value of 1 USD so household projections use one currency. Automatic U.S. withholding defaults to 0% in an RRSP and 15% in TFSA and FHSA.</p>
@@ -4069,14 +4069,16 @@ function holdingConversionRate(item){
   const currency=item.currency||activeCurrency();if(currency===activeCurrency())return 1;
   const rate=Number(item.fxRate);return rate>0?rate:0;
 }
-function addHoldingPaymentMonths(date,months){
-  const next=new Date(date);const day=Math.min(next.getDate(),28);next.setDate(1);next.setMonth(next.getMonth()+months);next.setDate(day);return next;
+function advanceHoldingPayment(date,frequency){
+  const next=new Date(date);
+  if(frequency>12){next.setDate(next.getDate()+Math.max(1,Math.round(365/frequency)));return next;}
+  const months=Math.max(1,Math.round(12/frequency)),day=Math.min(next.getDate(),28);next.setDate(1);next.setMonth(next.getMonth()+months);next.setDate(day);return next;
 }
 function holdingPaymentDatesForYear(item,year){
   if(!item.nextPaymentDate)return[];let date=new Date(`${item.nextPaymentDate}T12:00:00`);if(Number.isNaN(date.getTime()))return[];
-  const frequency=Number(item.frequency)||4,interval=Math.max(1,Math.round(12/frequency)),dates=[];let guard=0;
-  while(date.getFullYear()<year&&guard++<120)date=addHoldingPaymentMonths(date,interval);
-  while(date.getFullYear()===year&&guard++<140){dates.push(new Date(date));date=addHoldingPaymentMonths(date,interval);}
+  const frequency=Number(item.frequency)||4,dates=[];let guard=0;
+  while(date.getFullYear()<year&&guard++<1000)date=advanceHoldingPayment(date,frequency);
+  while(date.getFullYear()===year&&guard++<1200){dates.push(new Date(date));date=advanceHoldingPayment(date,frequency);}
   return dates;
 }
 function holdingSharesAtDate(item,targetDate){
@@ -4089,9 +4091,9 @@ function holdingSharesAtDate(item,targetDate){
 }
 function estimatedHoldingDividendForMonth(year,index){
   return holdingEntries('TOTAL','COMBINED').reduce((sum,{account,item})=>{
-    const payment=holdingPaymentDatesForYear(item,Number(year)).find(date=>date.getMonth()===index);if(!payment)return sum;
+    const payments=holdingPaymentDatesForYear(item,Number(year)).filter(date=>date.getMonth()===index);if(!payments.length)return sum;
     const conversion=holdingConversionRate(item);if(!conversion)return sum;
-    const estimate=holdingEstimate({...item,shares:holdingSharesAtDate(item,payment)},account);return sum+estimate.net*conversion;
+    return sum+payments.reduce((paymentTotal,payment)=>{const estimate=holdingEstimate({...item,shares:holdingSharesAtDate(item,payment)},account);return paymentTotal+estimate.net*conversion;},0);
   },0);
 }
 function dividendProjectionSeries(year){
@@ -4146,7 +4148,7 @@ function setHoldingOwner(owner){
 }
 const HOLDING_ACCOUNTS=['RRSP','TFSA','FHSA'];
 const HOLDING_OWNERS=['Nafi','Fabliha'];
-function holdingFrequencyLabel(frequency){return ({12:'monthly',4:'quarterly',2:'twice yearly',1:'yearly'})[Number(frequency)]||'quarterly';}
+function holdingFrequencyLabel(frequency){return ({52:'weekly',26:'every 2 weeks',12:'monthly',6:'every 2 months',4:'quarterly',2:'twice yearly',1:'yearly'})[Number(frequency)]||`${Number(frequency)||4} payments yearly`;}
 function holdingRatePerPayment(item){
   if(Number.isFinite(Number(item.dividendRatePerPayment)))return Number(item.dividendRatePerPayment);
   return (Number(item.annualDividendPerShare)||0)/(Number(item.frequency)||4);
@@ -4407,7 +4409,7 @@ async function lookupHoldingMarketData(){
     function setNumber(id,value,label){if(Number.isFinite(Number(value))&&Number(value)>0){document.getElementById(id).value=String(value);changes.push(label);}}
     if(data.quote?.price!=null)setNumber('holding-price',data.quote.price,'share price');
     if(data.dividend?.amount!=null)setNumber('holding-rate',data.dividend.amount,'dividend per share');
-    if(data.dividend?.frequency&&[1,2,4,12].includes(data.dividend.frequency)){document.getElementById('holding-frequency').value=String(data.dividend.frequency);changes.push('payment frequency');}
+    if(data.dividend?.frequency&&[1,2,4,6,12,26,52].includes(data.dividend.frequency)){document.getElementById('holding-frequency').value=String(data.dividend.frequency);changes.push('payment frequency');}
     if(data.dividend?.paymentDate && data.dividend.paymentDate>=new Date().toISOString().slice(0,10)){document.getElementById('holding-next-payment').value=data.dividend.paymentDate;changes.push('payment date');}
     if(data.dividend?.exDate){document.getElementById('holding-ex-date').value=data.dividend.exDate;changes.push('ex-dividend date');}
     if(['CAD','USD'].includes(data.quote?.currency)){document.getElementById('holding-currency').value=data.quote.currency;document.getElementById('holding-source').value=data.quote.currency==='CAD'?'CA':'US';changes.push('currency');}
