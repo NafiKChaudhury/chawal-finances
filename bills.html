@@ -961,6 +961,7 @@
     #page-description { display:block;margin:4px 0 0;color:var(--muted);font-size:12px; }
     .page-actions { align-items:center; }
     .top-search { width:300px;height:44px;padding:0 12px;display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:10px;background:var(--card-2);color:var(--muted);font:inherit;font-size:12px;text-align:left;cursor:pointer; }
+    #overview-actions[hidden],#debt-actions[hidden] { display:none!important; }
     .top-search span { flex:1; }.top-search kbd { padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:var(--card);color:var(--faint);font:600 10px Manrope,sans-serif; }
     .btn-primary,.btn-secondary,.btn-add,.btn-sm { border-radius:10px; }
     .btn-primary { box-shadow:0 8px 20px color-mix(in srgb,var(--accent) 18%,transparent); }
@@ -1017,6 +1018,46 @@
       .workspace-nav button { padding:0 10px;font-size:11px; }.sec-actions { display:grid;grid-template-columns:1fr 1fr; }
     }
 
+    /* Overview and bills dashboard */
+    .chart-value { color:var(--positive);font-size:13px;font-weight:750;font-variant-numeric:tabular-nums; }
+    .overview-allocation-card { min-width:0; }.allocation-layout { min-height:230px;display:grid;grid-template-columns:180px minmax(0,1fr);gap:20px;align-items:center; }.allocation-chart { position:relative;width:180px;height:180px; }.allocation-chart canvas { width:100%!important;height:100%!important; }.allocation-center { position:absolute;inset:0;display:grid;place-content:center;text-align:center;pointer-events:none; }.allocation-center strong { color:var(--ink);font-size:19px;font-weight:800; }.allocation-center span { color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em; }.allocation-legend { display:grid;gap:11px; }.allocation-row { display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:9px;align-items:center;color:var(--muted);font-size:12px; }.allocation-row i { width:9px;height:9px;border-radius:3px; }.allocation-row strong { color:var(--ink);font-variant-numeric:tabular-nums; }
+    .overview-widget-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px; }.overview-widget-grid .section { min-width:0;margin:0; }.overview-widget-card { min-height:290px; }.overview-debt-outlook { display:grid!important;grid-template-columns:1fr!important;align-content:start; }.overview-debt-outlook .outlook-copy { grid-column:auto; }.overview-debt-outlook .outlook-stat { min-height:74px; }
+    .text-button { min-height:36px;padding:0 8px;border:0;background:transparent;color:var(--tint-ink);font:700 12px Manrope,sans-serif;cursor:pointer; }
+    .overview-list { display:grid; }.overview-list-row { min-height:54px;padding:9px 0;display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:10px;align-items:center;border-bottom:1px solid var(--line-soft); }.overview-list-row:last-child { border-bottom:0; }.overview-list-row .bill-dot { width:8px;height:8px;border-radius:50%;background:var(--bill-color); }.overview-list-row strong { display:block;color:var(--ink);font-size:12px;font-weight:700; }.overview-list-row small { display:block;margin-top:2px;color:var(--muted);font-size:11px; }.overview-list-row>span:last-child { color:var(--ink);font-size:12px;font-weight:750;font-variant-numeric:tabular-nums; }.overview-empty { min-height:160px;display:grid;place-content:center;text-align:center;color:var(--muted);font-size:12px; }.overview-empty strong { display:block;margin-bottom:5px;color:var(--ink);font-size:14px; }
+    .dividend-overview-total { margin:6px 0 18px;color:var(--ink);font-size:34px;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums; }.dividend-overview-meta { display:grid;grid-template-columns:1fr 1fr;gap:10px; }.dividend-overview-meta div { padding:13px;border-radius:11px;background:var(--card-2); }.dividend-overview-meta span { display:block;color:var(--muted);font-size:10px; }.dividend-overview-meta strong { display:block;margin-top:5px;color:var(--ink);font-size:14px; }
+    .recent-transaction { min-height:54px;padding:9px 0;display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:10px;align-items:center;border-bottom:1px solid var(--line-soft); }.recent-transaction:last-child { border-bottom:0; }.recent-transaction-icon { width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:var(--tint);color:var(--tint-ink); }.recent-transaction strong { display:block;color:var(--ink);font-size:12px; }.recent-transaction small { display:block;margin-top:2px;color:var(--muted);font-size:10px; }.recent-transaction-value { color:var(--ink);font-size:12px;font-weight:750;font-variant-numeric:tabular-nums; }
+    .bills-toolbar { margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:14px; }.bill-search { width:min(340px,100%);height:44px;padding:0 12px;display:flex;align-items:center;gap:8px;border:1px solid var(--control-border);border-radius:10px;background:var(--card-2); }.bill-search input { width:100%;min-height:40px;padding:0!important;border:0!important;background:transparent!important;outline:0; }.bill-filters { padding:4px;display:flex;gap:3px;border-radius:10px;background:var(--seg);overflow:auto;scrollbar-width:none; }.bill-filters::-webkit-scrollbar { display:none; }.bill-filters button { min-height:36px;padding:0 14px;border:0;border-radius:8px;background:transparent;color:var(--muted);font:650 11px Manrope,sans-serif;white-space:nowrap;cursor:pointer; }.bill-filters button.active { background:var(--seg-on);color:var(--ink); }
+    .bills-table-wrap { overflow:auto;scrollbar-width:none; }.bills-table-wrap::-webkit-scrollbar { display:none; }.bills-table { width:100%;min-width:760px;border-collapse:collapse; }.bills-table th { padding:10px 12px;border-bottom:1px solid var(--line);color:var(--muted);font-size:10px;font-weight:700;text-align:left;text-transform:uppercase;letter-spacing:.07em; }.bills-table th:nth-child(3),.bills-table td:nth-child(3) { text-align:right; }.bills-table td { height:58px;padding:8px 12px;border-bottom:1px solid var(--line-soft);color:var(--ink-2);font-size:12px; }.bills-table tr:last-child td { border-bottom:0; }.bill-name-cell { display:flex;align-items:center;gap:10px; }.bill-name-cell .bill-dot { width:9px;height:9px;flex:0 0 auto;border-radius:50%;background:var(--bill-color); }.bill-name-cell strong { display:block;color:var(--ink);font-size:12px; }.bill-name-cell small { display:block;color:var(--muted);font-size:10px; }.bill-amount { color:var(--ink)!important;font-weight:750;font-variant-numeric:tabular-nums; }.bill-status { min-height:26px;padding:0 9px;display:inline-flex;align-items:center;border-radius:99px;background:var(--card-2);color:var(--muted);font-size:10px;font-weight:700; }.bill-status.paid { background:color-mix(in srgb,var(--positive) 13%,var(--card));color:var(--positive); }.bill-status.overdue { background:color-mix(in srgb,var(--danger) 13%,var(--card));color:var(--danger); }.bill-status.upcoming { background:var(--tint);color:var(--tint-ink); }.bill-row-actions { display:flex;justify-content:flex-end;gap:6px; }.bill-paid-button { min-height:36px;padding:0 10px;border:1px solid var(--control-border);border-radius:8px;background:var(--card);color:var(--ink-2);font:650 10px Manrope,sans-serif;cursor:pointer; }.bill-paid-button.is-paid { border-color:color-mix(in srgb,var(--positive) 45%,var(--line));color:var(--positive); }.bill-editors .edit-form { margin-top:12px; }
+    .bill-calendar-layout { display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:18px; }.calendar-stepper { display:flex;gap:6px; }.calendar-stepper button { width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--control-border);border-radius:9px;background:var(--card);color:var(--ink-2);cursor:pointer; }.bill-calendar { display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px; }.bill-calendar-weekday { padding:4px;color:var(--muted);font-size:10px;font-weight:700;text-align:center;text-transform:uppercase; }.bill-calendar-day { min-height:72px;padding:8px;display:flex;flex-direction:column;gap:7px;border:1px solid var(--line-soft);border-radius:10px;background:var(--card-2);color:var(--ink-2);font:650 11px Manrope,sans-serif;text-align:left;cursor:pointer; }.bill-calendar-day.empty { visibility:hidden; }.bill-calendar-day.today { border-color:var(--accent); }.bill-calendar-day.selected { background:var(--tint);border-color:var(--accent);color:var(--tint-ink); }.calendar-dots { display:flex;flex-wrap:wrap;gap:4px; }.calendar-dots i { width:6px;height:6px;border-radius:50%;background:var(--bill-color); }.bill-calendar-legend { margin-top:12px;display:flex;flex-wrap:wrap;gap:8px 14px; }.bill-calendar-legend span { display:flex;align-items:center;gap:6px;color:var(--muted);font-size:10px; }.bill-calendar-legend i { width:7px;height:7px;border-radius:50%;background:var(--bill-color); }.calendar-day-panel { min-height:270px;padding:16px;border:1px solid var(--line-soft);border-radius:12px;background:var(--card-2); }.calendar-day-panel h3 { margin-bottom:12px;color:var(--ink);font-size:14px; }.calendar-bill { padding:11px 0;display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:9px;align-items:center;border-bottom:1px solid var(--line-soft); }.calendar-bill:last-child { border-bottom:0; }.calendar-bill i { width:8px;height:8px;border-radius:50%;background:var(--bill-color); }.calendar-bill strong { display:block;color:var(--ink);font-size:12px; }.calendar-bill small { color:var(--muted);font-size:10px; }.calendar-bill>span:last-child { color:var(--ink);font-size:11px;font-weight:750; }
+    .bill-color-credit { --bill-color:var(--debt-credit); }.bill-color-loan { --bill-color:var(--debt-loans); }.bill-color-car { --bill-color:var(--sun); }.bill-color-housing { --bill-color:var(--violet); }.bill-color-utility { --bill-color:var(--income); }.bill-color-other { --bill-color:var(--neutral-bar); }
+
+    @media (max-width:899px) {
+      .overview-widget-grid { grid-template-columns:1fr;gap:12px; }.overview-widget-card { min-height:0; }.allocation-layout { grid-template-columns:140px minmax(0,1fr); }.allocation-chart { width:140px;height:140px; }
+      .bills-toolbar { align-items:stretch;flex-direction:column; }.bill-search { width:100%; }.bill-filters { width:100%; }.bill-filters button { flex:1; }.bill-calendar-layout { grid-template-columns:1fr; }.calendar-day-panel { min-height:180px; }.bill-calendar-day { min-height:58px;padding:6px; }.bill-calendar-weekday { font-size:9px; }
+    }
+    @media (max-width:480px) {
+      .allocation-layout { grid-template-columns:1fr;justify-items:center; }.allocation-legend { width:100%; }.overview-widget-card { padding:15px!important; }.dividend-overview-total { font-size:29px; }.bills-table-card .sec-head { flex-direction:column; }.bills-table-card .sec-actions { width:100%; }.bill-calendar { gap:3px; }.bill-calendar-day { min-height:52px;border-radius:7px; }.calendar-dots i { width:5px;height:5px; }
+    }
+
+    /* Income, dividends, reports and settings */
+    .dashboard-two-col { display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:18px;margin-bottom:18px; }.dashboard-two-col .section { min-width:0;margin:0; }
+    .dividend-stats { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .allocation-chart-layout { min-height:270px;display:grid;grid-template-columns:170px minmax(0,1fr);gap:22px;align-items:center; }.allocation-chart-wrap { position:relative;width:170px;height:170px; }.allocation-chart-wrap canvas { width:100%!important;height:100%!important; }.allocation-chart-wrap>strong { position:absolute;inset:0;display:grid;place-content:center;color:var(--ink);font-size:18px;font-weight:800;text-align:center;pointer-events:none; }
+    .data-search { width:min(360px,100%);height:44px;margin:4px 0 14px;padding:0 12px;display:flex;align-items:center;gap:8px;border:1px solid var(--control-border);border-radius:10px;background:var(--card-2); }.data-search input { width:100%;min-height:40px;padding:0!important;border:0!important;background:transparent!important;outline:0; }
+    .data-table { width:100%;min-width:780px;border-collapse:collapse;font-size:12px; }.data-table th { padding:11px 12px;border-bottom:1px solid var(--line);color:var(--muted);font-size:10px;font-weight:750;letter-spacing:.07em;text-align:left;text-transform:uppercase; }.data-table td { height:56px;padding:9px 12px;border-bottom:1px solid var(--line-soft);color:var(--ink-2);vertical-align:middle; }.data-table tbody tr:last-child td { border-bottom:0; }.data-table .number { color:var(--ink);font-weight:750;text-align:right;font-variant-numeric:tabular-nums; }.data-table th.number { color:var(--muted); }.data-table .primary-cell { color:var(--ink);font-weight:700; }.data-table .secondary-line { display:block;margin-top:2px;color:var(--muted);font-size:11px;font-weight:500; }.table-actions { display:flex;justify-content:flex-end;gap:6px; }.table-actions button { min-width:40px;min-height:40px;padding:0 10px;border:1px solid var(--control-border);border-radius:9px;background:var(--card);color:var(--ink-2);font:650 11px Manrope,sans-serif;cursor:pointer; }.table-actions button.danger { color:var(--danger); }
+    .compact-record-list { display:grid;gap:8px; }.compact-record { min-height:64px;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1.2fr) repeat(3,minmax(90px,.55fr)) auto;gap:14px;align-items:center;border:1px solid var(--line-soft);border-radius:11px;background:var(--card-2); }.compact-record strong { color:var(--ink);font-size:13px; }.compact-record small { display:block;margin-top:3px;color:var(--muted);font-size:11px; }.compact-record .record-number { color:var(--ink);font-weight:700;text-align:right;font-variant-numeric:tabular-nums; }.form-status { min-height:18px;margin-top:10px;color:var(--muted);font-size:11px; }.form-status.error { color:var(--danger); }.holdings-manager { scroll-margin-top:18px; }
+    .projection-controls { margin-bottom:16px;padding:12px;display:flex;align-items:end;justify-content:space-between;gap:16px;border-radius:11px;background:var(--card-2); }.extra-payment-presets { padding:4px;display:flex;gap:3px;border-radius:10px;background:var(--seg);overflow:auto; }.extra-payment-presets button { min-height:38px;padding:0 13px;border:0;border-radius:8px;background:transparent;color:var(--muted);font:650 11px Manrope,sans-serif;white-space:nowrap;cursor:pointer; }.extra-payment-presets button.active { background:var(--seg-on);color:var(--ink); }.projection-controls label { color:var(--muted);font-size:11px;font-weight:650; }.projection-controls input { width:150px;margin-top:5px;display:block; }.projection-summary-grid { margin-bottom:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px; }.projection-summary-item { padding:14px;border-radius:11px;background:var(--card-2); }.projection-summary-item span { display:block;color:var(--muted);font-size:10px; }.projection-summary-item strong { display:block;margin-top:5px;color:var(--ink);font-size:18px;font-variant-numeric:tabular-nums; }.projection-warning { margin:0 0 14px;padding:12px;border:1px solid color-mix(in srgb,var(--sun) 45%,var(--line));border-radius:10px;background:color-mix(in srgb,var(--sun) 9%,var(--card));color:var(--ink-2);font-size:12px; }.projection-detail-grid { margin-top:18px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:18px; }.projection-detail-grid h3 { margin-bottom:10px;color:var(--ink);font-size:13px; }.milestone-list { display:grid;gap:8px; }.milestone-item { min-height:52px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line-soft);border-radius:10px;background:var(--card-2); }.milestone-item strong { color:var(--ink);font-size:12px; }.milestone-item span { color:var(--muted);font-size:11px; }
+    .switch-control { width:46px;height:26px;min-height:26px;appearance:none;border:1px solid var(--control-border)!important;border-radius:99px!important;background:var(--seg)!important;cursor:pointer;position:relative; }.switch-control::after { content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:.2s; }.switch-control:checked { border-color:var(--accent)!important;background:var(--accent)!important; }.switch-control:checked::after { left:23px;background:var(--card); }.settings-account-form { margin-top:12px; }.settings-account-form .fg { flex:1; }.save-state-label { display:flex;align-items:center;gap:7px;color:var(--muted);font-size:11px;font-weight:650; }.save-state-label i { width:7px;height:7px;border-radius:50%;background:var(--positive); }.danger-outline { color:var(--danger)!important; }
+    .empty-table-state { padding:34px 16px!important;color:var(--muted)!important;text-align:center!important; }.empty-table-state strong { display:block;margin-bottom:4px;color:var(--ink);font-size:13px; }
+
+    @media (max-width:1100px) { .projection-summary-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.projection-detail-grid { grid-template-columns:1fr; } }
+    @media (max-width:899px) {
+      .dashboard-two-col { grid-template-columns:1fr;gap:12px; }.dividend-stats { grid-template-columns:repeat(2,minmax(0,1fr)); }.dividend-stat:last-child { grid-column:auto; }.allocation-chart-layout { min-height:220px;grid-template-columns:140px minmax(0,1fr); }.allocation-chart-wrap { width:140px;height:140px; }
+      .compact-record { grid-template-columns:minmax(0,1fr) auto; }.compact-record>*:not(:first-child):not(:last-child) { display:none; }
+      .projection-controls { align-items:stretch;flex-direction:column; }.extra-payment-presets { width:100%; }.extra-payment-presets button { flex:1; }.projection-controls input { width:100%; }.projection-summary-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:480px) { .allocation-chart-layout { grid-template-columns:1fr;justify-items:center; }.allocation-legend { width:100%; }.data-search { width:100%; }.projection-summary-item strong { font-size:16px; } }
+
     @media print {
       header .print-btn, #save-bar, .page-tabs, .mobile-tab-bar, .mobile-more-overlay, .quick-add-fab, .quick-add-overlay, .mobile-cell-overlay, .btn-add, .btn-sm, .btn-edit, .btn-del, #toast,
       .item-actions, .edit-form, .payoff-sub-head button, .year-tabs { display:none !important; }
@@ -1058,6 +1099,7 @@
   <symbol id="i-reports" viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19V3"/><path d="M2 21h20"/></symbol>
   <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></symbol>
   <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
 </svg>
 
 <div id="toast" class="toast"></div>
@@ -1136,43 +1178,28 @@
   <div id="tab-annual" class="tab-content active">
     <div class="overview-visual-grid">
       <div class="section overview-chart-card">
-        <div class="sec-head"><h2>Income and bills paid</h2><div class="chart-legend"><span><i class="legend-dot"></i>Income</span><span><i class="legend-dot debt-dot"></i>Bills paid</span></div></div>
-        <div class="overview-comparison-note" id="income-chart-note"></div>
-        <div class="chart-wrap-lg overview-comparison-chart"><canvas id="ann-income-chart"></canvas></div>
+        <div class="sec-head"><div><h2>Net worth trend</h2><span class="muted-note">Recorded assets less saved liabilities</span></div><span class="chart-value" id="net-worth-chart-value"></span></div>
+        <div class="chart-wrap-lg"><canvas id="net-worth-chart"></canvas></div>
       </div>
-      <div class="section this-month-card">
-        <div class="sec-head"><h2>This month</h2></div>
-        <div class="debt-mix-block">
-          <div class="debt-mix-chart">
-            <canvas id="debt-mix-chart"></canvas>
-            <div class="debt-mix-center"><strong id="debt-mix-count">$0</strong><span>total debt</span></div>
-          </div>
-          <div><div class="debt-mix-label">Debt mix</div><div class="debt-mix-legend" id="debt-mix-legend"></div></div>
-        </div>
-        <div id="this-month-rows"></div>
-      </div>
-    </div>
-    <div class="section overview-debt-outlook" id="overview-debt-outlook"></div>
-    <div class="section growth-card">
-      <div class="sec-head">
-        <h2>Spending and investment growth</h2>
-        <div class="growth-card-head">
-          <div class="chart-legend"><span><i class="legend-dot debt-dot"></i>Bills paid</span><span><i class="legend-dot investment-dot"></i>Investments</span></div>
-          <div class="chart-mode-toggle" aria-label="Chart view">
-            <button class="active" data-growth-mode="totals" onclick="setGrowthChartMode('totals')">Totals</button>
-            <button data-growth-mode="growth" onclick="setGrowthChartMode('growth')">Year-over-year growth</button>
-          </div>
+      <div class="section overview-allocation-card">
+        <div class="sec-head"><div><h2>Asset allocation</h2><span class="muted-note">Recorded investment contributions</span></div></div>
+        <div class="allocation-layout">
+          <div class="allocation-chart"><canvas id="asset-allocation-chart"></canvas><div class="allocation-center"><strong id="asset-allocation-total">$0</strong><span>recorded</span></div></div>
+          <div id="asset-allocation-legend" class="allocation-legend"></div>
         </div>
       </div>
-      <div class="growth-insights" id="growth-insights"></div>
-      <div class="chart-wrap-lg"><canvas id="annual-growth-chart"></canvas></div>
-      <p class="growth-note" id="growth-note">Current-year figures include entries recorded so far. Investment totals come from the visible Tracker investment lines.</p>
     </div>
-    <div class="section">
-      <div class="sec-head"><h2>Year by year</h2></div>
-      <div class="table-scroll">
-        <table class="ann-table" id="ann-table"></table>
+    <div class="overview-widget-grid">
+      <div class="section overview-widget-card">
+        <div class="sec-head"><div><h2>Upcoming bills</h2><span class="muted-note">Saved names, due dates, and amounts</span></div><button class="text-button" onclick="switchTab('bills')">View all</button></div>
+        <div id="overview-upcoming-bills"></div>
       </div>
+      <div class="section overview-widget-card" id="overview-dividend-income"></div>
+      <div class="section overview-widget-card">
+        <div class="sec-head"><div><h2>Recent transactions</h2><span class="muted-note">Latest saved amount changes</span></div><button class="text-button" onclick="switchTab('history')">Reports</button></div>
+        <div id="overview-recent-transactions"></div>
+      </div>
+      <div class="section overview-debt-outlook" id="overview-debt-outlook"></div>
     </div>
   </div>
 
@@ -1325,29 +1352,72 @@
   <div id="tab-bills" class="tab-content">
     <div class="workspace-nav" aria-label="Bills workspace"><button class="active" onclick="switchTab('bills')">Recurring bills</button><button onclick="switchTab('debt')">Debts</button><button onclick="switchTab('tracker')">Monthly tracker</button></div>
     <div id="bills-summary" class="feature-stat-grid"></div>
-    <div class="section">
-      <div class="sec-head"><h2>Recurring bills</h2><button class="btn-primary" onclick="addBill()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add bill</button></div>
+    <div class="section bills-table-card">
+      <div class="sec-head"><div><h2>All bills</h2><span class="muted-note">Recurring bills and saved monthly debt payments</span></div><div class="sec-actions"><button class="btn-secondary" onclick="addMortgageBill()"><svg class="ui-icon"><use href="#i-plus"/></svg>Mortgage</button><button class="btn-primary" onclick="addBill()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add bill</button></div></div>
       <div class="edit-form" id="bill-add-form">
         <div class="form-row">
           <div class="fg"><label>Name</label><input id="ba-name" placeholder="e.g. Netflix"/></div>
           <div class="fg"><label>Category</label><select id="ba-cat"><option>Housing</option><option>Car</option><option>Insurance</option><option>Utilities</option><option>Health</option><option>Subscriptions</option><option>Other</option></select></div>
           <div class="fg"><label>Amount ($/mo)</label><input id="ba-amount" type="number" step="0.01" placeholder="0.00"/></div>
-          <div class="fg"><label>Due Day</label><input id="ba-due" type="number" min="1" max="31" placeholder="1"/></div>
+          <div class="fg"><label>Due day (optional)</label><input id="ba-due" type="number" min="1" max="31" placeholder="Not set"/></div>
         </div>
         <div class="form-actions">
           <button class="btn-sm btn-save" onclick="saveBill()">Save</button>
           <button class="btn-sm btn-cancel" onclick="cancelBill()">Cancel</button>
         </div>
       </div>
+      <div class="bills-toolbar">
+        <label class="bill-search"><svg class="ui-icon"><use href="#i-search"/></svg><input id="bill-search-input" type="search" placeholder="Search bills" oninput="setBillsSearch(this.value)"/></label>
+        <div class="bill-filters" id="bill-filters" aria-label="Bill status filters">
+          <button class="active" data-filter="all" onclick="setBillsFilter('all',this)">All</button>
+          <button data-filter="upcoming" onclick="setBillsFilter('upcoming',this)">Upcoming</button>
+          <button data-filter="paid" onclick="setBillsFilter('paid',this)">Paid</button>
+          <button data-filter="overdue" onclick="setBillsFilter('overdue',this)">Overdue</button>
+        </div>
+      </div>
       <div id="bills-list"></div>
+    </div>
+    <div class="section bill-calendar-card">
+      <div class="sec-head"><div><h2>Monthly bill calendar</h2><span class="muted-note" id="bill-calendar-period"></span></div><div class="calendar-stepper"><button onclick="stepBillCalendar(-1)" aria-label="Previous month"><svg class="ui-icon"><use href="#i-chevron-left"/></svg></button><button onclick="stepBillCalendar(1)" aria-label="Next month"><svg class="ui-icon"><use href="#i-chevron-right"/></svg></button></div></div>
+      <div class="bill-calendar-layout">
+        <div><div class="bill-calendar" id="bill-calendar"></div><div class="bill-calendar-legend" id="bill-calendar-legend"></div></div>
+        <aside class="calendar-day-panel" id="calendar-day-panel"></aside>
+      </div>
     </div>
   </div>
 
   <!-- ── INCOME ── -->
   <div id="tab-income" class="tab-content">
     <div id="income-summary" class="feature-stat-grid"></div>
+    <div class="dashboard-two-col income-chart-grid">
+      <div class="section">
+        <div class="sec-head"><div><h2>Monthly income trend</h2><span class="muted-note">Recorded income by month</span></div></div>
+        <div class="chart-wrap-lg"><canvas id="income-trend-chart"></canvas></div>
+      </div>
+      <div class="section">
+        <div class="sec-head"><div><h2>Income by source</h2><span class="muted-note" id="income-source-period"></span></div></div>
+        <div class="allocation-chart-layout"><div class="allocation-chart-wrap"><canvas id="income-source-chart"></canvas><strong id="income-source-total"></strong></div><div id="income-source-legend" class="allocation-legend"></div></div>
+      </div>
+    </div>
     <div class="section">
-      <div class="sec-head"><h2>Income sources</h2><div class="sec-actions"><button class="btn-secondary" onclick="openIncomeEntry()"><svg class="ui-icon"><use href="#i-calendar"/></svg>Monthly tracker</button><button class="btn-primary" onclick="addIncome()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add income</button></div></div>
+      <div class="sec-head"><div><h2>Income transactions</h2><span class="muted-note">Descriptions can be changed without affecting the source</span></div><div class="sec-actions"><button class="btn-secondary" onclick="toggleIncomeSources()">Manage sources</button><button class="btn-primary" onclick="showIncomeTransactionForm()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add income</button></div></div>
+      <div class="edit-form" id="income-transaction-form">
+        <input id="it-id" type="hidden"/>
+        <div class="form-row">
+          <div class="fg"><label>Date</label><input id="it-date" type="date"/></div>
+          <div class="fg"><label>Description</label><input id="it-description" placeholder="e.g. Employer paycheque"/></div>
+          <div class="fg"><label>Type</label><select id="it-category"><option>Job</option><option>Dividend</option><option>Other</option></select></div>
+          <div class="fg"><label>Source</label><input id="it-source" placeholder="e.g. Employer"/></div>
+          <div class="fg"><label>Amount</label><input id="it-amount" type="number" min="0" step="0.01" placeholder="0.00"/></div>
+          <div class="fg"><label>Currency</label><select id="it-currency"><option>CAD</option><option>USD</option></select></div>
+        </div>
+        <div class="form-actions"><button class="btn-sm btn-save" onclick="saveIncomeTransaction()">Save transaction</button><button class="btn-sm btn-cancel" onclick="cancelIncomeTransaction()">Cancel</button></div>
+      </div>
+      <label class="data-search"><svg class="ui-icon"><use href="#i-search"/></svg><input id="income-transaction-search" type="search" placeholder="Search income" oninput="renderIncomeTransactions()"/></label>
+      <div class="table-scroll"><table class="data-table" id="income-transactions-table"></table></div>
+    </div>
+    <div class="section income-source-section" id="income-source-section" hidden>
+      <div class="sec-head"><h2>Recurring income sources</h2><div class="sec-actions"><button class="btn-secondary" onclick="openIncomeEntry()">Monthly tracker</button><button class="btn-primary" onclick="addIncome()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add source</button></div></div>
       <div class="edit-form" id="income-add-form">
         <div class="form-row">
           <div class="fg"><label>Name</label><input id="ia-name" placeholder="e.g. Side Income"/></div>
@@ -1367,27 +1437,69 @@
   <div id="tab-dividends" class="tab-content">
     <div class="dividend-stats" id="dividend-stats"></div>
     <div class="section">
-      <div class="sec-head"><h2>Month by month</h2><div class="chart-legend"><span><i class="legend-dot chart-dot"></i><b id="div-legend-current"></b></span><span><i class="legend-dot neutral-dot"></i><b id="div-legend-previous"></b></span></div></div>
+      <div class="sec-head"><div><h2>Monthly dividend income trend</h2><span class="muted-note">Recorded amounts and remaining estimates</span></div><div class="chart-legend"><span><i class="legend-dot chart-dot"></i><b id="div-legend-current"></b></span><span><i class="legend-dot neutral-dot"></i><b id="div-legend-previous"></b></span></div></div>
       <div class="chart-wrap-lg"><canvas id="div-chart"></canvas></div>
     </div>
-    <div class="dividend-analysis-grid single">
-      <div class="section">
-        <div class="sec-head"><h2>Annual totals</h2><span class="muted-note">Dividend growth by year</span></div>
-        <div class="chart-wrap-lg"><canvas id="div-annual-chart"></canvas></div>
-      </div>
-    </div>
     <div class="section">
-      <div class="sec-head"><h2>By year</h2></div>
-      <div class="table-scroll"><table class="dividend-table" id="dividend-table"></table></div>
+      <div class="sec-head"><div><h2>Dividend records</h2><span class="muted-note">Totals reconcile with your saved monthly records</span></div><div class="sec-actions"><button class="btn-secondary" onclick="toggleHoldingsManager()">Manage holdings</button><button class="btn-primary" onclick="showDividendRecordForm()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add dividend</button></div></div>
+      <div class="edit-form" id="dividend-record-form">
+        <input id="dr-id" type="hidden"/>
+        <div class="form-row">
+          <div class="fg"><label>Date</label><input id="dr-date" type="date"/></div>
+          <div class="fg"><label>Ticker</label><input id="dr-ticker" placeholder="e.g. AAPL" onblur="suggestDividendCompany()"/></div>
+          <div class="fg"><label>Company name</label><input id="dr-company" placeholder="e.g. Apple Inc."/></div>
+          <div class="fg"><label>Description</label><input id="dr-description" placeholder="Suggested from company name"/></div>
+          <div class="fg"><label>Amount received</label><input id="dr-amount" type="number" min="0" step="0.01" placeholder="0.00"/></div>
+          <div class="fg"><label>Currency</label><select id="dr-currency" onchange="syncDividendFxField()"><option>CAD</option><option>USD</option></select></div>
+          <div class="fg" id="dr-fx-wrap"><label>CAD per USD</label><input id="dr-fx" type="number" min="0" step="0.0001" value="1"/></div>
+          <div class="fg"><label>Account</label><select id="dr-account"><option>TFSA</option><option>RRSP</option><option>FHSA</option><option>CASH</option></select></div>
+          <div class="fg"><label>Owner</label><input id="dr-owner" placeholder="Owner"/></div>
+        </div>
+        <div class="form-actions"><button class="btn-sm btn-save" onclick="saveDividendRecord()">Save dividend</button><button class="btn-sm btn-cancel" onclick="cancelDividendRecord()">Cancel</button></div>
+      </div>
+      <label class="data-search"><svg class="ui-icon"><use href="#i-search"/></svg><input id="dividend-record-search" type="search" placeholder="Search dividend records" oninput="renderDividendRecords()"/></label>
+      <div class="table-scroll"><table class="data-table" id="dividend-records-table"></table></div>
+    </div>
+    <div class="section holdings-manager" id="holdings-manager" hidden>
+      <div class="sec-head"><div><h2>Manage holdings</h2><span class="muted-note">Used only for dividend estimates, withholding and market data</span></div><button class="btn-primary" onclick="showHoldingForm()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add holding</button></div>
+      <div class="edit-form" id="holding-form">
+        <input id="holding-edit-key" type="hidden"/>
+        <div class="form-row">
+          <div class="fg"><label>Owner</label><input id="holding-owner" placeholder="Owner"/></div>
+          <div class="fg"><label>Account</label><select id="holding-account"><option>TFSA</option><option>RRSP</option><option>FHSA</option><option>CASH</option></select></div>
+          <div class="fg"><label>Ticker</label><input id="holding-ticker" placeholder="e.g. HYLD.TO"/></div>
+          <div class="fg"><label>Company name</label><input id="holding-company" placeholder="Optional"/></div>
+          <div class="fg"><label>Shares</label><input id="holding-shares" type="number" min="0" step="0.0001"/></div>
+          <div class="fg"><label>Dividend per share</label><input id="holding-rate" type="number" min="0" step="0.0001"/></div>
+          <div class="fg"><label>Frequency</label><select id="holding-frequency"><option value="weekly">Weekly</option><option value="biweekly">Every 2 weeks</option><option value="monthly" selected>Monthly</option><option value="quarterly">Quarterly</option><option value="semiannual">Twice yearly</option><option value="annual">Yearly</option></select></div>
+          <div class="fg"><label>Currency</label><select id="holding-currency"><option>CAD</option><option>USD</option></select></div>
+          <div class="fg"><label>Source country</label><select id="holding-country"><option value="Canada">Canada</option><option value="United States">United States</option><option value="Other">Other</option></select></div>
+          <div class="fg"><label>Current price</label><input id="holding-price" type="number" min="0" step="0.01"/></div>
+          <div class="fg"><label>Next payment date</label><input id="holding-next-date" type="date"/></div>
+          <div class="fg"><label>CAD value per unit</label><input id="holding-fx" type="number" min="0" step="0.0001" value="1"/></div>
+        </div>
+        <div class="form-actions"><button class="btn-secondary" onclick="fetchHoldingMarketData()">Fetch market data</button><button class="btn-sm btn-save" onclick="saveHolding()">Save holding</button><button class="btn-sm btn-cancel" onclick="cancelHoldingForm()">Cancel</button></div>
+        <div id="holding-market-status" class="form-status"></div>
+      </div>
+      <div id="holdings-list" class="compact-record-list"></div>
     </div>
   </div>
   <!-- HISTORY -->
   <div id="tab-history" class="tab-content">
     <div id="reports-summary" class="feature-stat-grid reports-stats"></div>
     <div class="reports-grid">
-      <div class="section"><div class="sec-head"><h2>Income and bills</h2><span class="muted-note">Year by year</span></div><div class="chart-wrap-lg"><canvas id="reports-cashflow-chart"></canvas></div></div>
-      <div class="section"><div class="sec-head"><h2>Debt mix</h2><span class="muted-note">Current balances</span></div><div class="chart-wrap-lg"><canvas id="reports-debt-chart"></canvas></div></div>
-      <div class="section reports-wide"><div class="sec-head"><h2>Dividend growth</h2><span class="muted-note">Annual totals</span></div><div class="chart-wrap-lg"><canvas id="reports-dividend-chart"></canvas></div></div>
+      <div class="section"><div class="sec-head"><h2>Net worth trend</h2><span class="muted-note">Assets less liabilities</span></div><div class="chart-wrap-lg"><canvas id="reports-net-worth-chart"></canvas></div></div>
+      <div class="section"><div class="sec-head"><h2>Asset growth</h2><span class="muted-note">Recorded investments by year</span></div><div class="chart-wrap-lg"><canvas id="reports-asset-growth-chart"></canvas></div></div>
+      <div class="section"><div class="sec-head"><h2>Dividend reports</h2><span class="muted-note">Annual recorded income</span></div><div class="chart-wrap-lg"><canvas id="reports-dividend-chart"></canvas></div></div>
+      <div class="section"><div class="sec-head"><h2>Financial categories</h2><span class="muted-note">Current tracked balances and assets</span></div><div class="allocation-chart-layout"><div class="allocation-chart-wrap"><canvas id="reports-category-chart"></canvas><strong id="reports-category-total"></strong></div><div id="reports-category-legend" class="allocation-legend"></div></div></div>
+      <div class="section reports-wide projection-report">
+        <div class="sec-head"><div><h2>Debt-free projection</h2><span class="muted-note">A projection based on saved balances, APRs and payments, not a guarantee</span></div></div>
+        <div class="projection-controls"><div class="extra-payment-presets"><button onclick="setReportExtraPayment(0,this)" class="active">Current plan</button><button onclick="setReportExtraPayment(100,this)">+$100</button><button onclick="setReportExtraPayment(250,this)">+$250</button><button onclick="setReportExtraPayment(500,this)">+$500</button></div><label>Custom extra per month<input id="report-extra-payment" type="number" min="0" step="25" value="0" oninput="setReportExtraPayment(this.value)"/></label></div>
+        <div id="projection-report-summary" class="projection-summary-grid"></div>
+        <div id="projection-missing-data" class="projection-warning" hidden></div>
+        <div class="chart-wrap-lg"><canvas id="reports-projection-chart"></canvas></div>
+        <div class="projection-detail-grid"><div><h3>Individual payoff estimates</h3><div class="table-scroll"><table id="projection-debt-table" class="data-table"></table></div></div><div><h3>Estimated payoff milestones</h3><div id="projection-milestones-list" class="milestone-list"></div></div></div>
+      </div>
     </div>
     <div class="section activity-section">
       <div class="sec-head"><h2>Activity history</h2><span class="muted-note">Review changes and restore earlier values</span></div>
@@ -1441,6 +1553,24 @@
         <div class="setting-action"><span><strong>Cloud sync</strong><small>Use the same data on your phone and computer</small></span><button class="btn-secondary" onclick="showCloudModal()">Manage</button></div>
         <div class="setting-action"><span><strong>Print or export PDF</strong><small>Create a shareable snapshot of your ledger</small></span><button class="btn-secondary" onclick="window.print()">Export</button></div>
         <div class="setting-action"><span><strong>Install app</strong><small>Add Chawal Finances to this device</small></span><button class="btn-secondary" onclick="installApp()">Install</button></div>
+        <div class="setting-action"><span><strong>Export data</strong><small>Download a private backup of all saved records</small></span><button class="btn-secondary" onclick="exportAppData()">Download</button></div>
+        <div class="setting-action"><span><strong>Import data</strong><small>Replace this device's records from a Chawal Finances backup</small></span><button class="btn-secondary" onclick="document.getElementById('settings-import-file').click()">Choose file</button><input id="settings-import-file" type="file" accept="application/json,.json" hidden onchange="importAppData(this)"/></div>
+      </div>
+      <div class="section settings-card">
+        <div class="sec-head"><h2>Notifications</h2></div>
+        <label class="setting-row"><span><strong>Bill reminders</strong><small>Show reminders for dated bills that are not marked paid</small></span><input class="switch-control" id="setting-bill-reminders" type="checkbox" onchange="saveNotificationSetting('bill_reminders',this.checked)"/></label>
+        <label class="setting-row"><span><strong>Dividend reminders</strong><small>Keep dividend entry reminders enabled on this device</small></span><input class="switch-control" id="setting-dividend-reminders" type="checkbox" onchange="saveNotificationSetting('dividend_reminders',this.checked)"/></label>
+        <label class="setting-row"><span><strong>Cloud sync notices</strong><small>Show when changes are waiting to sync</small></span><input class="switch-control" id="setting-sync-notices" type="checkbox" onchange="saveNotificationSetting('sync_notices',this.checked)"/></label>
+      </div>
+      <div class="section settings-card">
+        <div class="sec-head"><h2>Account settings</h2></div>
+        <div class="form-row settings-account-form"><div class="fg"><label>Display name</label><input id="setting-account-name" placeholder="Your name"/></div><div class="fg"><label>Email</label><input id="setting-account-email" type="email" placeholder="Optional"/></div></div>
+        <div class="form-actions"><button class="btn-primary" onclick="saveAccountSettings()">Save account</button></div>
+      </div>
+      <div class="section settings-card">
+        <div class="sec-head"><h2>Data management</h2></div>
+        <div class="setting-action"><span><strong>Local data</strong><small>Your financial records stay in this browser unless cloud sync is connected</small></span><span class="save-state-label"><i></i>Saved on this device</span></div>
+        <div class="setting-action"><span><strong>Reset this device</strong><small>Erase local records only after a confirmation</small></span><button class="btn-secondary danger-outline" onclick="resetLocalData()">Reset data</button></div>
       </div>
     </div>
 
@@ -1576,8 +1706,13 @@ let activeTrackerSection = 'debt_payments';
 let trackerSelectedRow = null;
 let showInactiveTrackerLines = false;
 const paidOffVisible = {};
-let debtChart = null, divChart = null, annualDivChart = null, annIncChart = null, annBillsChart = null, annDebtChart = null, annDivChart = null, projectionChart = null, monthlyPictureChart = null, debtMixChart = null, annualGrowthChart = null, reportsCashflowChart = null, reportsDebtChart = null, reportsDividendChart = null;
+let debtChart = null, divChart = null, annualDivChart = null, annIncChart = null, annBillsChart = null, annDebtChart = null, annDivChart = null, projectionChart = null, monthlyPictureChart = null, debtMixChart = null, annualGrowthChart = null, reportsCashflowChart = null, reportsDebtChart = null, reportsDividendChart = null, netWorthChart = null, assetAllocationChart = null, incomeTrendChart = null, incomeSourceChart = null, reportsNetWorthChart = null, reportsAssetGrowthChart = null, reportsCategoryChart = null, reportsProjectionChart = null;
 let growthChartMode = 'totals';
+let reportExtraPayment = 0;
+let billsFilter = 'all';
+let billsSearch = '';
+let billCalendarDate = new Date(new Date().getFullYear(),new Date().getMonth(),1);
+let selectedBillDay = new Date().getDate();
 
 // ── Row definitions ──────────────────────────────────────────────────────────
 const DEBT_PAY_ROWS = [
@@ -1878,7 +2013,8 @@ async function load() {
   ORIG = JSON.parse(JSON.stringify(D));
   updateSaveStatus(loadedFromCloud?'Synced':'Saved on this device',loadedFromCloud?'synced':'device');
   renderAll();
-  const firstTab = ['annual','bills','tracker','debt','income','dividends','history','settings'].includes(D.settings.default_tab) ? D.settings.default_tab : 'annual';
+  const requestedTab = new URLSearchParams(location.search).get('tab');
+  const firstTab = ['annual','bills','tracker','debt','income','dividends','history','settings'].includes(requestedTab) ? requestedTab : (['annual','bills','tracker','debt','income','dividends','history','settings'].includes(D.settings.default_tab) ? D.settings.default_tab : 'annual');
   if (firstTab !== 'annual') switchTab(firstTab);
 }
 
@@ -1889,15 +2025,24 @@ function ensureDataShape() {
     ? D.monthly_bills
     : (Array.isArray(D.bills) ? D.bills : []);
   D.income = Array.isArray(D.income) ? D.income : [];
+  D.income_transactions = Array.isArray(D.income_transactions) ? D.income_transactions : [];
   D.dividends = D.dividends && typeof D.dividends === 'object' ? D.dividends : {};
+  D.dividend_records = Array.isArray(D.dividend_records) ? D.dividend_records : [];
+  D.dividend_holdings = D.dividend_holdings && typeof D.dividend_holdings === 'object' ? D.dividend_holdings : {};
+  ['RRSP','TFSA','FHSA','CASH'].forEach(account=>{ D.dividend_holdings[account]=Array.isArray(D.dividend_holdings[account])?D.dividend_holdings[account]:[]; });
+  D.dividend_transactions = Array.isArray(D.dividend_transactions) ? D.dividend_transactions : [];
+  D.dividend_drip = D.dividend_drip && typeof D.dividend_drip === 'object' ? D.dividend_drip : {};
   D.monthly_tracker = D.monthly_tracker && typeof D.monthly_tracker === 'object' ? D.monthly_tracker : {};
   D.change_history = Array.isArray(D.change_history) ? D.change_history : [];
+  D.bill_payment_status = D.bill_payment_status && typeof D.bill_payment_status === 'object' ? D.bill_payment_status : {};
   D.tracker_year_meta = D.tracker_year_meta && typeof D.tracker_year_meta === 'object' ? D.tracker_year_meta : {};
   D.settings = D.settings && typeof D.settings === 'object' ? D.settings : {};
   D.settings.currency = D.settings.currency || 'CAD';
   D.settings.default_tab = D.settings.default_tab || 'annual';
   if (!['annual','bills','tracker','debt','income','dividends','history','settings'].includes(D.settings.default_tab)) D.settings.default_tab='annual';
   D.settings.history_retention = Number(D.settings.history_retention) || 90;
+  D.settings.notifications = D.settings.notifications && typeof D.settings.notifications === 'object' ? D.settings.notifications : {bill_reminders:true,dividend_reminders:true,sync_notices:true};
+  D.settings.account = D.settings.account && typeof D.settings.account === 'object' ? D.settings.account : {name:'',email:''};
   D.investment_goals = D.investment_goals && typeof D.investment_goals === 'object' ? D.investment_goals : {};
   Object.keys(D.monthly_tracker).forEach(year=>{ D.investment_goals[year]=35000; });
   D.credit_limits = D.credit_limits && typeof D.credit_limits === 'object' ? D.credit_limits : {};
@@ -2737,7 +2882,7 @@ function collectHistoryChanges(before, after, path=[], out=[]) {
 
 const HISTORY_AREAS = {
   debt_items:'Debts', payoff_settings:'Debt payoff', payoff_rates:'Debt payoff', payoff_overrides:'Debt payoff', payoff_custom_loans:'Debt payoff', credit_limits:'Debts',
-  monthly_bills:'Bills', income:'Income', pay_sources:'Pay schedules', dividends:'Dividends',
+  monthly_bills:'Bills', bill_payment_status:'Bills', income:'Income', income_transactions:'Income', pay_sources:'Pay schedules', dividends:'Dividends', dividend_records:'Dividends', dividend_holdings:'Dividends',
   monthly_tracker:'Tracker', tracker_rows:'Tracker', tracker_year_meta:'Tracker', annual_summary:'Overview',
   investment_goal:'Investment goal', investment_goals:'Investment goal', settings:'Settings'
 };
@@ -2768,7 +2913,7 @@ function captureHistory() {
 }
 
 function readablePath(path) {
-  const labels = {debt_items:'Debts',monthly_bills:'Bills',income:'Income',pay_sources:'Pay schedules',dividends:'Dividends',monthly_tracker:'Tracker',tracker_rows:'Tracker lines',annual_summary:'Overview',settings:'Settings',amount:'Amount',name:'Name',due_day:'Due day',frequency:'Frequency'};
+  const labels = {debt_items:'Debts',monthly_bills:'Bills',income:'Income',income_transactions:'Income transactions',pay_sources:'Pay schedules',dividends:'Dividends',dividend_records:'Dividend records',dividend_holdings:'Dividend holdings',monthly_tracker:'Tracker',tracker_rows:'Tracker lines',annual_summary:'Overview',settings:'Settings',amount:'Amount',name:'Name',due_day:'Due day',frequency:'Frequency',description:'Description',ticker:'Ticker',company:'Company',shares:'Shares'};
   return path.map((part,index) => {
     if (labels[part]) return labels[part];
     if (/^\d+$/.test(part)) {
@@ -2957,9 +3102,9 @@ function quickAdd(type) {
   closeQuickAdd();
   if (type === 'debt')       { mobileSwitchTab('debt'); addDebt(); }
   if (type === 'bill')       { mobileSwitchTab('bills'); addBill(); }
-  if (type === 'income')     { mobileSwitchTab('income'); addIncome(); }
+  if (type === 'income')     { mobileSwitchTab('income'); showIncomeTransactionForm(); }
   if (type === 'investment') { mobileSwitchTab('tracker'); showTrackerRowForm('investments'); }
-  if (type === 'dividend')   { mobileSwitchTab('dividends'); }
+  if (type === 'dividend')   { mobileSwitchTab('dividends'); showDividendRecordForm(); }
   if (type === 'job')        { mobileSwitchTab('settings'); showPaySourceForm(); }
 }
 
@@ -4423,7 +4568,7 @@ function historyEntryPresentation(entry) {
   const change=arrayChange||changes.find(item=>!['id','category'].includes(item.path?.at(-1)))||changes[0];
   const path=change.path||[],root=path[0],area=HISTORY_AREAS[root]||'Finances',delta=historyArrayDelta(change);
   if(delta){
-    const name=delta.item?.name||delta.item?.label||delta.item?.company||area.replace(/s$/,'');
+    const name=delta.item?.description||delta.item?.company||delta.item?.ticker||delta.item?.name||delta.item?.label||area.replace(/s$/,'');
     return{title:name,area,badge:delta.type};
   }
   if(root==='tracker_year_meta'){
@@ -4440,9 +4585,27 @@ function historyEntryPresentation(entry) {
   if(root==='payoff_rates')return{title:`${historyDebtName(path[1])} APR`,area:'Debt payoff',change};
   if(root==='payoff_overrides')return{title:`${historyDebtName(path[1])} monthly payment`,area:'Debt payoff',change};
   if(root==='payoff_settings'||root==='credit_limits')return{title:`${historyDebtName(path[1])} ${root==='credit_limits'?'credit limit':historyFieldName(path.at(-1))}`,area:root==='credit_limits'?'Debts':'Debt payoff',change,badge:changes.length>1?`${changes.length} changes`:''};
+  if(root==='bill_payment_status'){
+    const paid=change.after===true||change.after?.[path.at(-1)]===true;
+    const rawName=path.length>2?path.at(-1):Object.keys((change.after&&typeof change.after==='object'?change.after:change.before)||{})[0]||'Bill';
+    const name=PREFERRED_BILL_ALIASES.get(normalizeBillName(rawName))||historyWords(rawName);
+    return{title:`${name} marked ${paid?'paid':'unpaid'}`,area:'Bills',badge:paid?'Paid':'Unpaid'};
+  }
   if(['monthly_bills','income','pay_sources'].includes(root)){
     const fallback={monthly_bills:'Bill',income:'Income source',pay_sources:'Pay schedule'}[root],name=historyItemName(root,path[1],change)||fallback;
     return{title:`${name} ${historyFieldName(path.at(-1))}`,area,change,badge:changes.length>1?`${changes.length} changes`:''};
+  }
+  if(root==='income_transactions'){
+    const item=(D.income_transactions||[])[Number(path[1])]||change.after||change.before||{},name=item.description||item.source||'Income transaction';
+    return{title:`${name} ${historyFieldName(path.at(-1))}`,area:'Income',change,badge:changes.length>1?`${changes.length} changes`:''};
+  }
+  if(root==='dividend_records'){
+    const item=(D.dividend_records||[])[Number(path[1])]||change.after||change.before||{},name=item.description||item.company||item.ticker||'Dividend record';
+    return{title:`${name} ${historyFieldName(path.at(-1))}`,area:'Dividends',change,badge:changes.length>1?`${changes.length} changes`:''};
+  }
+  if(root==='dividend_holdings'){
+    const account=path[1]||'',item=D.dividend_holdings?.[account]?.[Number(path[2])]||change.after||change.before||{},name=item.ticker||item.name||'Holding';
+    return{title:`${name} ${historyFieldName(path.at(-1))}`,area:`Dividends · ${account}`,change,badge:changes.length>1?`${changes.length} changes`:''};
   }
   if(root==='settings')return{title:historyFieldName(path[1]),area:'Settings',change};
   if(root==='investment_goals')return{title:`${path[1]} investment goal`,area:'Tracker',change};
@@ -4485,6 +4648,330 @@ function renderPaySources() {
   list.innerHTML=D.pay_sources.map(ps=>`<div class="pay-source-item"><div class="pay-source-info"><div class="pay-source-name">${escapeHtml(ps.name)}</div><div class="pay-source-meta">${payScheduleLabel(ps)}</div></div><div class="pay-source-amount">${fmtF(ps.amount)}<small>per paycheque</small></div><div class="row-menu-wrap"><button class="icon-button" aria-label="Options for ${escapeHtml(ps.name)}" onclick="toggleRowMenu('pay-menu-${ps.id}',event)">${uiIcon('more')}</button><div class="row-menu" id="pay-menu-${ps.id}" hidden><button onclick="editPaySource('${ps.id}')">${uiIcon('edit')}Edit</button><button class="danger" onclick="deletePaySource('${ps.id}')">${uiIcon('trash')}Delete</button></div></div></div>`).join('');
 }
 
+// Income dashboard and editable transaction records.
+function monthlyRecurringIncome(item){const amount=Number(item.amount)||0;return item.frequency==='biweekly'?amount*26/12:item.frequency==='annual'?amount/12:amount;}
+function incomeMonthBreakdown(year,month){
+  const records=(D.income_transactions||[]).filter(item=>{const date=new Date(`${item.date}T12:00:00`);return date.getFullYear()===Number(year)&&date.getMonth()===Number(month);});
+  if(records.length){const totals={job:0,dividend:0,other:0};records.forEach(item=>{const key=String(item.category||'Other').toLowerCase();totals[key==='job'?'job':key==='dividend'?'dividend':'other']+=Number(item.amountCad??item.amount)||0;});if(totals.dividend===0)totals.dividend=Number(D.dividends?.[String(year)]?.[month])||0;return{...totals,total:totals.job+totals.dividend+totals.other,source:'transactions'};}
+  const tracker=D.monthly_tracker?.[String(year)]?.income||{},rows=getTrackerRows(String(year),'income'),entered=rows.some(row=>Number(tracker[row.id]?.[month])>0),totals={job:0,dividend:0,other:0};
+  if(entered){rows.forEach(row=>{const amount=Number(tracker[row.id]?.[month])||0,label=String(row.label||row.id).toLowerCase();totals[label.includes('dividend')?'dividend':label.includes('other')||label.includes('side')?'other':'job']+=amount;});}
+  else (D.income||[]).forEach(item=>{const label=String(item.name||'').toLowerCase(),amount=monthlyRecurringIncome(item);totals[label.includes('dividend')?'dividend':label.includes('other')||label.includes('side')?'other':'job']+=amount;});
+  if(totals.dividend===0)totals.dividend=Number(D.dividends?.[String(year)]?.[month])||0;
+  return{...totals,total:totals.job+totals.dividend+totals.other,source:entered?'tracker':'recurring'};
+}
+function renderIncomeList(){
+  if(!D)return;const now=new Date(),year=String(now.getFullYear()),month=now.getMonth(),current=incomeMonthBreakdown(year,month),summary=document.getElementById('income-summary');
+  if(summary)summary.innerHTML=`<article class="feature-stat positive"><div class="stat-icon">${uiIcon('income')}</div><div class="stat-label">Total monthly income</div><strong>${fmtF(current.total)}</strong><small>${current.source==='transactions'?'From saved transactions':current.source==='tracker'?'From the monthly tracker':'Recurring monthly estimate'}</small></article><article class="feature-stat"><div class="stat-icon">${uiIcon('wallet')}</div><div class="stat-label">Job income</div><strong>${fmtF(current.job)}</strong><small>${currentMonthLabel()} ${year}</small></article><article class="feature-stat analytics"><div class="stat-icon">${uiIcon('dividends')}</div><div class="stat-label">Dividend income</div><strong>${fmtF(current.dividend)}</strong><small>${currentMonthLabel()} ${year}</small></article><article class="feature-stat"><div class="stat-icon">${uiIcon('plus')}</div><div class="stat-label">Other income</div><strong>${fmtF(current.other)}</strong><small>${currentMonthLabel()} ${year}</small></article>`;
+  const list=document.getElementById('income-list');if(list){list.innerHTML=(D.income||[]).length?(D.income||[]).map(item=>`<div class="item-row"><div class="item-info"><div class="item-name">${escapeHtml(item.name)}</div><div class="item-sub">${escapeHtml(item.frequency||'monthly')}</div></div><div class="item-amount">${fmtF(monthlyRecurringIncome(item))}<span class="secondary-line">monthly equivalent</span></div><div class="item-actions"><button class="btn-sm btn-edit" onclick="editInc('${item.id}')">Edit</button><button class="btn-sm btn-del" onclick="delInc('${item.id}')">Delete</button></div></div><div class="edit-form" id="ie-${item.id}"><div class="form-row"><div class="fg"><label>Name</label><input id="in-${item.id}" value="${escapeHtml(item.name)}"/></div><div class="fg"><label>Amount</label><input type="number" step="0.01" id="ia2-${item.id}" value="${Number(item.amount)||0}"/></div><div class="fg"><label>Frequency</label><select id="if-${item.id}"><option value="monthly" ${item.frequency==='monthly'?'selected':''}>Monthly</option><option value="biweekly" ${item.frequency==='biweekly'?'selected':''}>Bi-weekly</option><option value="annual" ${item.frequency==='annual'?'selected':''}>Annual</option></select></div></div><div class="form-actions"><button class="btn-sm btn-save" onclick="updateInc('${item.id}')">Save</button><button class="btn-sm btn-cancel" onclick="closeInc('${item.id}')">Cancel</button></div></div>`).join(''):'<div class="overview-empty"><strong>No recurring sources</strong>Add a source or record individual income transactions.</div>';}
+  renderIncomeCharts();renderIncomeTransactions();
+}
+function renderIncomeCharts(){
+  if(typeof Chart==='undefined')return;const now=new Date(),year=String(now.getFullYear()),series=MONTHS.map((_,month)=>incomeMonthBreakdown(year,month)),hasIncome=series.some(row=>row.total>0),trend=document.getElementById('income-trend-chart');
+  if(trend){if(incomeTrendChart)incomeTrendChart.destroy();incomeTrendChart=new Chart(trend.getContext('2d'),{type:'bar',data:{labels:MONTHS,datasets:[{label:'Job',data:series.map(row=>row.job),backgroundColor:cssValue('--income'),borderRadius:4},{label:'Dividends',data:series.map(row=>row.dividend),backgroundColor:cssValue('--violet'),borderRadius:4},{label:'Other',data:series.map(row=>row.other),backgroundColor:cssValue('--neutral-bar'),borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:hasIncome,position:'top',align:'end',labels:{color:cssValue('--muted'),usePointStyle:true,boxWidth:8}},tooltip:{enabled:hasIncome,callbacks:{label:context=>` ${context.dataset.label}: ${fmtF(context.raw||0)}`}}},scales:{x:{display:hasIncome,stacked:true,grid:{display:false},ticks:{color:cssValue('--muted')}},y:{display:hasIncome,stacked:true,beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}});}
+  const current=series[now.getMonth()],sourceCanvas=document.getElementById('income-source-chart'),rows=[['Job',current.job,'--income'],['Dividends',current.dividend,'--violet'],['Other',current.other,'--neutral-bar']].filter(row=>row[1]>0);document.getElementById('income-source-period').textContent=`${currentMonthLabel()} ${year}`;document.getElementById('income-source-total').textContent=fmt(current.total);document.getElementById('income-source-legend').innerHTML=rows.length?rows.map(row=>`<div class="allocation-row"><i style="background:${cssValue(row[2])}"></i><span>${row[0]}</span><strong>${fmtF(row[1])}</strong></div>`).join(''):'<div class="overview-empty"><strong>No income recorded</strong>Add income for this month.</div>';
+  if(sourceCanvas){if(incomeSourceChart)incomeSourceChart.destroy();incomeSourceChart=new Chart(sourceCanvas.getContext('2d'),{type:'doughnut',data:{labels:rows.length?rows.map(row=>row[0]):['No data'],datasets:[{data:rows.length?rows.map(row=>row[1]):[1],backgroundColor:rows.length?rows.map(row=>cssValue(row[2])):[cssValue('--line')],borderWidth:0,spacing:3}]},options:{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{display:false},tooltip:{enabled:Boolean(rows.length),callbacks:{label:context=>` ${context.label}: ${fmtF(context.raw)}`}}}}});}
+}
+function toggleIncomeSources(){const section=document.getElementById('income-source-section');section.hidden=!section.hidden;if(!section.hidden)section.scrollIntoView({behavior:'smooth',block:'start'});}
+function showIncomeTransactionForm(id=''){const form=document.getElementById('income-transaction-form'),item=(D.income_transactions||[]).find(row=>row.id===id);document.getElementById('it-id').value=item?.id||'';document.getElementById('it-date').value=item?.date||new Date().toISOString().slice(0,10);document.getElementById('it-description').value=item?.description||'';document.getElementById('it-category').value=item?.category||'Job';document.getElementById('it-source').value=item?.source||'';document.getElementById('it-amount').value=item?.amount||'';document.getElementById('it-currency').value=item?.currency||activeCurrency();form.classList.add('open');form.scrollIntoView({behavior:'smooth',block:'center'});}
+function cancelIncomeTransaction(){document.getElementById('income-transaction-form').classList.remove('open');}
+function saveIncomeTransaction(){const id=document.getElementById('it-id').value,date=document.getElementById('it-date').value,description=document.getElementById('it-description').value.trim(),amount=Math.max(0,Number(document.getElementById('it-amount').value)||0);if(!date||!description||!amount)return toast('Enter a date, description, and amount.');const next={id:id||`income-${Date.now()}`,date,description,category:document.getElementById('it-category').value,source:document.getElementById('it-source').value.trim(),amount,currency:document.getElementById('it-currency').value,amountCad:amount};const index=D.income_transactions.findIndex(row=>row.id===id);if(index>=0)D.income_transactions[index]=next;else D.income_transactions.push(next);cancelIncomeTransaction();mark();renderIncomeList();syncAllViews();}
+function deleteIncomeTransaction(id){if(!confirm('Delete this income transaction?'))return;D.income_transactions=D.income_transactions.filter(item=>item.id!==id);mark();renderIncomeList();syncAllViews();}
+function renderIncomeTransactions(){const table=document.getElementById('income-transactions-table');if(!table)return;const query=(document.getElementById('income-transaction-search')?.value||'').trim().toLowerCase(),rows=[...(D.income_transactions||[])].filter(item=>[item.description,item.source,item.category,item.currency].join(' ').toLowerCase().includes(query)).sort((a,b)=>String(b.date).localeCompare(String(a.date)));table.innerHTML='<thead><tr><th>Date</th><th>Description</th><th>Source</th><th>Type</th><th>Currency</th><th class="number">Amount</th><th></th></tr></thead><tbody>'+(rows.length?rows.map(item=>`<tr><td>${new Date(`${item.date}T12:00:00`).toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'})}</td><td class="primary-cell">${escapeHtml(item.description)}</td><td>${escapeHtml(item.source||'—')}</td><td>${escapeHtml(item.category||'Other')}</td><td>${escapeHtml(item.currency||'CAD')}</td><td class="number">${fmtF(Number(item.amount)||0)}</td><td><div class="table-actions"><button onclick="showIncomeTransactionForm('${item.id}')">Edit</button><button class="danger" onclick="deleteIncomeTransaction('${item.id}')">Delete</button></div></td></tr>`).join(''):'<tr><td colspan="7" class="empty-table-state"><strong>No income transactions yet</strong>Use Add income to record one.</td></tr>')+'</tbody>';}
+
+// Dividend records remain reconciled to the existing monthly aggregate data.
+const holdingPeriods={weekly:52,biweekly:26,monthly:12,bimonthly:6,quarterly:4,semiannual:2,annual:1};
+function holdingPeriodCount(holding){const raw=holding.frequency;if(Number.isFinite(Number(raw))&&Number(raw)>0)return Number(raw);return holdingPeriods[raw]||12;}
+function holdingFrequencyValue(raw){const count=Number(raw);if(!Number.isFinite(count))return raw||'monthly';return count>=40?'weekly':count>=20?'biweekly':count>=10?'monthly':count>=5?'bimonthly':count>=3?'quarterly':count>=2?'semiannual':'annual';}
+function holdingTaxRate(holding){if(holding.withholdingOverride!==''&&holding.withholdingOverride!=null&&Number.isFinite(Number(holding.withholdingOverride)))return Math.max(0,Number(holding.withholdingOverride))/100;const source=String(holding.sourceCountry).trim().toLowerCase();if(source==='us'||source==='usa'||source.includes('united states'))return holding.account==='RRSP'?0:.15;return 0;}
+function holdingCadRate(holding){return holding.currency==='USD'?Math.max(0,Number(holding.fxRate)||0):1;}
+function holdingAnnualEstimate(holding){return Math.max(0,Number(holding.shares)||0)*Math.max(0,Number(holding.rate)||Number(holding.dividendRatePerPayment)||Number(holding.dividendRate)||0)*holdingPeriodCount(holding)*(1-holdingTaxRate(holding))*holdingCadRate(holding);}
+function allHoldings(){return Object.entries(D.dividend_holdings||{}).flatMap(([account,items])=>(items||[]).map(item=>({...item,account:item.account||account})));}
+function estimatedDividendMonths(year){const monthly=Array(12).fill(0),nowYear=new Date().getFullYear();allHoldings().forEach(holding=>{const annual=holdingAnnualEstimate(holding);if(!annual)return;const period=holdingPeriodCount(holding),next=holding.nextPaymentDate?new Date(`${holding.nextPaymentDate}T12:00:00`):null;if(next&&!Number.isNaN(next.getTime())){const date=new Date(next),stepDays=Math.max(1,Math.round(365/period));while(date.getFullYear()<Number(year))date.setDate(date.getDate()+stepDays);while(date.getFullYear()===Number(year)){monthly[date.getMonth()]+=annual/period;date.setDate(date.getDate()+stepDays);}}else if(Number(year)>=nowYear){monthly.forEach((_,index)=>monthly[index]+=annual/12);}});return monthly;}
+function dividendProjectionSeries(year){const actual=(D.dividends?.[year]||Array(12).fill(0)).map(value=>Number(value)||0),now=new Date();if(Number(year)!==now.getFullYear())return actual;const estimates=estimatedDividendMonths(year);return actual.map((value,index)=>index<now.getMonth()?value:(value>0?value:estimates[index]));}
+function recordCadAmount(record){return Math.max(0,Number(record.amount)||0)*(record.currency==='USD'?Math.max(0,Number(record.fxRate)||0):1);}
+function adjustDividendAggregate(record,direction){if(!record?.date)return;const date=new Date(`${record.date}T12:00:00`),year=String(date.getFullYear()),month=date.getMonth();D.dividends[year]??=Array(12).fill(0);D.dividends[year][month]=Math.max(0,(Number(D.dividends[year][month])||0)+direction*recordCadAmount(record));}
+function renderDividends(){if(!D)return;const now=new Date(),year=String(now.getFullYear()),month=now.getMonth(),actual=(D.dividends?.[year]||Array(12).fill(0)).map(Number),projected=dividendProjectionSeries(year),ytd=actual.slice(0,month+1).reduce((sum,value)=>sum+(value||0),0),annual=projected.reduce((sum,value)=>sum+(value||0),0),entered=actual.slice(0,month+1).filter(value=>value>0),average=entered.length?ytd/entered.length:0,totalReceived=Object.values(D.dividends||{}).flat().reduce((sum,value)=>sum+(Number(value)||0),0);document.getElementById('dividend-stats').innerHTML=`<article class="dividend-stat"><span>Estimated annual dividends</span><strong>${fmtF(annual)}</strong><small>Actual received plus remaining estimates</small></article><article class="dividend-stat"><span>Monthly dividend average</span><strong>${fmtF(average)}</strong><small>${entered.length} month${entered.length===1?'':'s'} with recorded dividends</small></article><article class="dividend-stat"><span>Year-to-date dividends</span><strong>${fmtF(ytd)}</strong><small>${year} received so far</small></article><article class="dividend-stat"><span>Total dividends received</span><strong>${fmtF(totalReceived)}</strong><small>Across all saved years</small></article>`;renderDividendRecords();renderHoldings();}
+function renderDivChart(){const canvas=document.getElementById('div-chart');if(!canvas||typeof Chart==='undefined')return;const now=new Date(),year=String(now.getFullYear()),previous=String(Number(year)-1),current=dividendProjectionSeries(year),prior=(D.dividends?.[previous]||Array(12).fill(0)).map(Number),hasData=[...current,...prior].some(value=>value>0);document.getElementById('div-legend-current').textContent=`${year} actual + estimate`;document.getElementById('div-legend-previous').textContent=previous;if(divChart)divChart.destroy();divChart=new Chart(canvas.getContext('2d'),{type:'bar',data:{labels:MONTHS,datasets:[{label:`${year} actual + estimate`,data:current,backgroundColor:current.map((_,index)=>index>=now.getMonth()?colorAlpha('--violet',.55):cssValue('--violet')),borderRadius:4},{label:previous,data:prior,backgroundColor:cssValue('--neutral-bar-soft'),borderRadius:4,barPercentage:.55}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{enabled:hasData,callbacks:{label:context=>` ${context.dataset.label}: ${fmtF(context.raw||0)}`}}},scales:{x:{display:hasData,grid:{display:false},ticks:{color:cssValue('--muted')}},y:{display:hasData,beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}});}
+function showDividendRecordForm(id=''){const item=(D.dividend_records||[]).find(row=>row.id===id),form=document.getElementById('dividend-record-form');document.getElementById('dr-id').value=item?.id||'';document.getElementById('dr-date').value=item?.date||new Date().toISOString().slice(0,10);document.getElementById('dr-ticker').value=item?.ticker||'';document.getElementById('dr-company').value=item?.company||'';document.getElementById('dr-description').value=item?.description||'';document.getElementById('dr-amount').value=item?.amount||'';document.getElementById('dr-currency').value=item?.currency||'CAD';document.getElementById('dr-fx').value=item?.fxRate||1;document.getElementById('dr-account').value=item?.account||'TFSA';document.getElementById('dr-owner').value=item?.owner||'';syncDividendFxField();form.classList.add('open');form.scrollIntoView({behavior:'smooth',block:'center'});}
+function cancelDividendRecord(){document.getElementById('dividend-record-form').classList.remove('open');}
+function syncDividendFxField(){document.getElementById('dr-fx-wrap').hidden=document.getElementById('dr-currency').value!=='USD';}
+function suggestDividendCompany(){const ticker=document.getElementById('dr-ticker').value.trim().toUpperCase(),holding=allHoldings().find(item=>String(item.ticker||item.name).toUpperCase()===ticker),company=document.getElementById('dr-company'),description=document.getElementById('dr-description');if(holding&&!company.value)company.value=holding.companyName||holding.company||'';if(company.value&&!description.value)description.value=company.value;}
+function saveDividendRecord(){const id=document.getElementById('dr-id').value,date=document.getElementById('dr-date').value,amount=Math.max(0,Number(document.getElementById('dr-amount').value)||0);if(!date||!amount)return toast('Enter a date and amount.');const company=document.getElementById('dr-company').value.trim(),description=document.getElementById('dr-description').value.trim()||company||document.getElementById('dr-ticker').value.trim().toUpperCase()||'Dividend';const next={id:id||`dividend-${Date.now()}`,date,ticker:document.getElementById('dr-ticker').value.trim().toUpperCase(),company,description,descriptionCustom:Boolean(document.getElementById('dr-description').value.trim()),amount,currency:document.getElementById('dr-currency').value,fxRate:Math.max(0,Number(document.getElementById('dr-fx').value)||1),account:document.getElementById('dr-account').value,owner:document.getElementById('dr-owner').value.trim()};const index=D.dividend_records.findIndex(row=>row.id===id);if(index>=0){adjustDividendAggregate(D.dividend_records[index],-1);D.dividend_records[index]=next;}else D.dividend_records.push(next);adjustDividendAggregate(next,1);cancelDividendRecord();mark();renderDividends();renderDivChart();syncAllViews();}
+function deleteDividendRecord(id){if(!confirm('Delete this dividend record?'))return;const item=D.dividend_records.find(row=>row.id===id);adjustDividendAggregate(item,-1);D.dividend_records=D.dividend_records.filter(row=>row.id!==id);mark();renderDividends();renderDivChart();syncAllViews();}
+function dividendLegacyRows(){const byMonth=new Map();(D.dividend_records||[]).forEach(item=>{const date=new Date(`${item.date}T12:00:00`),key=`${date.getFullYear()}-${date.getMonth()}`;byMonth.set(key,(byMonth.get(key)||0)+recordCadAmount(item));});const rows=[];Object.entries(D.dividends||{}).forEach(([year,months])=>(months||[]).forEach((value,month)=>{const remainder=(Number(value)||0)-(byMonth.get(`${year}-${month}`)||0);if(remainder>.005)rows.push({id:`legacy-${year}-${month}`,date:`${year}-${String(month+1).padStart(2,'0')}-01`,description:'Monthly total not assigned to a holding',amount:remainder,currency:'CAD',legacy:true});}));return rows;}
+function renderDividendRecords(){const table=document.getElementById('dividend-records-table');if(!table)return;const query=(document.getElementById('dividend-record-search')?.value||'').trim().toLowerCase(),rows=[...(D.dividend_records||[]),...dividendLegacyRows()].filter(item=>[item.ticker,item.company,item.description,item.account,item.owner,item.currency].join(' ').toLowerCase().includes(query)).sort((a,b)=>String(b.date).localeCompare(String(a.date)));table.innerHTML='<thead><tr><th>Date</th><th>Ticker and company</th><th>Description</th><th>Account</th><th>Owner</th><th>Currency</th><th class="number">Amount</th><th></th></tr></thead><tbody>'+(rows.length?rows.map(item=>`<tr><td>${new Date(`${item.date}T12:00:00`).toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'})}</td><td class="primary-cell">${escapeHtml(item.ticker||'—')}<span class="secondary-line">${escapeHtml(item.company||'')}</span></td><td>${escapeHtml(item.description)}</td><td>${escapeHtml(item.account||'—')}</td><td>${escapeHtml(item.owner||'—')}</td><td>${escapeHtml(item.currency||'CAD')}</td><td class="number">${fmtF(item.amount)}</td><td>${item.legacy?'':`<div class="table-actions"><button onclick="showDividendRecordForm('${item.id}')">Edit</button><button class="danger" onclick="deleteDividendRecord('${item.id}')">Delete</button></div>`}</td></tr>`).join(''):'<tr><td colspan="8" class="empty-table-state"><strong>No dividend records yet</strong>Existing monthly totals will appear here until detailed records are added.</td></tr>')+'</tbody>';}
+function toggleHoldingsManager(){const section=document.getElementById('holdings-manager');section.hidden=!section.hidden;if(!section.hidden){renderHoldings();section.scrollIntoView({behavior:'smooth',block:'start'});}}
+function showHoldingForm(key=''){const [account,id]=key.split('::'),item=(D.dividend_holdings?.[account]||[]).find(row=>String(row.id)===id),form=document.getElementById('holding-form');document.getElementById('holding-edit-key').value=key;document.getElementById('holding-owner').value=item?.owner||'';document.getElementById('holding-account').value=item?.account||account||'TFSA';document.getElementById('holding-ticker').value=item?.ticker||item?.name||'';document.getElementById('holding-company').value=item?.companyName||item?.company||'';document.getElementById('holding-shares').value=item?.shares||'';document.getElementById('holding-rate').value=item?.rate||item?.dividendRatePerPayment||item?.dividendRate||'';document.getElementById('holding-frequency').value=holdingFrequencyValue(item?.frequency);document.getElementById('holding-currency').value=item?.currency||'CAD';document.getElementById('holding-country').value=item?.sourceCountry||'Canada';document.getElementById('holding-price').value=item?.price||item?.currentPrice||'';document.getElementById('holding-next-date').value=item?.nextPaymentDate||'';document.getElementById('holding-fx').value=item?.fxRate||1;document.getElementById('holding-market-status').textContent='';form.classList.add('open');form.scrollIntoView({behavior:'smooth',block:'center'});}
+function cancelHoldingForm(){document.getElementById('holding-form').classList.remove('open');}
+function saveHolding(){const key=document.getElementById('holding-edit-key').value,[oldAccount,id]=key.split('::'),account=document.getElementById('holding-account').value,ticker=document.getElementById('holding-ticker').value.trim().toUpperCase();if(!ticker)return toast('Enter a ticker.');const old=(D.dividend_holdings?.[oldAccount]||[]).find(row=>String(row.id)===id),rate=Math.max(0,Number(document.getElementById('holding-rate').value)||0),price=Math.max(0,Number(document.getElementById('holding-price').value)||0),frequency=document.getElementById('holding-frequency').value,next={...old,id:old?.id||`holding-${Date.now()}`,owner:document.getElementById('holding-owner').value.trim(),account,ticker,name:ticker,companyName:document.getElementById('holding-company').value.trim(),shares:Math.max(0,Number(document.getElementById('holding-shares').value)||0),rate,dividendRatePerPayment:rate,frequency,currency:document.getElementById('holding-currency').value,sourceCountry:document.getElementById('holding-country').value,price,currentPrice:price,nextPaymentDate:document.getElementById('holding-next-date').value,fxRate:Math.max(0,Number(document.getElementById('holding-fx').value)||1)};if(old){D.dividend_holdings[oldAccount]=D.dividend_holdings[oldAccount].filter(row=>String(row.id)!==id);}D.dividend_holdings[account].push(next);cancelHoldingForm();mark();renderHoldings();renderDividends();renderDivChart();}
+function deleteHolding(account,id){if(!confirm('Delete this holding? Historical dividend records will remain.'))return;D.dividend_holdings[account]=D.dividend_holdings[account].filter(item=>String(item.id)!==id);mark();renderHoldings();renderDividends();renderDivChart();}
+function renderHoldings(){const list=document.getElementById('holdings-list');if(!list)return;const rows=allHoldings().sort((a,b)=>String(a.account).localeCompare(String(b.account))||String(a.ticker||a.name).localeCompare(String(b.ticker||b.name)));list.innerHTML=rows.length?rows.map(item=>`<div class="compact-record"><div><strong>${escapeHtml(item.ticker||item.name||'Holding')}</strong><small>${escapeHtml(item.companyName||item.company||'')} · ${escapeHtml(item.owner||'Owner')} · ${escapeHtml(item.account)}</small></div><div class="record-number">${plainNumber(Number(item.shares)||0)}<small>shares</small></div><div class="record-number">${fmtF((Number(item.price)||Number(item.currentPrice)||0)*holdingCadRate(item))}<small>price in CAD</small></div><div class="record-number">${fmtF(holdingAnnualEstimate(item))}<small>estimated yearly</small></div><div class="table-actions"><button onclick="showHoldingForm('${item.account}::${item.id}')">Edit</button><button class="danger" onclick="deleteHolding('${item.account}','${item.id}')">Delete</button></div></div>`).join(''):'<div class="overview-empty"><strong>No holdings saved</strong>Add a holding to estimate future dividends.</div>';}
+async function fetchHoldingMarketData(){const ticker=document.getElementById('holding-ticker').value.trim().toUpperCase(),status=document.getElementById('holding-market-status');if(!ticker)return toast('Enter a ticker first.');status.className='form-status';status.textContent='Fetching market data…';try{const response=await fetch(`/.netlify/functions/market-data?symbol=${encodeURIComponent(ticker)}`),payload=await response.json();if(!response.ok)throw new Error(payload.error||'Market lookup failed');document.getElementById('holding-ticker').value=payload.symbol||ticker;if(payload.quote?.name)document.getElementById('holding-company').value=payload.quote.name;if(payload.quote?.price)document.getElementById('holding-price').value=payload.quote.price;if(payload.quote?.currency)document.getElementById('holding-currency').value=payload.quote.currency;if(payload.dividend?.amount!=null)document.getElementById('holding-rate').value=payload.dividend.amount;if(payload.dividend?.paymentDate)document.getElementById('holding-next-date').value=payload.dividend.paymentDate;if(payload.dividend?.frequency){const frequency=payload.dividend.frequency;document.getElementById('holding-frequency').value=frequency>=40?'weekly':frequency>=20?'biweekly':frequency>=10?'monthly':frequency>=4?'quarterly':frequency>=2?'semiannual':'annual';}if(payload.fx?.cadPerUnit)document.getElementById('holding-fx').value=payload.fx.cadPerUnit;status.textContent=`Updated from ${payload.source}. Review values before saving.`;}catch(error){status.className='form-status error';status.textContent=error.message;}}
+
+// Reports and portfolio-level debt-free projection.
+function simulateDebtPortfolio(extra=0){
+  const model=debtProjectionModel(),debts=model.debts.map(item=>({...item,remaining:Math.max(0,item.balance),paidMonth:null})),totalDebt=debts.reduce((sum,item)=>sum+item.balance,0),monthlyBudget=debts.reduce((sum,item)=>sum+Math.max(0,item.pay),0)+Math.max(0,Number(extra)||0),series=[totalDebt];let interest=0,month=0;
+  while(month<1200&&debts.some(item=>item.remaining>.005)){
+    month++;debts.forEach(item=>{if(item.remaining<=.005)return;const charge=item.remaining*Math.max(0,item.apr)/1200;item.remaining+=charge;interest+=charge;});let budget=monthlyBudget;
+    debts.forEach(item=>{if(item.remaining<=.005||budget<=0)return;const payment=Math.min(item.remaining,Math.max(0,item.pay),budget);item.remaining-=payment;budget-=payment;if(item.remaining<=.005&&!item.paidMonth)item.paidMonth=month;});
+    const priority=debts.filter(item=>item.remaining>.005).sort((a,b)=>(b.apr-a.apr)||(a.balance-b.balance));for(const item of priority){if(budget<=0)break;const payment=Math.min(item.remaining,budget);item.remaining-=payment;budget-=payment;if(item.remaining<=.005&&!item.paidMonth)item.paidMonth=month;}
+    if(month%3===0||!debts.some(item=>item.remaining>.005))series.push(debts.reduce((sum,item)=>sum+Math.max(0,item.remaining),0));if(monthlyBudget<=0)break;
+  }
+  const complete=debts.length>0&&debts.every(item=>item.remaining<=.005),date=complete?new Date(new Date().getFullYear(),new Date().getMonth()+month,1):null;return{...model,debts,totalDebt,monthlyBudget,months:complete?month:null,date,interest,series,complete};
+}
+function setReportExtraPayment(value,button){reportExtraPayment=Math.max(0,Number(value)||0);const input=document.getElementById('report-extra-payment');if(input&&document.activeElement!==input)input.value=reportExtraPayment;document.querySelectorAll('.extra-payment-presets button').forEach(item=>item.classList.toggle('active',item===button||(!button&&Number(item.textContent.replace(/[^0-9]/g,''))===reportExtraPayment)));renderDebtProjectionReport();}
+function projectionDateLabel(date){return date?date.toLocaleDateString('en-CA',{month:'long',year:'numeric'}):'Needs payment data';}
+function renderDebtProjectionReport(){
+  const summary=document.getElementById('projection-report-summary');if(!summary)return;const baseline=simulateDebtPortfolio(0),scenario=simulateDebtPortfolio(reportExtraPayment),original=baseline.debts.reduce((sum,item)=>sum+Math.max(item.balance,getPayoffOriginalBalance(item.id)||0),0),progress=original>0?Math.max(0,Math.min(100,(original-baseline.totalDebt)/original*100)):0,savedInterest=Math.max(0,baseline.interest-scenario.interest),monthsSooner=baseline.months&&scenario.months?Math.max(0,baseline.months-scenario.months):0;
+  summary.innerHTML=`<div class="projection-summary-item"><span>Total outstanding debt</span><strong>${fmtF(scenario.totalDebt)}</strong></div><div class="projection-summary-item"><span>Estimated debt-free date</span><strong>${scenario.totalDebt>0?projectionDateLabel(scenario.date):'No active debt'}</strong></div><div class="projection-summary-item"><span>Payoff progress</span><strong>${progress.toFixed(1)}%</strong></div><div class="projection-summary-item"><span>Estimated remaining interest</span><strong>${fmtF(scenario.interest)}</strong></div>${reportExtraPayment>0?`<div class="projection-summary-item"><span>Time saved</span><strong>${monthsSooner} months</strong></div><div class="projection-summary-item"><span>Interest saved</span><strong>${fmtF(savedInterest)}</strong></div>`:''}`;
+  const warning=document.getElementById('projection-missing-data'),parts=[];if(scenario.missingApr)parts.push(`${scenario.missingApr} active debt${scenario.missingApr===1?' has':'s have'} no APR and currently assume 0%`);if(scenario.missingPayment)parts.push(`${scenario.missingPayment} active debt${scenario.missingPayment===1?' has':'s have'} no usable payment`);warning.hidden=!parts.length;warning.textContent=parts.length?`${parts.join('. ')}. Add the missing information on the Debts page for a better projection.`:'';
+  const labels=scenario.series.map((_,index)=>{const date=new Date();date.setMonth(date.getMonth()+index*3);return date.toLocaleDateString('en-CA',{month:'short',year:'2-digit'});}),canvas=document.getElementById('reports-projection-chart');if(canvas&&typeof Chart!=='undefined'){if(reportsProjectionChart)reportsProjectionChart.destroy();reportsProjectionChart=new Chart(canvas.getContext('2d'),{type:'line',data:{labels,datasets:[{label:'Projected debt balance',data:scenario.series,borderColor:cssValue('--outflow'),backgroundColor:colorAlpha('--outflow',.12),fill:true,tension:.25,pointRadius:0,borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>` Balance: ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted'),maxTicksLimit:8,maxRotation:0}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}});}
+  const debtTable=document.getElementById('projection-debt-table');if(debtTable)debtTable.innerHTML='<thead><tr><th>Debt</th><th class="number">Balance</th><th class="number">Payment</th><th class="number">APR</th><th>Estimated payoff</th></tr></thead><tbody>'+scenario.debts.sort((a,b)=>b.balance-a.balance).map(item=>{const date=item.paidMonth?new Date(new Date().getFullYear(),new Date().getMonth()+item.paidMonth,1):null;return`<tr><td class="primary-cell">${escapeHtml(item.label)}</td><td class="number">${fmtF(item.balance)}</td><td class="number">${item.pay>0?fmtF(item.pay):'Missing'}</td><td class="number">${item.apr>0?`${item.apr.toFixed(2)}%`:'Missing'}</td><td>${projectionDateLabel(date)}</td></tr>`;}).join('')+'</tbody>';
+  const milestones=document.getElementById('projection-milestones-list');if(milestones)milestones.innerHTML=scenario.debts.filter(item=>item.paidMonth).sort((a,b)=>a.paidMonth-b.paidMonth).map(item=>{const date=new Date(new Date().getFullYear(),new Date().getMonth()+item.paidMonth,1);return`<div class="milestone-item"><strong>${escapeHtml(item.label)} paid off</strong><span>${projectionDateLabel(date)}</span></div>`;}).join('')||'<div class="overview-empty"><strong>No milestones available</strong>Add monthly payment information to calculate payoff dates.</div>';
+}
+function reportYears(){const current=String(new Date().getFullYear());return[...new Set([...Object.keys(D.annual_summary||{}),...Object.keys(D.monthly_tracker||{}),...Object.keys(D.dividends||{})])].filter(year=>Number(year)<=Number(current)).filter(year=>{const row=annualViewRow(year);return row.income||row.billsPaid||row.dividends||row.debt||getYearTotalInv(year);}).sort((a,b)=>Number(a)-Number(b));}
+function simpleBarChart(existing,canvas,labels,data,color,label){if(existing)existing.destroy();const hasData=data.some(value=>Number(value)>0);return new Chart(canvas.getContext('2d'),{type:'bar',plugins:[latestValuePlugin],data:{labels,datasets:[{label,data,backgroundColor:color,borderRadius:5,barPercentage:.62}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:20}},plugins:{legend:{display:false},latestValue:{enabled:hasData,formatter:axisMoney},tooltip:{enabled:hasData,callbacks:{label:context=>` ${label}: ${fmtF(context.raw||0)}`}}},scales:{x:{display:hasData,grid:{display:false},ticks:{color:cssValue('--muted'),maxRotation:0}},y:{display:hasData,beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}});}
+function renderReports(){
+  const summary=document.getElementById('reports-summary');if(!summary||typeof Chart==='undefined')return;const assets=recordedAssetData(),liabilities=currentLiabilities(),net=assets.total-liabilities,projection=simulateDebtPortfolio(reportExtraPayment);summary.innerHTML=`<article class="feature-stat positive"><div class="stat-icon">${uiIcon('wallet')}</div><div class="stat-label">Total assets</div><strong>${fmt(assets.total)}</strong><small>Recorded investments and assets</small></article><article class="feature-stat danger"><div class="stat-icon">${uiIcon('debt')}</div><div class="stat-label">Total liabilities</div><strong>${fmt(liabilities)}</strong><small>Current saved debt balances</small></article><article class="feature-stat analytics"><div class="stat-icon">${uiIcon('reports')}</div><div class="stat-label">Net worth summary</div><strong>${fmt(net)}</strong><small>Assets less liabilities</small></article><article class="feature-stat"><div class="stat-icon">${uiIcon('calendar')}</div><div class="stat-label">Debt-free projection</div><strong>${projection.totalDebt>0?projectionDateLabel(projection.date):'No active debt'}</strong><small>${projection.totalDebt>0?'At the selected payment pace':'Nothing currently requires payoff'}</small></article>`;
+  const years=reportYears(),labels=years.map(year=>year===String(new Date().getFullYear())?`${year} so far`:year),rows=years.map(annualViewRow),netValues=rows.map((row,index)=>{const annualAssets=years.slice(0,index+1).reduce((sum,year)=>sum+getYearTotalInv(year),0);return annualAssets-(Number(row.debt)||0);}),hasNet=netValues.some(value=>Number(value)!==0),netCanvas=document.getElementById('reports-net-worth-chart');if(netCanvas){if(reportsNetWorthChart)reportsNetWorthChart.destroy();reportsNetWorthChart=new Chart(netCanvas.getContext('2d'),{type:'line',data:{labels,datasets:[{label:'Net worth',data:netValues,borderColor:cssValue('--accent'),backgroundColor:colorAlpha('--accent',.12),fill:true,tension:.32,pointRadius:hasNet?3:0,borderWidth:hasNet?3:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:hasNet,callbacks:{label:context=>` Net worth: ${fmtF(context.raw)}`}}},scales:{x:{display:hasNet,grid:{display:false},ticks:{color:cssValue('--muted')}},y:{display:hasNet,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}});}
+  const assetCanvas=document.getElementById('reports-asset-growth-chart');if(assetCanvas)reportsAssetGrowthChart=simpleBarChart(reportsAssetGrowthChart,assetCanvas,labels,years.map(getYearTotalInv),years.map(year=>year===String(new Date().getFullYear())?colorAlpha('--investment',.55):cssValue('--investment')),'Assets added');
+  const divCanvas=document.getElementById('reports-dividend-chart');if(divCanvas)reportsDividendChart=simpleBarChart(reportsDividendChart,divCanvas,labels,years.map(year=>(D.dividends?.[year]||[]).reduce((sum,value)=>sum+(Number(value)||0),0)),years.map(year=>year===String(new Date().getFullYear())?colorAlpha('--violet',.55):cssValue('--violet')),'Dividends');
+  const debtGroups={credit:0,loans:0,cars:0};(D.debt_items||[]).forEach(item=>{const key=categoryInfo(item.category).key;if(Object.hasOwn(debtGroups,key))debtGroups[key]+=Math.max(0,Number(item.amount)||0);});const categories=[['Credit card debt',debtGroups.credit,'--debt-credit'],['Loans and LOC',debtGroups.loans,'--debt-loans'],['Car loans',debtGroups.cars,'--debt-cars'],['Investments',assets.total,'--investment']].filter(row=>row[1]>0),catCanvas=document.getElementById('reports-category-chart'),catTotal=categories.reduce((sum,row)=>sum+row[1],0);document.getElementById('reports-category-total').textContent=fmt(catTotal);document.getElementById('reports-category-legend').innerHTML=categories.map(row=>`<div class="allocation-row"><i style="background:${cssValue(row[2])}"></i><span>${row[0]}</span><strong>${fmtF(row[1])}</strong></div>`).join('');if(catCanvas){if(reportsCategoryChart)reportsCategoryChart.destroy();reportsCategoryChart=new Chart(catCanvas.getContext('2d'),{type:'doughnut',data:{labels:categories.map(row=>row[0]),datasets:[{data:categories.map(row=>row[1]),backgroundColor:categories.map(row=>cssValue(row[2])),borderWidth:0,spacing:3}]},options:{responsive:true,maintainAspectRatio:false,cutout:'70%',plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>` ${context.label}: ${fmtF(context.raw)}`}}}}});}renderDebtProjectionReport();
+}
+
+// Settings retain the existing controls while adding private import/export and preferences.
+function renderSettings(){if(!D?.settings)return;document.getElementById('setting-currency').value=D.settings.currency||'CAD';const startTab=['tracker','debt'].includes(D.settings.default_tab)?'bills':(D.settings.default_tab||'annual');document.getElementById('setting-default-tab').value=startTab;document.getElementById('setting-history-days').value=String(D.settings.history_retention||90);document.getElementById('setting-bill-reminders').checked=D.settings.notifications?.bill_reminders!==false;document.getElementById('setting-dividend-reminders').checked=D.settings.notifications?.dividend_reminders!==false;document.getElementById('setting-sync-notices').checked=D.settings.notifications?.sync_notices!==false;document.getElementById('setting-account-name').value=D.settings.account?.name||'';document.getElementById('setting-account-email').value=D.settings.account?.email||'';syncThemeControls();}
+function saveNotificationSetting(key,value){D.settings.notifications??={};D.settings.notifications[key]=Boolean(value);mark();}
+function saveAccountSettings(){D.settings.account={name:document.getElementById('setting-account-name').value.trim(),email:document.getElementById('setting-account-email').value.trim()};mark();toast('Account settings saved.');}
+function exportAppData(){const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=`chawal-finances-${new Date().toISOString().slice(0,10)}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+async function importAppData(input){const file=input.files?.[0];if(!file)return;try{const parsed=JSON.parse(await file.text());if(!parsed||typeof parsed!=='object'||Array.isArray(parsed))throw new Error('This is not a valid Chawal Finances backup.');if(!confirm('Replace the data saved on this device with this backup?'))return;D=parsed;ensureDataShape();ensurePaySources();ensureTrackerRows();ensureTrackerYearMetadata();mark();renderAll();toast('Backup imported. Review the totals before syncing.');}catch(error){alert(error.message);}finally{input.value='';}}
+function resetLocalData(){if(!confirm('Erase all Chawal Finances data saved in this browser? Export a backup first if you may need it.'))return;localStorage.removeItem('bills_local_data');location.reload();}
+
+// Unified bills dashboard. Preferred labels are display aliases only and never
+// create, delete, or overwrite an account unless the user saves an edit.
+const PREFERRED_BILL_LABELS_BY_ID = {
+  'amex-primary':'American Express','amex-joint':'American Express Joint','pc-financial':'Presidents Choice',
+  'td-visa-1548':'TD Visa (1548)','td-visa-1354':'TD Visa (1354)','bmo-cc':'BMO','osap':'OSAP',
+  'fabs-osap':'Fabs OSAP','affirm':'Affirm (Parents Phone)','g70':'Genesis G70','tucson':'Hyundai Tucson'
+};
+const PREFERRED_BILL_ALIASES = new Map([
+  ['americanexpress','American Express'],['americanexpressjoint','American Express Joint'],
+  ['presidentschoice','Presidents Choice'],['pcfinancial','Presidents Choice'],
+  ['tdvisa1548','TD Visa (1548)'],['tdvisa1354','TD Visa (1354)'],
+  ['bmo','BMO'],['bmocreditcard','BMO'],['osap','OSAP'],['osapstudentloan','OSAP'],
+  ['fabsosap','Fabs OSAP'],['affirmparentsphone','Affirm (Parents Phone)'],['affirmparentsphones','Affirm (Parents Phone)'],
+  ['affirmtvdesk','Affirm (Parents Phone)'],['rent','Rent'],['genesisg70','Genesis G70'],
+  ['hyundaitucson','Hyundai Tucson'],['mortgage','Mortgage']
+]);
+
+function normalizeBillName(value) { return String(value||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
+function preferredBillLabel(name,id='') { const normalized=normalizeBillName(name);return PREFERRED_BILL_ALIASES.get(normalized)||(!normalized?PREFERRED_BILL_LABELS_BY_ID[id]:'')||String(name||'Unnamed bill'); }
+function billStatusKey(name) { return normalizeBillName(name)||`bill${Date.now()}`; }
+function billDomKey(value) { return String(value||'bill').replace(/[^a-zA-Z0-9_-]/g,'-'); }
+function validDueDay(value) { const day=Number(value);return Number.isInteger(day)&&day>=1&&day<=31?day:null; }
+function billPeriodKey(year,month) { return `${year}-${String(Number(month)+1).padStart(2,'0')}`; }
+function isBillPaid(record,year,month) { return Boolean(D.bill_payment_status?.[billPeriodKey(year,month)]?.[record.statusKey]); }
+
+function billCategory(record) {
+  const category=String(record.category||'').toLowerCase(),name=normalizeBillName(record.name);
+  if(category.includes('credit')||['americanexpress','americanexpressjoint','presidentschoice','tdvisa1548','tdvisa1354','bmo'].includes(name))return{key:'credit',label:'Credit cards',className:'bill-color-credit'};
+  if(category.includes('car')||['genesisg70','hyundaitucson'].includes(name))return{key:'car',label:'Car loans',className:'bill-color-car'};
+  if(category.includes('hous')||name==='rent'||name==='mortgage')return{key:'housing',label:'Housing',className:'bill-color-housing'};
+  if(category.includes('loan')||category.includes('loc')||name.includes('osap')||name.includes('affirm'))return{key:'loan',label:'Loans and LOC',className:'bill-color-loan'};
+  if(['utilities','insurance','subscriptions','health'].some(value=>category.includes(value)))return{key:'utility',label:'Other recurring',className:'bill-color-utility'};
+  return{key:'other',label:'Other',className:'bill-color-other'};
+}
+
+function getBillRecords(year=String(new Date().getFullYear()),month=new Date().getMonth()) {
+  const tracker=D.monthly_tracker?.[String(year)]?.debt_payments||{};
+  const records=new Map();
+  const merge=(incoming)=>{
+    const label=preferredBillLabel(incoming.name,incoming.id);
+    const key=billStatusKey(label);
+    const existing=records.get(key);
+    if(existing){
+      if(incoming.recurringId)existing.recurringId=incoming.recurringId;
+      if(incoming.debtId)existing.debtId=incoming.debtId;
+      if(incoming.trackerId)existing.trackerId=incoming.trackerId;
+      if(existing.amount<=0&&incoming.amount>0)existing.amount=incoming.amount;
+      if(!existing.dueDay&&incoming.dueDay)existing.dueDay=incoming.dueDay;
+      if((!existing.category||existing.category==='Other')&&incoming.category)existing.category=incoming.category;
+      return;
+    }
+    records.set(key,{...incoming,name:label,statusKey:key,dueDay:validDueDay(incoming.dueDay),amount:Number(incoming.amount)||0});
+  };
+  (D.monthly_bills||[]).forEach(item=>merge({id:item.id,name:item.name,category:item.category||'Other',amount:Number(item.amount)||0,dueDay:item.due_day,recurringId:item.id,debtId:null,trackerId:null}));
+  (D.debt_items||[]).forEach(item=>{
+    const payment=Number(tracker[item.id]?.[month])||0;
+    if((Number(item.amount)||0)<=0&&payment<=0)return;
+    merge({id:item.id,name:item.name,category:item.category||'Loans & LOC',amount:payment,dueDay:item.due_day,recurringId:null,debtId:item.id,trackerId:item.id});
+  });
+  getTrackerRows(String(year),'debt_payments').forEach(row=>{
+    const payment=Number(tracker[row.id]?.[month])||0;
+    if(payment<=0)return;
+    merge({id:row.id,name:row.label,category:row.category||trackerGroup(row,'debt_payments'),amount:payment,dueDay:null,recurringId:null,debtId:null,trackerId:row.id});
+  });
+  return [...records.values()].map(record=>({...record,color:billCategory(record)})).sort((a,b)=>(a.dueDay??99)-(b.dueDay??99)||a.name.localeCompare(b.name));
+}
+
+function billState(record,year=String(new Date().getFullYear()),month=new Date().getMonth()) {
+  if(isBillPaid(record,year,month))return'paid';
+  if(!record.dueDay)return'unscheduled';
+  const now=new Date(),period=new Date(Number(year),Number(month),1),currentPeriod=new Date(now.getFullYear(),now.getMonth(),1);
+  if(period<currentPeriod)return'overdue';
+  if(period>currentPeriod)return'upcoming';
+  return record.dueDay<now.getDate()?'overdue':'upcoming';
+}
+function billStateLabel(state) { return{paid:'Paid',overdue:'Overdue',upcoming:'Upcoming',unscheduled:'Not set'}[state]||'Not set'; }
+function billDueDate(record,year,month) {
+  if(!record.dueDay)return'Not set';
+  const last=new Date(Number(year),Number(month)+1,0).getDate();
+  return new Date(Number(year),Number(month),Math.min(record.dueDay,last)).toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'});
+}
+
+function setBillsSearch(value) { billsSearch=String(value||'').trim().toLowerCase();renderBillsList(); }
+function setBillsFilter(filter) {
+  billsFilter=['all','upcoming','paid','overdue'].includes(filter)?filter:'all';
+  document.querySelectorAll('#bill-filters button').forEach(button=>button.classList.toggle('active',button.dataset.filter===billsFilter));
+  renderBillsList();
+}
+function toggleBillPaid(statusKey,year=String(new Date().getFullYear()),month=new Date().getMonth()) {
+  D.bill_payment_status??={};const period=billPeriodKey(year,month);D.bill_payment_status[period]??={};
+  if(D.bill_payment_status[period][statusKey])delete D.bill_payment_status[period][statusKey];else D.bill_payment_status[period][statusKey]=true;
+  if(!Object.keys(D.bill_payment_status[period]).length)delete D.bill_payment_status[period];
+  mark();renderBillsList();renderOverviewSummary();renderOverviewWidgets();
+}
+
+function unifiedBillEditor(record) {
+  const key=billDomKey(record.statusKey),editableAmount=Boolean(record.recurringId);
+  return `<div class="edit-form bill-unified-editor" id="ube-${key}"><div class="form-row">
+    <div class="fg"><label>Name</label><input id="ubn-${key}" value="${escapeHtml(record.name)}"/></div>
+    <div class="fg"><label>Category</label><select id="ubc-${key}">${['Housing','Car','Car Loans','Insurance','Utilities','Health','Subscriptions','Credit Cards','Loans & LOC','Other'].map(value=>`<option ${record.category===value?'selected':''}>${value}</option>`).join('')}</select></div>
+    <div class="fg"><label>Amount ${editableAmount?'':'(from tracker)'}</label><input type="number" step="0.01" id="uba-${key}" value="${record.amount}" ${editableAmount?'':'disabled'}/></div>
+    <div class="fg"><label>Due day (optional)</label><input type="number" min="1" max="31" id="ubd-${key}" value="${record.dueDay||''}" placeholder="Not set"/></div>
+    </div><div class="form-actions"><button class="btn-sm btn-save" onclick="updateUnifiedBill('${record.statusKey}')">Save</button><button class="btn-sm btn-cancel" onclick="closeUnifiedBill('${record.statusKey}')">Cancel</button>${record.recurringId?`<button class="btn-sm btn-del" onclick="delBill('${record.recurringId}')">Remove recurring bill</button>`:''}</div></div>`;
+}
+function editUnifiedBill(statusKey) { document.querySelectorAll('.edit-form').forEach(form=>form.classList.remove('open'));document.getElementById(`ube-${billDomKey(statusKey)}`)?.classList.add('open'); }
+function closeUnifiedBill(statusKey) { document.getElementById(`ube-${billDomKey(statusKey)}`)?.classList.remove('open'); }
+function updateUnifiedBill(statusKey) {
+  const now=new Date(),record=getBillRecords(String(now.getFullYear()),now.getMonth()).find(item=>item.statusKey===statusKey);if(!record)return;
+  const key=billDomKey(statusKey),name=document.getElementById(`ubn-${key}`).value.trim();if(!name)return;
+  const category=document.getElementById(`ubc-${key}`).value,due=validDueDay(Number(document.getElementById(`ubd-${key}`).value));
+  const newStatusKey=billStatusKey(name);
+  if(newStatusKey!==statusKey)Object.values(D.bill_payment_status||{}).forEach(period=>{if(period?.[statusKey]){period[newStatusKey]=true;delete period[statusKey];}});
+  if(record.recurringId){const item=D.monthly_bills.find(value=>value.id===record.recurringId);if(item){item.name=name;item.category=category;item.amount=Number(document.getElementById(`uba-${key}`).value)||0;item.due_day=due;}}
+  if(record.debtId){const item=D.debt_items.find(value=>value.id===record.debtId);if(item){item.name=name;item.category=category;item.due_day=due;}}
+  mark();renderBillsList();syncAllViews();
+}
+
+function renderBillsList() {
+  const now=new Date(),year=String(now.getFullYear()),month=now.getMonth(),records=getBillRecords(year,month);
+  const total=records.reduce((sum,item)=>sum+item.amount,0),paid=records.filter(item=>isBillPaid(item,year,month)).reduce((sum,item)=>sum+item.amount,0);
+  const upcoming=records.filter(item=>billState(item,year,month)==='upcoming');
+  const annual=Array.from({length:12},(_,index)=>getBillRecords(year,index).reduce((sum,item)=>sum+item.amount,0)).reduce((sum,value)=>sum+value,0);
+  const summary=document.getElementById('bills-summary');if(summary)summary.innerHTML=`
+    <article class="feature-stat"><div class="stat-icon">${uiIcon('bills')}</div><div class="stat-label">Total monthly bills</div><strong>${fmtF(total)}</strong><small>${records.length} saved account${records.length===1?'':'s'}</small></article>
+    <article class="feature-stat positive"><div class="stat-icon">${uiIcon('check')}</div><div class="stat-label">Paid this month</div><strong>${fmtF(paid)}</strong><small>${records.filter(item=>isBillPaid(item,year,month)).length} marked paid</small></article>
+    <article class="feature-stat danger"><div class="stat-icon">${uiIcon('calendar')}</div><div class="stat-label">Upcoming bills</div><strong>${fmtF(upcoming.reduce((sum,item)=>sum+item.amount,0))}</strong><small>${upcoming.length} with a saved due date</small></article>
+    <article class="feature-stat analytics"><div class="stat-icon">${uiIcon('reports')}</div><div class="stat-label">Annual total</div><strong>${fmt(annual)}</strong><small>From saved monthly amounts</small></article>`;
+  const filtered=records.filter(item=>{
+    const state=billState(item,year,month),searchMatch=!billsSearch||`${item.name} ${item.category}`.toLowerCase().includes(billsSearch);
+    return searchMatch&&(billsFilter==='all'||state===billsFilter);
+  });
+  const rows=filtered.map(item=>{const state=billState(item,year,month);return`<tr>
+    <td><div class="bill-name-cell ${item.color.className}"><i class="bill-dot"></i><div><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.color.label)}</small></div></div></td>
+    <td>${escapeHtml(billDueDate(item,year,month))}</td><td class="bill-amount">${fmtF(item.amount)}</td><td><span class="bill-status ${state}">${billStateLabel(state)}</span></td>
+    <td><div class="bill-row-actions"><button class="bill-paid-button ${state==='paid'?'is-paid':''}" onclick="toggleBillPaid('${item.statusKey}','${year}',${month})">${state==='paid'?'Mark unpaid':'Mark paid'}</button><button class="bill-paid-button" onclick="editUnifiedBill('${item.statusKey}')">Edit</button></div></td></tr>`;}).join('');
+  const list=document.getElementById('bills-list');if(list)list.innerHTML=`<div class="bills-table-wrap"><table class="bills-table"><thead><tr><th>Bill</th><th>Due date</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead><tbody>${rows||'<tr><td colspan="5"><div class="overview-empty"><strong>No matching bills</strong>Try another search or filter.</div></td></tr>'}</tbody></table></div><div class="bill-editors">${filtered.map(unifiedBillEditor).join('')}</div>`;
+  renderBillCalendar();
+}
+
+function addMortgageBill() {
+  const existing=[...(D.monthly_bills||[]),...(D.debt_items||[])].find(item=>normalizeBillName(item.name)==='mortgage');
+  if(existing){const record=getBillRecords().find(item=>item.recurringId===existing.id||item.debtId===existing.id);if(record)editUnifiedBill(record.statusKey);else toast('Mortgage already exists in Debts. Add a payment or balance there when you are ready.');return;}
+  addBill();document.getElementById('ba-name').value='Mortgage';document.getElementById('ba-cat').value='Housing';document.getElementById('ba-amount').value='';document.getElementById('ba-due').value='';
+}
+function saveBill() {
+  const name=document.getElementById('ba-name').value.trim();if(!name)return;
+  D.monthly_bills.push({id:`b-${Date.now()}`,name,category:document.getElementById('ba-cat').value,amount:Number(document.getElementById('ba-amount').value)||0,due_day:validDueDay(Number(document.getElementById('ba-due').value))});
+  ['ba-name','ba-amount','ba-due'].forEach(id=>document.getElementById(id).value='');cancelBill();mark();renderBillsList();syncAllViews();
+}
+function updateBill(id) {
+  const item=D.monthly_bills.find(value=>value.id===id);if(!item)return;
+  item.name=document.getElementById(`bn-${id}`).value.trim()||item.name;item.category=document.getElementById(`bc-${id}`).value;item.amount=Number(document.getElementById(`bam-${id}`).value)||0;item.due_day=validDueDay(Number(document.getElementById(`bd-${id}`).value));
+  mark();renderBillsList();syncAllViews();
+}
+
+function renderBillCalendar() {
+  const calendar=document.getElementById('bill-calendar');if(!calendar)return;
+  const year=billCalendarDate.getFullYear(),month=billCalendarDate.getMonth(),days=new Date(year,month+1,0).getDate(),offset=new Date(year,month,1).getDay();
+  selectedBillDay=Math.min(Math.max(1,selectedBillDay),days);const records=getBillRecords(String(year),month);
+  document.getElementById('bill-calendar-period').textContent=new Intl.DateTimeFormat('en-CA',{month:'long',year:'numeric'}).format(billCalendarDate);
+  let html=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(day=>`<div class="bill-calendar-weekday">${day}</div>`).join('');
+  html+=Array.from({length:offset},()=>'<div class="bill-calendar-day empty"></div>').join('');
+  const today=new Date();
+  for(let day=1;day<=days;day++){
+    const due=records.filter(item=>Math.min(item.dueDay||0,days)===day),isToday=year===today.getFullYear()&&month===today.getMonth()&&day===today.getDate();
+    html+=`<button class="bill-calendar-day ${isToday?'today':''} ${selectedBillDay===day?'selected':''}" onclick="selectBillDay(${day})"><span>${day}</span><span class="calendar-dots">${due.slice(0,8).map(item=>`<i class="${item.color.className}"></i>`).join('')}</span></button>`;
+  }
+  calendar.innerHTML=html;
+  const legend=[...new Map(records.filter(item=>item.dueDay).map(item=>[item.color.key,item.color])).values()];
+  document.getElementById('bill-calendar-legend').innerHTML=legend.length?legend.map(item=>`<span class="${item.className}"><i></i>${escapeHtml(item.label)}</span>`).join(''):'<span>No saved due dates this month</span>';
+  const selected=records.filter(item=>Math.min(item.dueDay||0,days)===selectedBillDay),panel=document.getElementById('calendar-day-panel');
+  panel.innerHTML=`<h3>${new Date(year,month,selectedBillDay).toLocaleDateString('en-CA',{weekday:'long',month:'long',day:'numeric'})}</h3>${selected.length?selected.map(item=>`<div class="calendar-bill ${item.color.className}"><i></i><div><strong>${escapeHtml(item.name)}</strong><small>${billStateLabel(billState(item,String(year),month))}</small></div><span>${fmtF(item.amount)}</span></div>`).join(''):'<div class="overview-empty"><strong>No bills due</strong>Select another date to see its bills.</div>'}`;
+}
+function selectBillDay(day) { selectedBillDay=Number(day)||1;renderBillCalendar(); }
+function stepBillCalendar(change) { billCalendarDate=new Date(billCalendarDate.getFullYear(),billCalendarDate.getMonth()+Number(change),1);selectedBillDay=1;renderBillCalendar(); }
+
+function recordedAssetData() {
+  const years=Object.keys(D.monthly_tracker||{}).sort((a,b)=>Number(a)-Number(b)),byLabel=new Map();let total=0;
+  years.forEach(year=>{const values=D.monthly_tracker?.[year]?.investments||{};getTrackerRows(year,'investments').forEach(row=>{const amount=(values[row.id]||[]).reduce((sum,value)=>sum+(Number(value)||0),0);if(amount>0){const label=row.label||'Investments';byLabel.set(label,(byLabel.get(label)||0)+amount);total+=amount;}});});
+  return{years,byLabel,total};
+}
+function currentLiabilities() { return (D.debt_items||[]).filter(item=>categoryInfo(item.category).key!=='housing'||normalizeBillName(item.name)==='mortgage').reduce((sum,item)=>sum+(Number(item.amount)||0),0); }
+
+function renderOverviewSummary() {
+  const assets=recordedAssetData(),liabilities=currentLiabilities(),netWorth=assets.total-liabilities,current=getCurrentTrackerSnapshot(),bills=getBillRecords(current.year,current.month).reduce((sum,item)=>sum+item.amount,0),cashflow=current.income-bills-current.investments;
+  const summary=document.getElementById('summary');if(!summary)return;
+  summary.innerHTML=`
+    <article class="sum-card"><div class="l">Total net worth</div><div class="v">${fmt(netWorth)}</div><div class="s">Recorded assets less liabilities</div></article>
+    <article class="sum-card"><div class="l">Total assets</div><div class="v">${fmt(assets.total)}</div><div class="s">Recorded investment contributions</div></article>
+    <article class="sum-card"><div class="l">Total liabilities</div><div class="v">${fmt(liabilities)}</div><div class="s">${(D.debt_items||[]).filter(item=>Number(item.amount)>0&&categoryInfo(item.category).key!=='housing').length} active accounts</div></article>
+    <article class="sum-card"><div class="l">Monthly cash flow</div><div class="v">${current.income>0?fmt(cashflow):'Not entered'}</div><div class="s">${current.income>0?'After bills and investments':`Add ${currentMonthLabel()} income`}</div></article>`;
+}
+
+function renderNetWorthChart() {
+  const canvas=document.getElementById('net-worth-chart');if(!canvas||typeof Chart==='undefined')return;
+  const currentYear=String(new Date().getFullYear()),years=[...new Set([...Object.keys(D.monthly_tracker||{}),...Object.keys(D.annual_summary||{})])].filter(year=>Number(year)<=Number(currentYear)).sort((a,b)=>Number(a)-Number(b));
+  let cumulative=0;const values=years.map(year=>{cumulative+=getYearTotalInv(year);const debt=year===currentYear?currentLiabilities():(Number(D.annual_summary?.[year]?.year_end_debt)||0);return cumulative-debt;});
+  document.getElementById('net-worth-chart-value').textContent=values.length?fmt(values.at(-1)):'No data yet';
+  const hasData=values.some(value=>value!==0);
+  if(netWorthChart)netWorthChart.destroy();netWorthChart=new Chart(canvas.getContext('2d'),{type:'line',data:{labels:years.map(year=>year===currentYear?`${year} so far`:year),datasets:[{label:'Net worth',data:values,borderColor:cssValue('--accent'),backgroundColor:colorAlpha('--accent',.12),fill:true,tension:.34,pointRadius:hasData?3:0,pointHoverRadius:5,borderWidth:hasData?3:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:hasData,callbacks:{label:context=>` Net worth: ${fmtF(context.raw)}`}}},scales:{x:{display:hasData,grid:{display:false},ticks:{color:cssValue('--muted')}},y:{display:hasData,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:5,color:cssValue('--muted'),callback:axisMoney}}}}});
+}
+
+function renderAssetAllocation() {
+  const canvas=document.getElementById('asset-allocation-chart');if(!canvas||typeof Chart==='undefined')return;
+  const assets=recordedAssetData(),rows=[...assets.byLabel.entries()].sort((a,b)=>b[1]-a[1]),colors=['--investment','--income','--sun','--accent','--rose','--neutral-bar'].map(cssValue);
+  document.getElementById('asset-allocation-total').textContent=fmt(assets.total);
+  document.getElementById('asset-allocation-legend').innerHTML=rows.length?rows.map(([label,value],index)=>`<div class="allocation-row"><i style="background:${colors[index%colors.length]}"></i><span>${escapeHtml(label)}</span><strong>${fmt(value)}</strong></div>`).join(''):'<div class="overview-empty"><strong>No investments recorded</strong>Add contributions in the monthly tracker.</div>';
+  if(assetAllocationChart)assetAllocationChart.destroy();assetAllocationChart=new Chart(canvas.getContext('2d'),{type:'doughnut',data:{labels:rows.length?rows.map(row=>row[0]):['No data'],datasets:[{data:rows.length?rows.map(row=>row[1]):[1],backgroundColor:rows.length?rows.map((_,index)=>colors[index%colors.length]):[cssValue('--line')],borderWidth:0,spacing:3}]},options:{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{display:false},tooltip:{enabled:Boolean(rows.length),callbacks:{label:context=>` ${context.label}: ${fmtF(context.raw)}`}}}}});
+}
+
+function overviewUpcomingBills() {
+  const now=new Date(),months=[[String(now.getFullYear()),now.getMonth()]];if(now.getDate()>20){const next=new Date(now.getFullYear(),now.getMonth()+1,1);months.push([String(next.getFullYear()),next.getMonth()]);}
+  const seen=new Set(),items=[];months.forEach(([year,month])=>getBillRecords(year,month).forEach(item=>{if(!item.dueDay||isBillPaid(item,year,month))return;const due=new Date(Number(year),Number(month),Math.min(item.dueDay,new Date(Number(year),Number(month)+1,0).getDate()));if(due<new Date(now.getFullYear(),now.getMonth(),now.getDate()))return;const key=`${item.statusKey}-${year}-${month}`;if(!seen.has(key)){seen.add(key);items.push({...item,due,year,month});}}));return items.sort((a,b)=>a.due-b.due).slice(0,4);
+}
+function renderOverviewWidgets() {
+  const upcoming=overviewUpcomingBills(),billWrap=document.getElementById('overview-upcoming-bills');if(billWrap)billWrap.innerHTML=upcoming.length?`<div class="overview-list">${upcoming.map(item=>`<div class="overview-list-row ${item.color.className}"><i class="bill-dot"></i><div><strong>${escapeHtml(item.name)}</strong><small>${item.due.toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'})}</small></div><span>${fmtF(item.amount)}</span></div>`).join('')}</div>`:'<div class="overview-empty"><strong>No upcoming dated bills</strong>Add a due date on the Bills page to show it here.</div>';
+  const year=String(new Date().getFullYear()),month=new Date().getMonth(),dividends=(D.dividends?.[year]||[]),ytd=dividends.slice(0,month+1).reduce((sum,value)=>sum+(Number(value)||0),0),last=dividends[month]||0;
+  const divWrap=document.getElementById('overview-dividend-income');if(divWrap)divWrap.innerHTML=`<div class="sec-head"><div><h2>Dividend income</h2><span class="muted-note">Recorded manually in Dividends</span></div><button class="text-button" onclick="switchTab('dividends')">View</button></div><div class="dividend-overview-total">${fmtF(ytd)}</div><div class="dividend-overview-meta"><div><span>${year} year to date</span><strong>${fmtF(ytd)}</strong></div><div><span>${MONTHS[month]}</span><strong>${fmtF(last)}</strong></div></div>`;
+  const recent=(D.change_history||[]).map(entry=>({entry,presentation:historyEntryPresentation(entry)})).filter(item=>item.presentation.change&&['number','string'].includes(typeof item.presentation.change.after)).slice(0,4),recentWrap=document.getElementById('overview-recent-transactions');
+  if(recentWrap)recentWrap.innerHTML=recent.length?recent.map(({entry,presentation})=>`<div class="recent-transaction"><div class="recent-transaction-icon">${uiIcon('history')}</div><div><strong>${escapeHtml(presentation.title)}</strong><small>${escapeHtml(presentation.area)} · ${new Date(entry.timestamp).toLocaleDateString('en-CA',{month:'short',day:'numeric'})}</small></div><span class="recent-transaction-value">${escapeHtml(historyChangeValue(presentation.change,'after'))}</span></div>`).join(''):'<div class="overview-empty"><strong>No recent changes</strong>Saved amount edits will appear here.</div>';
+}
+function renderOverviewDashboard() { renderOverviewSummary();renderNetWorthChart();renderAssetAllocation();renderOverviewWidgets(); }
+function renderSummary() { renderOverviewSummary(); }
+function renderAnnualSummary() { renderOverviewDashboard(); }
+
 function syncActiveNavigation() {
   const name=document.querySelector('.tab-content.active')?.id?.replace('tab-','')||'annual';
   const primary=name==='tracker'&&activeTrackerSection==='income'?'income':['tracker','debt','bills'].includes(name)?'bills':name;
@@ -4500,8 +4987,8 @@ function switchTab(name) {
   document.getElementById('page-description').textContent=(copy[name]||copy.annual)[1];
   const kicker=document.getElementById('page-kicker');kicker.textContent=name==='annual'?new Intl.DateTimeFormat('en-CA',{month:'long',year:'numeric'}).format(new Date()):'Chawal Finances';
   document.getElementById('summary').style.display=name==='annual'?'grid':'none';
-  document.getElementById('overview-actions').hidden=false;document.getElementById('debt-actions').hidden=name!=='debt';
-  if(name==='annual'){renderSummary();renderAnnualSummary();renderMonthlyPicture();}if(name==='bills')renderBillsList();if(name==='tracker')renderTracker(activeYear);if(name==='debt'){renderDebtList();renderPayoffProjections();}if(name==='income')renderIncomeList();if(name==='dividends'){renderDividends();renderDivChart();}if(name==='history'){renderReports();renderHistory();}if(name==='settings'){renderSettings();renderPaySources();}
+  document.getElementById('overview-actions').hidden=name!=='annual';document.getElementById('debt-actions').hidden=name!=='debt';
+  if(name==='annual'){renderOverviewDashboard();renderDebtOutlook();}if(name==='bills')renderBillsList();if(name==='tracker')renderTracker(activeYear);if(name==='debt'){renderDebtList();renderPayoffProjections();}if(name==='income')renderIncomeList();if(name==='dividends'){renderDividends();renderDivChart();}if(name==='history'){renderReports();renderHistory();}if(name==='settings'){renderSettings();renderPaySources();}
   syncActiveNavigation();closeMobileMore();if(window.innerWidth<900)window.scrollTo({top:0,behavior:'auto'});
 }
 function mobileSwitchTab(name){switchTab(name);}
@@ -4509,6 +4996,7 @@ function closeMobileMore(){document.getElementById('mobile-more').classList.remo
 
 matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',()=>{if((localStorage.getItem('chawal_theme')||'system')==='system')setTheme('system');});
 document.addEventListener('click',()=>{document.querySelectorAll('.row-menu').forEach(menu=>menu.hidden=true);closeTrackerTools();});
+document.querySelectorAll('.side-link[data-tab]').forEach(button=>button.addEventListener('click',()=>switchTab(button.dataset.tab)));
 
 // ── Installable phone app ────────────────────────────────────────────────────
 let deferredInstallPrompt = null;
