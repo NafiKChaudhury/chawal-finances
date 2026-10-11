@@ -6,7 +6,9 @@ Personal finance, debt, investment and dividend dashboard deployed on Netlify.
 
 Dividends are entered manually by month on the Dividends page. The dashboard calculates year-to-date totals, monthly averages, year-over-year comparisons and annual totals from those entries.
 
-Previously saved holdings data remains in local or cloud storage for compatibility, but it is no longer displayed or included in dividend calculations.
+## Tracker lines
+
+Paid-off and unused lines are hidden by default. Use `Show inactive lines` on the Tracker page to review or reuse zero-value lines without deleting them.
 
 ## Saving and sync
 

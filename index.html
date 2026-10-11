@@ -817,6 +817,7 @@
     .outlook-stat { padding:14px;border-radius:11px;background:var(--card-2); }
     .outlook-stat span { color:var(--muted);font-size:10px; }.outlook-stat strong { display:block;margin-top:5px;color:var(--ink);font-size:21px;font-variant-numeric:tabular-nums; }.outlook-stat small { display:block;margin-top:4px;color:var(--muted);font-size:9px; }
     .tracker-line-actions { display:flex;gap:8px; }
+    .tracker-inactive-toggle[aria-pressed="true"] { border-color:var(--accent);background:var(--tint);color:var(--tint-ink); }
     .tracker-select { width:18px;height:18px;margin:0 8px 0 0;vertical-align:middle;accent-color:var(--accent); }
     .tracker-row-tools { display:inline-flex;align-items:center;gap:1px;margin-left:6px;vertical-align:middle; }
     .tracker-move-btn { width:34px;height:34px;display:inline-grid;place-items:center;border:0;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer; }
@@ -825,6 +826,7 @@
     .tracker-table tr.tracker-selected td { background:var(--tint)!important; }
     .tracker-table tr.group-subtotal td { height:40px;border-top:1px solid var(--line);background:var(--card-2)!important;color:var(--ink)!important;font-size:11px;font-weight:700; }
     .tracker-table tr.group-subtotal td:first-child { color:var(--ink-2)!important; }
+    .tracker-table tr.tracker-empty td { height:64px;padding:0 16px;color:var(--muted)!important;text-align:left;font-size:12px; }
     .tracker-category-field[hidden] { display:none!important; }
     .year-delta { display:block;margin-top:2px;color:var(--muted);font-size:9px;font-weight:650; }
     .apr-needed { display:block;margin-top:6px;color:var(--danger);font-size:9px;line-height:1.35; }
@@ -833,47 +835,6 @@
     .payoff-tools label,.payoff-tools span { color:var(--muted);font-size:10px; }.payoff-tools strong { display:block;margin-top:5px;color:var(--ink);font-size:13px; }.payoff-tools input[type="range"] { width:100%;min-height:30px;border:0!important;background:transparent!important;accent-color:var(--accent); }
     .dividend-analysis-grid { display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.85fr);gap:18px; }
     .dividend-analysis-grid .section { margin-bottom:18px; }
-    .dividend-owner-tabs { margin:0 0 8px;padding:4px;display:grid;grid-template-columns:repeat(3,1fr);gap:3px;border:1px solid var(--line);border-radius:11px;background:var(--card-2); }
-    .dividend-owner-tabs button { min-height:40px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-size:11px;font-weight:650;cursor:pointer; }
-    .dividend-owner-tabs button.active { background:var(--seg-on);color:var(--tint-ink);font-weight:750; }
-    .dividend-holding-tabs { margin:0 0 14px;padding:4px;display:grid;grid-template-columns:repeat(4,1fr);gap:3px;border-radius:11px;background:var(--seg); }
-    .dividend-holding-tabs button { min-height:40px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-size:11px;font-weight:650;cursor:pointer; }.dividend-holding-tabs button.active { background:var(--seg-on);color:var(--tint-ink);font-weight:750; }
-    .holding-form { margin-bottom:14px;display:none; }.holding-form.open { display:block; }
-    .holding-head-actions { display:flex;gap:8px; }
-    .holding-account-summary { margin-bottom:14px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px; }
-    .holding-account-stat { padding:12px;border:1px solid var(--line);border-radius:11px;background:var(--card-2); }
-    .holding-account-stat span,.holding-account-stat small { display:block;color:var(--muted);font-size:9px; }
-    .holding-account-stat strong { display:block;margin:5px 0 3px;color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums; }
-    .holding-account-stat.active { border-color:var(--accent);background:var(--tint); }
-    .holding-drip-settings { margin:0 0 14px;padding:12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;border:1px solid var(--line);border-radius:11px;background:var(--card-2); }
-    .holding-drip-toggle { min-height:52px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);text-align:left;cursor:pointer; }
-    .holding-drip-toggle strong,.holding-drip-toggle small { display:block; }.holding-drip-toggle strong { font-size:11px; }.holding-drip-toggle small { margin-top:3px;color:var(--muted);font-size:9px; }
-    .holding-drip-switch { width:38px;height:22px;padding:2px;display:block;flex:0 0 auto;border-radius:99px;background:var(--seg);transition:background .2s ease; }
-    .holding-drip-switch i { width:18px;height:18px;display:block;border-radius:50%;background:var(--card);border:1px solid var(--line);transition:transform .2s ease; }
-    .holding-drip-toggle.on { border-color:var(--accent);background:var(--tint); }.holding-drip-toggle.on .holding-drip-switch { background:var(--accent); }.holding-drip-toggle.on .holding-drip-switch i { transform:translateX(16px);border-color:transparent; }
-    .holding-drip-note { grid-column:1/-1;margin:0;color:var(--muted);font-size:10px;line-height:1.45; }
-    .holding-transaction-form { margin-bottom:14px;display:none; }.holding-transaction-form.open { display:block; }
-    .holding-transaction-toggle { margin-bottom:12px;padding:4px;display:grid;grid-template-columns:1fr 1fr;gap:4px;border-radius:11px;background:var(--seg); }
-    .holding-transaction-toggle button { min-height:40px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-weight:650;cursor:pointer; }
-    .holding-transaction-toggle button.active { background:var(--seg-on);color:var(--tint-ink); }
-    .holding-transaction-preview { margin-top:12px;padding:12px 14px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;border:1px solid var(--line);border-radius:11px;background:var(--card-2); }
-    .holding-transaction-preview span { display:block;color:var(--muted);font-size:10px; }
-    .holding-transaction-preview strong { display:block;margin-top:4px;color:var(--ink);font-size:14px;font-variant-numeric:tabular-nums; }
-    .holding-transactions { margin-top:16px;padding-top:14px;border-top:1px solid var(--line); }
-    .holding-transactions h3 { margin:0 0 8px;color:var(--ink);font-size:12px; }
-    .holding-transaction-row { min-height:50px;display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:10px;align-items:center;border-bottom:1px solid var(--line-soft);font-size:11px; }
-    .holding-transaction-row:last-child { border-bottom:0; }.holding-transaction-row time,.holding-transaction-row span { color:var(--muted); }.holding-transaction-row strong:last-child { text-align:right;font-variant-numeric:tabular-nums; }
-    .holding-form-note { margin:10px 0 0;color:var(--muted);font-size:10px;line-height:1.5; }
-    .holding-estimate-preview { margin-top:12px;padding:12px 14px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;border:1px solid var(--line);border-radius:11px;background:var(--card-2); }
-    .holding-estimate-preview span { display:block;color:var(--muted);font-size:10px; }
-    .holding-estimate-preview strong { display:block;margin-top:4px;color:var(--ink);font-size:16px;font-variant-numeric:tabular-nums; }
-    .holding-list-summary { margin-bottom:4px;color:var(--muted);font-size:10px; }
-    .holding-row { min-height:72px;display:grid;grid-template-columns:minmax(0,1fr) repeat(3,105px) 136px;gap:10px;align-items:center;border-bottom:1px solid var(--line-soft);font-size:12px; }
-    .holding-row:last-child { border-bottom:0; }.holding-row strong { color:var(--ink); }.holding-row span { color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums; }
-    .holding-name-meta { display:block;margin-top:3px;color:var(--muted);font-size:10px;font-weight:500; }
-    .holding-value { display:flex;flex-direction:column;align-items:flex-end;gap:2px; }.holding-value b { color:var(--ink);font-size:12px;font-variant-numeric:tabular-nums; }.holding-value small { color:var(--muted);font-size:9px; }
-    .holding-actions { display:flex;justify-content:flex-end;gap:2px; }
-    .holding-empty { padding:30px 10px;text-align:center;color:var(--muted);font-size:11px; }
 
     @media (max-width:1100px) {
       .sum-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -884,9 +845,6 @@
       .dividend-analysis-grid { grid-template-columns:minmax(0,1fr); }.dividend-analysis-grid>.section { min-width:0; }
     }
     @media (max-width:899px) {
-      .holding-row { grid-template-columns:minmax(0,1fr) repeat(3,92px); }.holding-actions { grid-column:1/-1; }.holding-estimate-preview,.holding-transaction-preview { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .holding-account-summary { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .holding-drip-settings { grid-template-columns:1fr; }
       body { padding-bottom:calc(72px + env(safe-area-inset-bottom)); }
       .app-sidebar { display:none; }
       main { margin:0;padding:24px 16px 28px; }
@@ -909,7 +867,7 @@
       .tracker-table { min-width:0; }.tracker-wrap { overflow:visible; }.tracker-table th,.tracker-table td { display:none; }.tracker-table th:first-child,.tracker-table td:first-child,.tracker-table th.mobile-active,.tracker-table td.mobile-active { display:table-cell!important; }.tracker-table th:first-child,.tracker-table td:first-child { position:static;width:70%;box-shadow:none!important; }.tracker-table th.mobile-active,.tracker-table td.mobile-active { width:30%; }.tracker-table thead th.mobile-active { text-align:right; }.tracker-table tr { min-height:48px; }.tracker-table tr.section-header td { display:table-cell!important; }.tracker-table tr.section-header td:not(:first-child) { display:none!important; }.tracker-table .section-total td { display:none!important; }.tracker-table .section-total td:first-child,.tracker-table .section-total td.mobile-active { display:table-cell!important; }.tracker-table .cell-display { min-height:48px;display:flex;align-items:center;justify-content:flex-end;padding:0; }
       .debt-legend { grid-template-columns:1fr; }.debt-account { grid-template-columns:minmax(0,1fr) 110px 44px;gap:10px; }.debt-account-bar { display:none; }.debt-account-share { grid-column:1;text-align:left;margin-top:-20px; }.debt-account-balance { grid-column:2;grid-row:1/3; }.row-menu-wrap { grid-column:3;grid-row:1/3; }.debt-account-name { align-self:start;padding-top:8px; }
       .dividend-stats { grid-template-columns:repeat(2,minmax(0,1fr));gap:10px; }.dividend-stat { padding:16px; }.dividend-stat strong { font-size:20px; }.dividend-stat:last-child { grid-column:1/-1; }
-      .payoff-tools { grid-template-columns:1fr; }.payoff-grid { grid-template-columns:1fr!important; }.holding-row { grid-template-columns:repeat(2,minmax(0,1fr)); }.holding-row>strong,.holding-actions { grid-column:1/-1; }.holding-value { align-items:flex-start; }.holding-row .holding-share { display:none; }
+      .payoff-tools { grid-template-columns:1fr; }.payoff-grid { grid-template-columns:1fr!important; }
       .setting-row,.setting-action { align-items:flex-start;flex-direction:column;gap:10px; }.setting-row select,.settings-theme-picker { width:100%; }.settings-theme-picker button { flex:1; }.setting-action .btn-secondary { width:100%; }.pay-source-item { grid-template-columns:minmax(0,1fr) 44px; }.pay-source-amount { grid-column:1;text-align:left; }.pay-source-item .row-menu-wrap { grid-column:2;grid-row:1/3; }
       .history-toolbar { align-items:stretch;flex-direction:column; }.history-filters { overflow:auto; }.history-entry-main { grid-template-columns:1fr;gap:8px; }.history-values { flex-wrap:wrap; }.history-actions { grid-column:auto; }.history-actions button { width:100%; }
       #save-bar { left:10px;right:10px;bottom:calc(72px + env(safe-area-inset-bottom)); }
@@ -918,8 +876,7 @@
     @media (max-width:480px) {
       .sum-grid { gap:8px; }.sum-card .v { font-size:19px; }.sum-card .s { min-height:28px; }
       .debt-summary-top strong { font-size:29px; }.page-actions .btn-primary { padding:0 12px; }
-      .overview-debt-outlook { grid-template-columns:1fr; }.outlook-copy { grid-column:auto; }.dividend-holding-tabs { grid-template-columns:repeat(2,1fr); }
-      .holding-head-actions { width:100%; }.holding-head-actions button { flex:1; }.holding-transaction-row { grid-template-columns:1fr auto; }.holding-transaction-row time { grid-column:1/-1; }
+      .overview-debt-outlook { grid-template-columns:1fr; }.outlook-copy { grid-column:auto; }
     }
 
     @media print {
@@ -945,6 +902,7 @@
   <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></symbol>
   <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6 1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
   <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
@@ -957,7 +915,6 @@
   <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 15H6L5 6M10 11v6M14 11v6"/></symbol>
   <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 7 4 12l5 5M4 12h9a7 7 0 0 1 7 7"/></symbol>
   <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 5h14a2 2 0 0 1 2 2v12H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M16 11h6v5h-6a2.5 2.5 0 0 1 0-5Z"/></symbol>
-  <symbol id="i-transfer" viewBox="0 0 24 24"><path d="m7 7 4-4 4 4M11 3v14M17 17l-4 4-4-4M13 21V7"/></symbol>
 </svg>
 
 <div id="toast" class="toast"></div>
@@ -1162,6 +1119,7 @@
         <button data-section="income" onclick="setTrackerSection('income',this)">Income and cashflow</button>
       </div>
       <div class="tracker-line-actions">
+        <button class="btn-secondary tracker-inactive-toggle" id="tracker-inactive-toggle" type="button" aria-pressed="false" onclick="toggleInactiveTrackerLines()"><svg class="ui-icon"><use href="#i-eye"/></svg><span>Show inactive lines</span></button>
         <button class="btn-secondary" onclick="addLineForActiveTracker()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add line</button>
         <button class="btn-secondary btn-del" id="tracker-remove-line" onclick="removeSelectedTrackerLine()" disabled><svg class="ui-icon"><use href="#i-trash"/></svg>Remove line</button>
       </div>
@@ -1263,65 +1221,6 @@
       <div class="section">
         <div class="sec-head"><h2>Annual totals</h2><span class="muted-note">Dividend growth by year</span></div>
         <div class="chart-wrap-lg"><canvas id="div-annual-chart"></canvas></div>
-      </div>
-      <div class="section" hidden aria-hidden="true">
-        <div class="sec-head"><h2>Holdings</h2><div class="holding-head-actions"><button class="btn-secondary" onclick="showHoldingForm()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add holding</button><button class="btn-primary" onclick="showHoldingTransaction()"><svg class="ui-icon"><use href="#i-transfer"/></svg>Buy or sell</button></div></div>
-        <div class="dividend-owner-tabs" id="dividend-owner-tabs" aria-label="Portfolio owner">
-          <button class="active" data-owner="Nafi" onclick="setHoldingOwner('Nafi')">Nafi</button>
-          <button data-owner="Fabliha" onclick="setHoldingOwner('Fabliha')">Fabliha</button>
-          <button data-owner="COMBINED" onclick="setHoldingOwner('COMBINED')">Combined</button>
-        </div>
-        <div class="dividend-holding-tabs" id="dividend-holding-tabs">
-          <button class="active" data-account="TOTAL" onclick="setHoldingAccount('TOTAL',this)">Total</button>
-          <button data-account="RRSP" onclick="setHoldingAccount('RRSP',this)">RRSP</button>
-          <button data-account="TFSA" onclick="setHoldingAccount('TFSA',this)">TFSA</button>
-          <button data-account="FHSA" onclick="setHoldingAccount('FHSA',this)">FHSA</button>
-        </div>
-        <div class="holding-account-summary" id="holding-account-summary"></div>
-        <div class="holding-drip-settings" id="holding-drip-settings"></div>
-        <div class="edit-form holding-form" id="holding-form">
-          <input id="holding-edit-id" type="hidden"/>
-          <div class="form-row">
-            <div class="fg"><label>Portfolio owner</label><select id="holding-owner"><option>Nafi</option><option>Fabliha</option></select></div>
-            <div class="fg"><label>Account</label><select id="holding-account" onchange="updateHoldingEstimate()"><option>RRSP</option><option>TFSA</option><option>FHSA</option></select></div>
-            <div class="fg"><label>Holding name or ticker</label><input id="holding-name" placeholder="e.g. AAPL or VDY.TO" autocomplete="off"/><button type="button" class="btn-sm btn-edit" id="holding-lookup-btn" onclick="lookupHoldingMarketData()" style="margin-top:5px"><svg class="ui-icon"><use href="#i-search"/></svg>Fetch market data</button></div>
-            <div class="fg"><label>Shares on record date</label><input id="holding-shares" type="number" min="0" step="0.0001" placeholder="0" oninput="updateHoldingEstimate()"/></div>
-          </div>
-          <div class="form-row">
-            <div class="fg"><label>Gross dividend rate per share</label><input id="holding-rate" type="number" min="0" step="0.0001" placeholder="0.00" oninput="updateHoldingEstimate()"/></div>
-            <div class="fg"><label>Payment frequency</label><select id="holding-frequency" onchange="updateHoldingEstimate()"><option value="52">Weekly</option><option value="26">Every 2 weeks</option><option value="12">Monthly</option><option value="6">Every 2 months</option><option value="4" selected>Quarterly</option><option value="2">Twice yearly</option><option value="1">Yearly</option></select></div>
-            <div class="fg"><label>Total dividends received</label><input id="holding-dividends" type="number" min="0" step="0.01" placeholder="0.00"/></div>
-          </div>
-          <div class="form-row">
-            <div class="fg"><label>Dividend source</label><select id="holding-source" onchange="updateHoldingEstimate()"><option value="US">United States</option><option value="CA">Canada</option><option value="OTHER">Other</option></select></div>
-            <div class="fg"><label>Currency</label><select id="holding-currency" onchange="updateHoldingEstimate()"><option value="USD">USD</option><option value="CAD">CAD</option></select></div>
-            <div class="fg"><label>Withholding override</label><input id="holding-tax-rate" type="number" min="0" max="100" step="0.01" placeholder="Automatic" oninput="updateHoldingEstimate()"/></div>
-          </div>
-          <div class="form-row">
-            <div class="fg"><label>Current share price</label><input id="holding-price" type="number" min="0" step="0.0001" placeholder="0.00" oninput="updateHoldingEstimate()"/></div>
-            <div class="fg"><label>Next payment date</label><input id="holding-next-payment" type="date"/></div>
-            <div class="fg"><label>CAD value per 1 unit</label><input id="holding-fx-rate" type="number" min="0" step="0.0001" placeholder="1.00"/></div>
-          </div>
-          <div id="holding-market-status" class="holding-form-note" role="status" aria-live="polite">Enter any Yahoo Finance U.S. ticker, or a Canadian ticker with its Yahoo suffix such as .TO, .V or .NE. Market values may be delayed and remain editable before saving.</div>
-          <div class="form-row"><div class="fg"><label>Announced ex-dividend date (reference)</label><input id="holding-ex-date" type="date"/></div><div class="fg"><label>Market data last checked</label><input id="holding-quote-updated" readonly placeholder="Not fetched"/></div></div>
-          <div class="holding-estimate-preview" aria-live="polite"><div><span>Total stock value</span><strong id="holding-estimate-value">$0.00 USD</strong></div><div><span>Gross dividend</span><strong id="holding-estimate-gross">$0.00 USD</strong></div><div><span id="holding-tax-label">Withholding tax</span><strong id="holding-estimate-tax">$0.00 USD</strong></div><div><span>Net dividend</span><strong id="holding-estimate-payment">$0.00 USD</strong></div><div><span>Estimated annual net</span><strong id="holding-estimate-annual">$0.00 USD</strong></div></div>
-          <p class="holding-form-note">The next payment date places estimates into future months. For USD holdings, enter the CAD value of 1 USD so household projections use one currency. Automatic U.S. withholding defaults to 0% in an RRSP and 15% in TFSA and FHSA.</p>
-          <div class="form-actions"><button class="btn-sm btn-save" id="holding-save-button" onclick="saveHolding()">Add holding</button><button class="btn-sm btn-cancel" onclick="cancelHolding()">Cancel</button></div>
-        </div>
-        <div class="edit-form holding-transaction-form" id="holding-transaction-form">
-          <div class="holding-transaction-toggle" id="holding-transaction-toggle"><button class="active" data-type="buy" onclick="setHoldingTransactionType('buy',this)">Buy shares</button><button data-type="sell" onclick="setHoldingTransactionType('sell',this)">Sell shares</button></div>
-          <div class="form-row">
-            <div class="fg"><label>Holding</label><select id="holding-transaction-item" onchange="updateHoldingTransactionPreview()"></select></div>
-            <div class="fg"><label>Transaction date</label><input id="holding-transaction-date" type="date"/></div>
-            <div class="fg"><label>Shares</label><input id="holding-transaction-shares" type="number" min="0.0001" step="0.0001" placeholder="0" oninput="updateHoldingTransactionPreview()"/></div>
-          </div>
-          <div class="holding-transaction-preview" aria-live="polite"><div><span>Current shares</span><strong id="holding-transaction-current">0</strong></div><div><span>Shares after transaction</span><strong id="holding-transaction-after">0</strong></div><div><span>Holding monthly average</span><strong id="holding-transaction-holding-monthly">$0.00</strong></div><div><span>Account monthly average</span><strong id="holding-transaction-account-monthly">$0.00</strong></div></div>
-          <p class="holding-form-note">This updates future estimates only. Your saved dividend history and past monthly totals will not be changed.</p>
-          <div class="form-actions"><button class="btn-sm btn-save" onclick="applyHoldingTransaction()">Update shares</button><button class="btn-sm btn-cancel" onclick="cancelHoldingTransaction()">Cancel</button></div>
-        </div>
-        <div class="holding-list-summary" id="holding-list-summary"></div>
-        <div id="holding-list"></div>
-        <div class="holding-transactions"><h3>Recent share transactions</h3><div id="holding-transaction-list"></div></div>
       </div>
     </div>
     <div class="section">
@@ -1508,9 +1407,7 @@ let lastHistorySnapshot = null;
 let historyFilter = 'all';
 let activeTrackerSection = 'debt_payments';
 let trackerSelectedRow = null;
-let activeHoldingAccount = 'TOTAL';
-let activeHoldingOwner = 'Nafi';
-let holdingTransactionType = 'buy';
+let showInactiveTrackerLines = false;
 const paidOffVisible = {};
 let debtChart = null, divChart = null, annualDivChart = null, annIncChart = null, annBillsChart = null, annDebtChart = null, annDivChart = null, projectionChart = null, monthlyPictureChart = null, debtMixChart = null, annualGrowthChart = null;
 let growthChartMode = 'totals';
@@ -1675,6 +1572,7 @@ function saveTrackerRow() {
   const meta=ensureTrackerYearMeta(activeYear);
   const category=section.startsWith('debt_')?document.getElementById('tracker-row-category').value:'';
   meta.sections[section].push({id,label:name,category,custom:true});
+  trackerSelectedRow={section,id};
   cancelTrackerRow(); mark(); renderTracker(activeYear); syncAllViews();
 }
 
@@ -1835,22 +1733,6 @@ function ensureDataShape() {
   D.settings.history_retention = Number(D.settings.history_retention) || 90;
   D.investment_goals = D.investment_goals && typeof D.investment_goals === 'object' ? D.investment_goals : {};
   Object.keys(D.monthly_tracker).forEach(year=>{ D.investment_goals[year]=35000; });
-  D.dividend_holdings = D.dividend_holdings && typeof D.dividend_holdings === 'object' ? D.dividend_holdings : {};
-  ['RRSP','FHSA','TFSA','CASH'].forEach(account=>{
-    if(!Array.isArray(D.dividend_holdings[account])) D.dividend_holdings[account]=[];
-    D.dividend_holdings[account].forEach(item=>{if(item.owner!=='Fabliha')item.owner='Nafi';});
-  });
-  D.dividend_drip = D.dividend_drip && typeof D.dividend_drip === 'object' ? D.dividend_drip : {};
-  ['Nafi','Fabliha'].forEach(owner=>{
-    D.dividend_drip[owner] = D.dividend_drip[owner] && typeof D.dividend_drip[owner] === 'object' ? D.dividend_drip[owner] : {};
-    ['RRSP','TFSA','FHSA'].forEach(account=>{D.dividend_drip[owner][account]=D.dividend_drip[owner][account]===true;});
-  });
-  D.dividend_transactions = Array.isArray(D.dividend_transactions) ? D.dividend_transactions : [];
-  D.dividend_transactions.forEach(transaction=>{
-    if(transaction.owner==='Fabliha')return;
-    const holding=(D.dividend_holdings?.[transaction.account]||[]).find(item=>item.id===transaction.holdingId);
-    transaction.owner=holding?.owner==='Fabliha'?'Fabliha':'Nafi';
-  });
   D.credit_limits = D.credit_limits && typeof D.credit_limits === 'object' ? D.credit_limits : {};
   if(Array.isArray(D.payoff_fixed_loans))D.payoff_fixed_loans.forEach(loan=>{if(loan.id==='osap'||loan.id==='fabs-osap')loan.frequency='monthly';});
 }
@@ -2670,7 +2552,7 @@ function collectHistoryChanges(before, after, path=[], out=[]) {
 
 const HISTORY_AREAS = {
   debt_items:'Debts', payoff_settings:'Debt payoff', payoff_rates:'Debt payoff', payoff_overrides:'Debt payoff', payoff_custom_loans:'Debt payoff', credit_limits:'Debts',
-  monthly_bills:'Bills', income:'Income', pay_sources:'Pay schedules', dividends:'Dividends', dividend_holdings:'Dividend holdings', dividend_transactions:'Dividend transactions', dividend_drip:'Dividend reinvestment',
+  monthly_bills:'Bills', income:'Income', pay_sources:'Pay schedules', dividends:'Dividends',
   monthly_tracker:'Tracker', tracker_rows:'Tracker', tracker_year_meta:'Tracker', annual_summary:'Overview',
   investment_goal:'Investment goal', investment_goals:'Investment goal', settings:'Settings'
 };
@@ -2701,7 +2583,7 @@ function captureHistory() {
 }
 
 function readablePath(path) {
-  const labels = {debt_items:'Debts',monthly_bills:'Bills',income:'Income',pay_sources:'Pay schedules',dividends:'Dividends',dividend_holdings:'Dividend holdings',dividend_transactions:'Dividend transactions',dividend_drip:'DRIP',monthly_tracker:'Tracker',tracker_rows:'Tracker lines',annual_summary:'Overview',settings:'Settings',amount:'Amount',name:'Name',due_day:'Due day',frequency:'Frequency'};
+  const labels = {debt_items:'Debts',monthly_bills:'Bills',income:'Income',pay_sources:'Pay schedules',dividends:'Dividends',monthly_tracker:'Tracker',tracker_rows:'Tracker lines',annual_summary:'Overview',settings:'Settings',amount:'Amount',name:'Name',due_day:'Due day',frequency:'Frequency'};
   return path.map((part,index) => {
     if (labels[part]) return labels[part];
     if (/^\d+$/.test(part)) {
@@ -3906,7 +3788,7 @@ function stepYear(direction) {
   const years=Object.keys(D.monthly_tracker||{}).sort((a,b)=>Number(a)-Number(b));
   const next=years[years.indexOf(activeYear)+direction]; if(next) setYear(next);
 }
-function setYear(year) { activeYear=String(year);trackerSelectedRow=null;renderYearTabs();renderTracker(activeYear); }
+function setYear(year) { activeYear=String(year);trackerSelectedRow=null;showInactiveTrackerLines=false;renderYearTabs();renderTracker(activeYear); }
 
 function ensureYearRecords(year) {
   const value=String(year);
@@ -3972,7 +3854,40 @@ function setTrackerSection(section,button) {
   document.querySelectorAll('.tracker-panel').forEach(panel=>panel.hidden=panel.dataset.section!==section);
   const removeButton=document.getElementById('tracker-remove-line');
   if(removeButton)removeButton.disabled=!trackerSelectedRow||trackerSelectedRow.section!==section;
+  updateTrackerInactiveToggle(activeYear);
   applyMobileMonthView();
+}
+
+function trackerRowIsActive(year,section,row) {
+  const tracker=D.monthly_tracker?.[year]||{};
+  const hasValues=values=>(values||[]).some(value=>Math.abs(Number(value)||0)>.000001);
+  if(hasValues(tracker[section]?.[row.id]))return true;
+  if(section==='debt_payments'||section==='debt_balances'){
+    const paired=section==='debt_payments'?'debt_balances':'debt_payments';
+    if(hasValues(tracker[paired]?.[row.id]))return true;
+    return Number((D.debt_items||[]).find(item=>item.id===row.id)?.amount)>0;
+  }
+  return false;
+}
+
+function visibleTrackerRows(year,section) {
+  const rows=getTrackerRows(year,section);
+  if(showInactiveTrackerLines)return rows;
+  return rows.filter(row=>trackerRowIsActive(year,section,row)||(trackerSelectedRow?.section===section&&trackerSelectedRow?.id===row.id));
+}
+
+function updateTrackerInactiveToggle(year) {
+  const button=document.getElementById('tracker-inactive-toggle');if(!button)return;
+  const inactiveCount=getTrackerRows(year,activeTrackerSection).filter(row=>!trackerRowIsActive(year,activeTrackerSection,row)).length;
+  button.setAttribute('aria-pressed',String(showInactiveTrackerLines));
+  button.disabled=!showInactiveTrackerLines&&inactiveCount===0;
+  button.querySelector('span').textContent=showInactiveTrackerLines?'Hide inactive lines':inactiveCount?`Show inactive lines (${inactiveCount})`:'No inactive lines';
+}
+
+function toggleInactiveTrackerLines() {
+  showInactiveTrackerLines=!showInactiveTrackerLines;
+  trackerSelectedRow=null;
+  renderTracker(activeYear);
 }
 
 function addLineForActiveTracker() {
@@ -4046,6 +3961,7 @@ function buildTrackerTable(tableId,year,section,rows) {
   html+='<th>Total</th></tr></thead><tbody>';
   const groupOrder=section.startsWith('debt_')?['Credit cards','Loans and lines of credit','Housing','Car loans']:[section==='investments'?'Investments':'Income and savings'];
   const orderedRows=[...rows].sort((a,b)=>{const ai=groupOrder.indexOf(trackerGroup(a,section));const bi=groupOrder.indexOf(trackerGroup(b,section));return (ai<0?99:ai)-(bi<0?99:bi);});
+  if(!orderedRows.length)html+='<tr class="tracker-empty"><td colspan="14">No active lines for this year. Use Show inactive lines to view unused or paid-off lines.</td></tr>';
   let lastGroup='';let groupRows=[];
   const appendSubtotal=(group,subtotalRows)=>{
     if(!group||!subtotalRows.length)return;
@@ -4069,10 +3985,10 @@ function buildTrackerTable(tableId,year,section,rows) {
   document.getElementById(tableId).innerHTML=html;
 }
 
-function buildPaymentsTable(tableId,year){buildTrackerTable(tableId,year,'debt_payments',getTrackerRows(year,'debt_payments'));}
-function buildBalancesTable(tableId,year){buildTrackerTable(tableId,year,'debt_balances',getTrackerRows(year,'debt_balances'));}
+function buildPaymentsTable(tableId,year){buildTrackerTable(tableId,year,'debt_payments',visibleTrackerRows(year,'debt_payments'));}
+function buildBalancesTable(tableId,year){buildTrackerTable(tableId,year,'debt_balances',visibleTrackerRows(year,'debt_balances'));}
 function buildTable(tableId,year,section,rows){buildTrackerTable(tableId,year,section,rows);}
-function buildIncomeTable(tableId,year){buildTrackerTable(tableId,year,'income',getTrackerRows(year,'income'));}
+function buildIncomeTable(tableId,year){buildTrackerTable(tableId,year,'income',visibleTrackerRows(year,'income'));}
 
 function renderTracker(year) {
   renderYearTabs();
@@ -4080,7 +3996,7 @@ function renderTracker(year) {
   const goal=35000;
   const saved=getYearTotalInv(year); const pct=Math.min(100,goal?saved/goal*100:0); const remaining=Math.max(0,goal-saved);
   document.getElementById('goal-widget-wrap').innerHTML=`<div class="goal-widget"><div><h3>${year} investment goal</h3><div class="goal-amount">${fmt(saved)} <span class="goal-target">of ${fmt(goal)}</span></div></div><div><div class="goal-bar-bg"><div class="goal-bar-fill" style="width:${pct}%"></div></div><div class="goal-meta"><span>${pct.toFixed(1)}% complete</span><span>${fmt(remaining)} to go</span></div></div></div>`;
-  buildPaymentsTable('tbl-debt-pay',year);buildBalancesTable('tbl-debt-bal',year);buildTable('tbl-invest',year,'investments',getTrackerRows(year,'investments'));buildIncomeTable('tbl-income',year);
+  buildPaymentsTable('tbl-debt-pay',year);buildBalancesTable('tbl-debt-bal',year);buildTable('tbl-invest',year,'investments',visibleTrackerRows(year,'investments'));buildIncomeTable('tbl-income',year);
   setTrackerSection(activeTrackerSection,document.querySelector(`#tracker-segments [data-section="${activeTrackerSection}"]`));
   applyMobileMonthView();
 }
@@ -4094,57 +4010,8 @@ function applyMobileMonthView() {
   });
 }
 
-function holdingConversionRate(item){
-  const currency=item.currency||activeCurrency();if(currency===activeCurrency())return 1;
-  const rate=Number(item.fxRate);return rate>0?rate:0;
-}
-function advanceHoldingPayment(date,frequency){
-  const next=new Date(date);
-  if(frequency>12){next.setDate(next.getDate()+Math.max(1,Math.round(365/frequency)));return next;}
-  const months=Math.max(1,Math.round(12/frequency)),day=Math.min(next.getDate(),28);next.setDate(1);next.setMonth(next.getMonth()+months);next.setDate(day);return next;
-}
-function holdingPaymentDatesForYear(item,year){
-  if(!item.nextPaymentDate)return[];let date=new Date(`${item.nextPaymentDate}T12:00:00`);if(Number.isNaN(date.getTime()))return[];
-  const frequency=Number(item.frequency)||4,dates=[];let guard=0;
-  while(date.getFullYear()<year&&guard++<1000)date=advanceHoldingPayment(date,frequency);
-  while(date.getFullYear()===year&&guard++<1200){dates.push(new Date(date));date=advanceHoldingPayment(date,frequency);}
-  return dates;
-}
-function holdingSharesAtDate(item,targetDate){
-  let shares=Number(item.shares)||0,target=targetDate.getTime();
-  (D.dividend_transactions||[]).filter(transaction=>transaction.holdingId===item.id).forEach(transaction=>{
-    const transactionDate=new Date(`${transaction.date}T12:00:00`).getTime();if(!Number.isFinite(transactionDate)||transactionDate<target)return;
-    const amount=Number(transaction.shares)||0;shares+=transaction.type==='sell'?amount:-amount;
-  });
-  return Math.max(0,shares);
-}
-function accountDripEnabled(owner,account){
-  return D.dividend_drip?.[owner]?.[account]===true;
-}
-function projectedHoldingDividendSeries(year){
-  const targetYear=Number(year),totals=Array(12).fill(0),now=new Date(),start=new Date(now.getFullYear(),now.getMonth(),1,12);
-  if(targetYear<now.getFullYear())return totals;
-  holdingEntries('TOTAL','COMBINED').forEach(({account,owner,item})=>{
-    const conversion=holdingConversionRate(item);if(!conversion)return;
-    const price=Number(item.currentPrice)||0,drip=accountDripEnabled(owner,account),rate=holdingRatePerPayment(item);
-    let reinvestedShares=0;
-    for(let projectionYear=now.getFullYear();projectionYear<=targetYear;projectionYear++){
-      holdingPaymentDatesForYear(item,projectionYear).filter(payment=>payment>=start).sort((a,b)=>a-b).forEach(payment=>{
-        const shares=holdingSharesAtDate(item,payment)+reinvestedShares;
-        const estimate=holdingEstimate({...item,shares,dividendRatePerPayment:rate},account);
-        if(payment.getFullYear()===targetYear)totals[payment.getMonth()]+=estimate.net*conversion;
-        if(drip&&price>0)reinvestedShares+=estimate.net/price;
-      });
-    }
-  });
-  return totals;
-}
 function dividendProjectionSeries(year){
   return (D.dividends?.[year]||Array(12).fill(0)).map(value=>Number(value)||0);
-}
-function holdingProjectionIssues(){
-  const entries=holdingEntries('TOTAL','COMBINED'),missingSchedule=entries.filter(({item})=>!item.nextPaymentDate).length,missingRate=entries.filter(({item})=>(item.currency||activeCurrency())!==activeCurrency()&&!holdingConversionRate(item)).length,missingDripPrice=entries.filter(({account,owner,item})=>accountDripEnabled(owner,account)&&!(Number(item.currentPrice)>0)).length;
-  return {missingSchedule,missingRate,missingDripPrice};
 }
 
 function renderDividends() {
@@ -4176,149 +4043,6 @@ function renderDivChart() {
   const years=Object.keys(D.dividends||{}).sort((a,b)=>Number(a)-Number(b));const totals=years.map(value=>dividendProjectionSeries(value).reduce((sum,item)=>sum+(Number(item)||0),0));
   if(annualDivChart)annualDivChart.destroy();
   annualDivChart=new Chart(annualCanvas.getContext('2d'),{type:'bar',data:{labels:years,datasets:[{label:'Dividends',data:totals,backgroundColor:cssValue('--chart'),borderWidth:0,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:context=>` ${fmtF(context.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted')}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{color:cssValue('--muted'),callback:value=>fmt(value)}}}}});
-}
-
-function setHoldingAccount(account,button) {
-  activeHoldingAccount=account;document.querySelectorAll('#dividend-holding-tabs button').forEach(item=>item.classList.toggle('active',item.dataset.account===account));
-  if(account!=='TOTAL')document.getElementById('holding-account').value=account;renderDividendHoldings();
-}
-function setHoldingOwner(owner){
-  activeHoldingOwner=owner;document.querySelectorAll('#dividend-owner-tabs button').forEach(item=>item.classList.toggle('active',item.dataset.owner===owner));
-  if(owner!=='COMBINED')document.getElementById('holding-owner').value=owner;renderDividendHoldings();
-}
-const HOLDING_ACCOUNTS=['RRSP','TFSA','FHSA'];
-const HOLDING_OWNERS=['Nafi','Fabliha'];
-function toggleAccountDrip(owner,account){
-  if(owner==='COMBINED'){toast('Select Nafi or Fabliha to change DRIP');return;}
-  D.dividend_drip??={};D.dividend_drip[owner]??={};D.dividend_drip[owner][account]=!accountDripEnabled(owner,account);
-  mark();renderDividends();renderDivChart();syncAllViews();toast(`${owner}'s ${account} DRIP turned ${D.dividend_drip[owner][account]?'on':'off'}`);
-}
-function renderAccountDripSettings(){
-  const target=document.getElementById('holding-drip-settings');if(!target)return;
-  if(activeHoldingOwner==='COMBINED'){target.innerHTML='<p class="holding-drip-note">Select Nafi or Fabliha above to change account-level DRIP settings.</p>';return;}
-  target.innerHTML=HOLDING_ACCOUNTS.map(account=>{const enabled=accountDripEnabled(activeHoldingOwner,account);return `<button class="holding-drip-toggle ${enabled?'on':''}" type="button" aria-pressed="${enabled}" onclick="toggleAccountDrip('${activeHoldingOwner}','${account}')"><span><strong>${account} DRIP</strong><small>${enabled?'Reinvest future dividends':'Pay future dividends as cash'}</small></span><span class="holding-drip-switch" aria-hidden="true"><i></i></span></button>`;}).join('')+'<p class="holding-drip-note">DRIP applies to every holding in the account. Estimated reinvestment uses each holding’s saved net dividend and current share price; past actual dividends are never changed.</p>';
-}
-function holdingFrequencyLabel(frequency){return ({52:'weekly',26:'every 2 weeks',12:'monthly',6:'every 2 months',4:'quarterly',2:'twice yearly',1:'yearly'})[Number(frequency)]||`${Number(frequency)||4} payments yearly`;}
-function holdingRatePerPayment(item){
-  if(Number.isFinite(Number(item.dividendRatePerPayment)))return Number(item.dividendRatePerPayment);
-  return (Number(item.annualDividendPerShare)||0)/(Number(item.frequency)||4);
-}
-function holdingTaxRate(account,source,override){
-  if(override!==null&&override!==''&&Number.isFinite(Number(override)))return Math.max(0,Math.min(100,Number(override)));
-  if(source==='US')return account==='RRSP'?0:15;
-  return 0;
-}
-function holdingEstimate(item,account){
-  const frequency=Number(item.frequency)||4,gross=(Number(item.shares)||0)*holdingRatePerPayment(item),taxRate=holdingTaxRate(account,item.sourceCountry||'US',item.withholdingOverride);
-  const tax=gross*taxRate/100,net=gross-tax;return {gross,tax,net,annualNet:net*frequency,taxRate};
-}
-function holdingMoney(amount,currency){return `${fmtF(Number(amount)||0)} ${currency||'USD'}`;}
-function holdingEntries(account=activeHoldingAccount,owner=activeHoldingOwner){
-  const accounts=account==='TOTAL'?HOLDING_ACCOUNTS:[account];
-  const owners=owner==='COMBINED'?HOLDING_OWNERS:[owner];
-  return accounts.flatMap(key=>(D.dividend_holdings?.[key]||[]).filter(item=>owners.includes(item.owner||'Nafi')).map(item=>({account:key,owner:item.owner||'Nafi',item})));
-}
-function holdingEntryTotals(entries,getValue){
-  const totals={};entries.forEach(({account,item})=>{const currency=item.currency||'USD';totals[currency]=(totals[currency]||0)+getValue(item,holdingEstimate(item,account),account);});
-  return totals;
-}
-function holdingTotalsText(totals){
-  const values=Object.entries(totals).filter(([,value])=>Math.abs(value)>.000001).map(([currency,value])=>holdingMoney(value,currency));
-  return values.join(' + ')||'$0.00';
-}
-function holdingCurrencyTotals(holdings,account,getValue){
-  return holdingTotalsText(holdingEntryTotals(holdings.map(item=>({account,item})),getValue));
-}
-function updateHoldingEstimate(){
-  const account=document.getElementById('holding-account').value,source=document.getElementById('holding-source').value,currency=document.getElementById('holding-currency').value;
-  const shares=parseFloat(document.getElementById('holding-shares').value)||0,rate=parseFloat(document.getElementById('holding-rate').value)||0,frequency=parseInt(document.getElementById('holding-frequency').value,10)||1,price=parseFloat(document.getElementById('holding-price').value)||0;
-  const overrideValue=document.getElementById('holding-tax-rate').value,override=overrideValue===''?null:parseFloat(overrideValue);const estimate=holdingEstimate({shares,dividendRatePerPayment:rate,frequency,sourceCountry:source,withholdingOverride:override},account);
-  document.getElementById('holding-estimate-value').textContent=holdingMoney(shares*price,currency);
-  document.getElementById('holding-estimate-gross').textContent=holdingMoney(estimate.gross,currency);document.getElementById('holding-estimate-tax').textContent=holdingMoney(estimate.tax,currency);
-  document.getElementById('holding-estimate-payment').textContent=holdingMoney(estimate.net,currency);document.getElementById('holding-estimate-annual').textContent=holdingMoney(estimate.annualNet,currency);
-  document.getElementById('holding-tax-label').textContent=`Withholding tax (${plainNumber(estimate.taxRate)}%)`;
-}
-let holdingLookupSource='';
-function showHoldingForm(){
-  holdingLookupSource='';
-  cancelHoldingTransaction();document.getElementById('holding-edit-id').value='';document.getElementById('holding-owner').value=activeHoldingOwner==='COMBINED'?'Nafi':activeHoldingOwner;document.getElementById('holding-account').value=activeHoldingAccount==='TOTAL'?'RRSP':activeHoldingAccount;
-  document.getElementById('holding-save-button').textContent='Add holding';document.getElementById('holding-form').classList.add('open');updateHoldingEstimate();document.getElementById('holding-name').focus();
-}
-function editHolding(account,id){
-  const item=(D.dividend_holdings?.[account]||[]).find(value=>value.id===id);if(!item)return;
-  holdingLookupSource=item.marketDataSource||'';activeHoldingAccount=account;activeHoldingOwner=item.owner||'Nafi';document.getElementById('holding-edit-id').value=id;document.getElementById('holding-owner').value=item.owner||'Nafi';document.getElementById('holding-account').value=account;document.getElementById('holding-name').value=item.name||'';
-  document.getElementById('holding-shares').value=Number(item.shares)||'';document.getElementById('holding-rate').value=holdingRatePerPayment(item)||'';document.getElementById('holding-frequency').value=String(Number(item.frequency)||4);document.getElementById('holding-dividends').value=Number(item.dividends)||'';
-  document.getElementById('holding-source').value=item.sourceCountry||'US';document.getElementById('holding-currency').value=item.currency||'USD';document.getElementById('holding-tax-rate').value=item.withholdingOverride??'';
-  document.getElementById('holding-price').value=Number(item.currentPrice)||'';document.getElementById('holding-next-payment').value=item.nextPaymentDate||'';document.getElementById('holding-fx-rate').value=Number(item.fxRate)||'';
-  document.getElementById('holding-ex-date').value=item.exDividendDate||'';document.getElementById('holding-quote-updated').value=item.marketDataUpdatedAt||'';document.getElementById('holding-market-status').textContent=item.marketDataSource?`Source: ${item.marketDataSource} · ${item.marketDataUpdatedAt||'unknown date'}`:'No API data saved for this holding';document.getElementById('holding-save-button').textContent='Save holding';document.getElementById('holding-form').classList.add('open');updateHoldingEstimate();document.getElementById('holding-name').focus();
-}
-function cancelHolding(){
-  holdingLookupSource='';
-  document.getElementById('holding-form').classList.remove('open');document.getElementById('holding-edit-id').value='';document.getElementById('holding-owner').value='Nafi';document.getElementById('holding-name').value='';document.getElementById('holding-shares').value='';document.getElementById('holding-rate').value='';document.getElementById('holding-frequency').value='4';document.getElementById('holding-dividends').value='';document.getElementById('holding-source').value='US';document.getElementById('holding-currency').value='USD';document.getElementById('holding-tax-rate').value='';document.getElementById('holding-price').value='';document.getElementById('holding-next-payment').value='';document.getElementById('holding-fx-rate').value='';document.getElementById('holding-ex-date').value='';document.getElementById('holding-quote-updated').value='';document.getElementById('holding-market-status').textContent='Market data not loaded';document.getElementById('holding-save-button').textContent='Add holding';updateHoldingEstimate();
-}
-function saveHolding(){
-  const account=document.getElementById('holding-account').value,owner=document.getElementById('holding-owner').value;const name=document.getElementById('holding-name').value.trim();if(!name){toast('Enter a holding name or ticker');return;}
-  const editId=document.getElementById('holding-edit-id').value,taxValue=document.getElementById('holding-tax-rate').value;const prior=editId?Object.values(D.dividend_holdings||{}).flat().find(item=>item.id===editId):null;const holding={...(prior||{}),id:editId||`holding-${Date.now()}`,owner,name,shares:parseFloat(document.getElementById('holding-shares').value)||0,dividendRatePerPayment:parseFloat(document.getElementById('holding-rate').value)||0,frequency:parseInt(document.getElementById('holding-frequency').value,10)||4,sourceCountry:document.getElementById('holding-source').value,currency:document.getElementById('holding-currency').value,withholdingOverride:taxValue===''?null:parseFloat(taxValue),dividends:parseFloat(document.getElementById('holding-dividends').value)||0,currentPrice:parseFloat(document.getElementById('holding-price').value)||0,nextPaymentDate:document.getElementById('holding-next-payment').value||'',fxRate:parseFloat(document.getElementById('holding-fx-rate').value)||0,exDividendDate:document.getElementById('holding-ex-date').value||'',marketDataUpdatedAt:document.getElementById('holding-quote-updated').value||'',marketDataSource:document.getElementById('holding-quote-updated').value?(holdingLookupSource||prior?.marketDataSource||''):(prior?.marketDataSource||'')};
-  D.dividend_holdings??={};['RRSP','FHSA','TFSA','CASH'].forEach(key=>{D.dividend_holdings[key]??=[];});
-  if(editId){Object.keys(D.dividend_holdings).forEach(key=>{D.dividend_holdings[key]=D.dividend_holdings[key].filter(item=>item.id!==editId);});}
-  D.dividend_holdings[account].push(holding);activeHoldingAccount=account;activeHoldingOwner=owner;cancelHolding();mark();renderDividends();renderDivChart();syncAllViews();toast(`${name} ${editId?'updated':`added to ${owner}'s ${account}`}`);
-}
-function deleteHolding(account,id){if(!confirm('Remove this holding?'))return;D.dividend_holdings[account]=(D.dividend_holdings[account]||[]).filter(item=>item.id!==id);mark();renderDividends();renderDivChart();syncAllViews();}
-function setHoldingTransactionType(type,button){
-  holdingTransactionType=type;document.querySelectorAll('#holding-transaction-toggle button').forEach(item=>item.classList.toggle('active',item===button));updateHoldingTransactionPreview();
-}
-function holdingTransactionEntry(){
-  const value=document.getElementById('holding-transaction-item')?.value||'',separator=value.indexOf('::');if(separator<0)return null;
-  const account=value.slice(0,separator),id=value.slice(separator+2),item=(D.dividend_holdings?.[account]||[]).find(entry=>entry.id===id);return item?{account,owner:item.owner||'Nafi',item}:null;
-}
-function showHoldingTransaction(account='',id='',owner=''){
-  cancelHolding();const entries=holdingEntries(account||activeHoldingAccount,owner||activeHoldingOwner);
-  if(!entries.length){toast('Add a holding before recording a transaction');return;}
-  const select=document.getElementById('holding-transaction-item');select.innerHTML=entries.map(entry=>`<option value="${escapeHtml(entry.account)}::${escapeHtml(entry.item.id)}">${escapeHtml(entry.item.name)} — ${entry.owner} ${entry.account}</option>`).join('');
-  if(account&&id)select.value=`${account}::${id}`;
-  holdingTransactionType='buy';document.querySelectorAll('#holding-transaction-toggle button').forEach(item=>item.classList.toggle('active',item.dataset.type==='buy'));
-  document.getElementById('holding-transaction-date').value=new Intl.DateTimeFormat('en-CA').format(new Date());document.getElementById('holding-transaction-shares').value='';
-  document.getElementById('holding-transaction-form').classList.add('open');updateHoldingTransactionPreview();document.getElementById('holding-transaction-shares').focus();
-}
-function cancelHoldingTransaction(){
-  const form=document.getElementById('holding-transaction-form');if(form)form.classList.remove('open');
-}
-function updateHoldingTransactionPreview(){
-  const entry=holdingTransactionEntry();if(!entry)return;
-  const amount=parseFloat(document.getElementById('holding-transaction-shares').value)||0,current=Number(entry.item.shares)||0,after=Math.max(0,current+(holdingTransactionType==='buy'?amount:-amount));
-  const nextItem={...entry.item,shares:after},estimate=holdingEstimate(nextItem,entry.account),currentEstimate=holdingEstimate(entry.item,entry.account),currency=entry.item.currency||'USD';
-  const accountTotals=holdingEntryTotals(holdingEntries(entry.account,entry.owner),(item,value)=>value.annualNet/12);accountTotals[currency]=(accountTotals[currency]||0)+(estimate.annualNet-currentEstimate.annualNet)/12;
-  document.getElementById('holding-transaction-current').textContent=plainNumber(current);document.getElementById('holding-transaction-after').textContent=plainNumber(after);
-  document.getElementById('holding-transaction-holding-monthly').textContent=holdingMoney(estimate.annualNet/12,currency);document.getElementById('holding-transaction-account-monthly').textContent=holdingTotalsText(accountTotals);
-}
-function applyHoldingTransaction(){
-  const entry=holdingTransactionEntry(),amount=parseFloat(document.getElementById('holding-transaction-shares').value)||0,date=document.getElementById('holding-transaction-date').value;
-  if(!entry||amount<=0){toast('Enter the number of shares');return;}if(!date){toast('Choose the transaction date');return;}
-  const before=Number(entry.item.shares)||0;if(holdingTransactionType==='sell'&&amount>before){toast(`You only have ${plainNumber(before)} shares to sell`);return;}
-  const after=before+(holdingTransactionType==='buy'?amount:-amount);entry.item.shares=after;D.dividend_transactions??=[];
-  D.dividend_transactions.unshift({id:`dividend-transaction-${Date.now()}`,holdingId:entry.item.id,owner:entry.owner,account:entry.account,name:entry.item.name,type:holdingTransactionType,shares:amount,sharesBefore:before,sharesAfter:after,date,createdAt:new Date().toISOString()});
-  cancelHoldingTransaction();mark();renderDividends();renderDivChart();syncAllViews();toast(`${holdingTransactionType==='buy'?'Purchase':'Sale'} recorded for ${entry.item.name}`);
-}
-function renderHoldingAccountSummary(){
-  const target=document.getElementById('holding-account-summary');if(!target)return;
-  const ownerLabel=activeHoldingOwner==='COMBINED'?'Both portfolios':`${activeHoldingOwner}'s portfolio`;
-  target.innerHTML=['TOTAL',...HOLDING_ACCOUNTS].map(account=>{const entries=holdingEntries(account),monthly=holdingTotalsText(holdingEntryTotals(entries,(item,estimate)=>estimate.annualNet/12)),annual=holdingTotalsText(holdingEntryTotals(entries,(item,estimate)=>estimate.annualNet));return `<button class="holding-account-stat ${activeHoldingAccount===account?'active':''}" onclick="setHoldingAccount('${account}')"><span>${account==='TOTAL'?ownerLabel:account}</span><strong>${monthly}</strong><small>${annual} annual net</small></button>`;}).join('');
-  renderAccountDripSettings();
-}
-function renderHoldingTransactions(){
-  const target=document.getElementById('holding-transaction-list');if(!target)return;const accounts=activeHoldingAccount==='TOTAL'?HOLDING_ACCOUNTS:[activeHoldingAccount],owners=activeHoldingOwner==='COMBINED'?HOLDING_OWNERS:[activeHoldingOwner];
-  const transactions=(D.dividend_transactions||[]).filter(item=>accounts.includes(item.account)&&owners.includes(item.owner||'Nafi')).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||String(b.createdAt||'').localeCompare(String(a.createdAt||''))).slice(0,8);
-  target.innerHTML=transactions.length?transactions.map(item=>{const date=new Date(`${item.date}T12:00:00`).toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'});return `<div class="holding-transaction-row"><time>${date}</time><div><strong>${escapeHtml(item.name)} ${item.type==='sell'?'sale':'purchase'}</strong><span>${item.owner||'Nafi'} · ${item.account} · ${plainNumber(Number(item.shares)||0)} shares · ${plainNumber(Number(item.sharesAfter)||0)} held after</span></div><strong>${item.type==='sell'?'−':'+'}${plainNumber(Number(item.shares)||0)} shares</strong></div>`;}).join(''):'<div class="holding-empty">No share transactions recorded yet.</div>';
-}
-function renderDividendHoldings(){
-  const list=document.getElementById('holding-list');if(!list||!D)return;const entries=holdingEntries(activeHoldingAccount);const paidTotal=holdingTotalsText(holdingEntryTotals(entries,item=>Number(item.dividends)||0));const estimatedTotal=holdingTotalsText(holdingEntryTotals(entries,(item,estimate)=>estimate.annualNet));const monthlyTotal=holdingTotalsText(holdingEntryTotals(entries,(item,estimate)=>estimate.annualNet/12));const marketTotal=holdingTotalsText(holdingEntryTotals(entries,item=>(Number(item.shares)||0)*(Number(item.currentPrice)||0)));
-  document.querySelectorAll('#dividend-holding-tabs button').forEach(item=>item.classList.toggle('active',item.dataset.account===activeHoldingAccount));
-  document.querySelectorAll('#dividend-owner-tabs button').forEach(item=>item.classList.toggle('active',item.dataset.owner===activeHoldingOwner));
-  const portfolioLabel=activeHoldingOwner==='COMBINED'?'Combined portfolio':`${activeHoldingOwner}'s portfolio`;
-  document.getElementById('holding-list-summary').textContent=`${portfolioLabel} · ${entries.length} holding${entries.length===1?'':'s'} · ${marketTotal} market value · ${monthlyTotal} monthly average · ${estimatedTotal} estimated annual net · ${paidTotal} dividends received`;
-  renderHoldingAccountSummary();
-  list.innerHTML=entries.length?entries.map(({account,owner,item})=>{const estimate=holdingEstimate(item,account),frequency=Number(item.frequency)||4,currency=item.currency||'USD',marketValue=(Number(item.shares)||0)*(Number(item.currentPrice)||0),schedule=item.nextPaymentDate?`next ${new Date(`${item.nextPaymentDate}T12:00:00`).toLocaleDateString('en-CA',{month:'short',day:'numeric'})}`:'add next payment date',drip=accountDripEnabled(owner,account)?'DRIP on':'DRIP off';return `<div class="holding-row"><strong>${escapeHtml(item.name)}<small class="holding-name-meta">${owner} · ${account} · ${drip} · ${plainNumber(Number(item.shares)||0)} shares · ${holdingMoney(holdingRatePerPayment(item),currency)} per share · ${holdingFrequencyLabel(frequency)} · ${plainNumber(estimate.taxRate)}% withholding · ${schedule}</small></strong><div class="holding-value"><b>${holdingMoney(marketValue,currency)}</b><small>stock value</small></div><div class="holding-value"><b>${holdingMoney(estimate.annualNet/12,currency)}</b><small>monthly average</small></div><div class="holding-value holding-paid"><b>${holdingMoney(Number(item.dividends)||0,currency)}</b><small>total dividends received</small></div><div class="holding-actions"><button class="icon-button" aria-label="Buy or sell ${escapeHtml(item.name)}" onclick="showHoldingTransaction('${account}','${item.id}','${owner}')">${uiIcon('transfer')}</button><button class="icon-button" aria-label="Edit ${escapeHtml(item.name)}" onclick="editHolding('${account}','${item.id}')">${uiIcon('edit')}</button><button class="icon-button" aria-label="Remove ${escapeHtml(item.name)}" onclick="deleteHolding('${account}','${item.id}')">${uiIcon('trash')}</button></div></div>`;}).join(''):`<div class="holding-empty">No holdings in this portfolio view yet.</div>`;
-  renderHoldingTransactions();
 }
 
 function historyDayLabel(date) {
@@ -4356,7 +4080,7 @@ function historyChangeValue(change,side) {
   const exists=side==='before'?change.beforeExists:change.afterExists,value=side==='before'?change.before:change.after,root=change.path?.[0],field=change.path?.at(-1);
   if(!exists)return'Not entered';if(value==null||value==='')return'Empty';if(typeof value==='boolean')return value?'On':'Off';
   if(typeof value==='number'){
-    if(field==='apr'||field==='withholdingOverride'||root==='payoff_rates')return`${plainNumber(value)}%`;
+    if(field==='apr'||root==='payoff_rates')return`${plainNumber(value)}%`;
     const moneyRoot=['monthly_tracker','dividends','debt_items','monthly_bills','income','pay_sources','annual_summary','credit_limits','investment_goals','investment_goal','payoff_settings'].includes(root);
     return moneyRoot&&field!=='due_day'&&field!=='frequency'&&field!=='history_retention'?fmtF(value):plainNumber(value);
   }
@@ -4491,57 +4215,6 @@ async function installApp() {
     : 'Open this page in Chrome, tap the browser menu, then choose “Install app” or “Add to Home screen”.');
 }
 
-
-// Check whether the published daily market cache has changed while viewing Dividends.
-// This is a read-only check; it never changes holdings or unsaved form fields.
-let marketCacheLastUpdated='';
-async function checkMarketCacheFreshness(){
-  if(document.hidden||!document.getElementById('tab-dividends')?.classList.contains('active'))return;
-  try{
-    const response=await fetch('/data/market-data.json',{cache:'no-store'});
-    if(!response.ok)return;
-    const data=await response.json();
-    if(!data?.updated_at)return;
-    if(marketCacheLastUpdated&&marketCacheLastUpdated!==data.updated_at){
-      const status=document.getElementById('holding-market-status');
-      if(status&&!document.getElementById('holding-form')?.classList.contains('open')){
-        status.textContent='New market data available. Open a holding and select Fetch market data to review it.';
-      }
-    }
-    marketCacheLastUpdated=data.updated_at;
-  }catch(e){/* A failed background check must not interrupt finance entry. */}
-}
-setInterval(checkMarketCacheFreshness,5*60*1000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkMarketCacheFreshness();});
-document.addEventListener('click',event=>{if(event.target.closest('[data-tab="dividends"]'))queueMicrotask(checkMarketCacheFreshness);});
-
-// Market-data lookup is opt-in: no automatic modification of saved holdings.
-async function lookupHoldingMarketData(){
-  const symbol=document.getElementById('holding-name').value.trim().toUpperCase();
-  const status=document.getElementById('holding-market-status');
-  const button=document.getElementById('holding-lookup-btn');
-  if(!/^[A-Z0-9][A-Z0-9.\-^]{0,19}$/.test(symbol)){status.textContent='Enter a valid stock or ETF ticker first.';return;}
-  button.disabled=true;status.textContent=`Looking up ${symbol}…`;
-  try{
-    const response=await fetch(`/.netlify/functions/market-data?symbol=${encodeURIComponent(symbol)}`,{headers:{Accept:'application/json'},cache:'no-store'});
-    const data=await response.json();
-    if(!response.ok)throw new Error(data.error||`Lookup failed (${response.status})`);
-    const changes=[];
-    function setNumber(id,value,label){if(Number.isFinite(Number(value))&&Number(value)>0){document.getElementById(id).value=String(value);changes.push(label);}}
-    if(data.quote?.price!=null)setNumber('holding-price',data.quote.price,'share price');
-    if(data.dividend?.amount!=null)setNumber('holding-rate',data.dividend.amount,'dividend per share');
-    if(data.dividend?.frequency&&[1,2,4,6,12,26,52].includes(data.dividend.frequency)){document.getElementById('holding-frequency').value=String(data.dividend.frequency);changes.push('payment frequency');}
-    if(data.dividend?.paymentDate && data.dividend.paymentDate>=new Date().toISOString().slice(0,10)){document.getElementById('holding-next-payment').value=data.dividend.paymentDate;changes.push('payment date');}
-    if(data.dividend?.exDate){document.getElementById('holding-ex-date').value=data.dividend.exDate;changes.push('ex-dividend date');}
-    if(['CAD','USD'].includes(data.quote?.currency)){document.getElementById('holding-currency').value=data.quote.currency;document.getElementById('holding-source').value=data.quote.currency==='CAD'?'CA':'US';changes.push('currency');}
-    if(data.fx?.cadPerUnit!=null)setNumber('holding-fx-rate',data.fx.cadPerUnit,'CAD conversion');
-    document.getElementById('holding-quote-updated').value=data.fetchedAt||new Date().toISOString();
-    holdingLookupSource=data.source||'Unknown provider';
-    updateHoldingEstimate();
-    status.textContent=`${data.source||'Market data'} · ${symbol} · ${changes.length?`Updated ${changes.join(', ')}. `:'No supported quote/dividend fields returned. '}Review before saving. ${data.warnings?.join(' ')||''}`;
-  }catch(error){status.textContent=`Market lookup unavailable: ${error.message}. Your manual values are unchanged.`;}
-  finally{button.disabled=false;}
-}
 
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   navigator.serviceWorker.register('./sw.js').catch(() => {});
