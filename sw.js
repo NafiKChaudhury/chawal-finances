@@ -1,4 +1,4 @@
-const CACHE_NAME = 'chawal-finances-v33';
+const CACHE_NAME = 'chawal-finances-v34-redesign';
 const APP_SHELL = [
   './',
   './index.html',

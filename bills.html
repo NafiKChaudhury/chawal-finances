@@ -6,7 +6,7 @@
      like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=07e5dea3-43cb-445f-986e-c1978bfdff67
      Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <meta name="theme-color" content="#1a1d27"/>
+  <meta name="theme-color" content="#06111f"/>
   <script>{const p=localStorage.getItem('chawal_theme')||'system';document.documentElement.dataset.theme=p==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):p;}</script>
   <meta name="mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -923,6 +923,100 @@
     @media (max-width:899px) { .debt-summary-top strong { font-size:32px; } }
     @media (max-width:480px) { .debt-summary-top strong { font-size:29px; } }
 
+    /* Premium dashboard visual system */
+    :root {
+      --bg:#f3f7fc;--card:#ffffff;--card-2:#f7f9fc;--ink:#10213a;--ink-2:#40506a;
+      --muted:#6f7f98;--faint:#a7b2c3;--line:#dbe3ee;--line-soft:#e9eef5;
+      --accent:#176bff;--accent-hover:#0f5dde;--tint:#eaf2ff;--tint-ink:#1359cd;
+      --seg:#edf2f8;--seg-on:#ffffff;--positive:#168a65;--danger:#d94c5c;--negative:#d94c5c;
+      --income:#10b99a;--outflow:#ef5968;--investment:#8b6df2;
+      --debt-credit:#4267a8;--debt-loans:#5b7fbd;--debt-cars:#7e9bc9;
+      --chart:#10b99a;--debt:#ef5968;--neutral-bar:#8b99ad;--neutral-bar-soft:#c7d0dc;
+      --control-border:#cbd6e5;--violet:#8b6df2;--aqua:#10b99a;--sun:#e8b842;--coral:#ef5968;--rose:#c85aa5;
+      --overlay:rgba(7,18,36,.55);--sidebar-width:244px;
+    }
+    html[data-theme="dark"] {
+      --bg:#06111f;--card:#0b1b2d;--card-2:#10243a;--ink:#f2f7ff;--ink-2:#bdcbe0;
+      --muted:#8193ae;--faint:#566983;--line:#1b3854;--line-soft:#142e48;
+      --accent:#2979ff;--accent-hover:#438aff;--tint:#102f59;--tint-ink:#77a9ff;
+      --seg:#071726;--seg-on:#17324f;--positive:#3dd6a3;--danger:#ff6978;--negative:#ff6978;
+      --income:#2dd6b4;--outflow:#ff6978;--investment:#a98bff;
+      --debt-credit:#557cc0;--debt-loans:#7297cf;--debt-cars:#96b2db;
+      --chart:#2dd6b4;--debt:#ff6978;--neutral-bar:#647691;--neutral-bar-soft:#33475f;
+      --control-border:#2a4663;--violet:#a98bff;--aqua:#2dd6b4;--sun:#f1c85a;--coral:#ff6978;--rose:#e279be;
+      --overlay:rgba(1,7,15,.78);
+    }
+    body { background:var(--bg)!important;color:var(--ink)!important;font-size:14px;line-height:1.45; }
+    .app-sidebar { width:var(--sidebar-width);padding:26px 18px 20px;background:var(--card);border-color:var(--line-soft); }
+    .sidebar-brand { padding:0 8px 30px;font-size:15px;letter-spacing:-.02em; }
+    .brand-mark { width:38px;height:38px;border-radius:12px;background:var(--accent)!important;font-size:12px; }
+    .sidebar-nav { gap:7px; }
+    .side-link { height:46px;padding:0 13px;border-radius:11px;color:var(--muted);font-size:13px; }
+    .side-link.active { background:var(--tint);color:var(--tint-ink); }
+    .side-link .ui-icon { width:19px;height:19px; }
+    main { width:calc(100% - var(--sidebar-width));max-width:1510px;margin-left:var(--sidebar-width);padding:0 34px 64px; }
+    .page-intro { min-height:84px;margin:0 0 26px;padding:18px 0;align-items:center;border-bottom:1px solid var(--line-soft); }
+    .page-intro h2 { margin:2px 0 0;font-size:28px;font-weight:760; }
+    .page-kicker { color:var(--muted);font-size:10px;letter-spacing:.12em; }
+    #page-description { display:block;margin:4px 0 0;color:var(--muted);font-size:12px; }
+    .page-actions { align-items:center; }
+    .top-search { width:300px;height:44px;padding:0 12px;display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:10px;background:var(--card-2);color:var(--muted);font:inherit;font-size:12px;text-align:left;cursor:pointer; }
+    .top-search span { flex:1; }.top-search kbd { padding:2px 6px;border:1px solid var(--line);border-radius:5px;background:var(--card);color:var(--faint);font:600 10px Manrope,sans-serif; }
+    .btn-primary,.btn-secondary,.btn-add,.btn-sm { border-radius:10px; }
+    .btn-primary { box-shadow:0 8px 20px color-mix(in srgb,var(--accent) 18%,transparent); }
+    .section,.sum-card,.dividend-stat,.debt-summary-card,.debt-category { border-color:var(--line)!important;border-radius:15px!important;background:var(--card)!important;box-shadow:0 10px 32px color-mix(in srgb,var(--bg) 72%,transparent)!important; }
+    .sum-grid { gap:16px; }.sum-card { min-height:132px;padding:20px; }.sum-card .v { font-size:27px; }.sum-card .l { text-transform:uppercase;letter-spacing:.08em;font-size:10px; }
+    .sum-card:nth-child(1) .sum-progress i { background:var(--danger); }.sum-card:nth-child(2) .sum-progress i { background:var(--outflow); }.sum-card:nth-child(3) .sum-progress i { background:var(--violet); }
+    .sec-head { min-height:36px;align-items:center; }.sec-head h2 { font-size:15px; }.sec-actions { display:flex;gap:9px;align-items:center; }
+    .workspace-nav { width:max-content;max-width:100%;margin:0 0 18px;padding:4px;display:flex;gap:4px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--card);scrollbar-width:none; }
+    .workspace-nav::-webkit-scrollbar { display:none; }.workspace-nav button { min-height:38px;padding:0 15px;border:0;border-radius:8px;background:transparent;color:var(--muted);font:600 12px Manrope,sans-serif;white-space:nowrap;cursor:pointer; }.workspace-nav button.active { background:var(--tint);color:var(--tint-ink); }
+    .feature-stat-grid { margin:0 0 18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px; }
+    .feature-stat { min-height:120px;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--card); }
+    .feature-stat .stat-icon { width:34px;height:34px;margin-bottom:18px;display:grid;place-items:center;border-radius:9px;background:var(--tint);color:var(--tint-ink); }
+    .feature-stat .stat-label { color:var(--muted);font-size:11px;font-weight:650; }.feature-stat strong { display:block;margin-top:5px;color:var(--ink);font-size:24px;font-variant-numeric:tabular-nums; }.feature-stat small { display:block;margin-top:5px;color:var(--muted);font-size:11px; }
+    .feature-stat.positive .stat-icon { background:color-mix(in srgb,var(--positive) 13%,var(--card));color:var(--positive); }.feature-stat.danger .stat-icon { background:color-mix(in srgb,var(--danger) 13%,var(--card));color:var(--danger); }.feature-stat.analytics .stat-icon { background:color-mix(in srgb,var(--violet) 13%,var(--card));color:var(--violet); }
+    .reports-grid { display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);gap:18px; }.reports-grid .section { min-width:0;margin:0; }.reports-grid .reports-wide { grid-column:1/-1;margin-bottom:18px; }
+    .activity-section { margin-top:18px; }.reports-stats { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .chart-wrap-lg { min-height:290px;height:290px; }
+    .overview-visual-grid { grid-template-columns:minmax(0,1.4fr) minmax(330px,.6fr); }
+    .debt-mix-chart { width:150px;height:150px; }.debt-mix-center strong { font-size:17px; }
+    .item-row { min-height:72px;padding:12px 4px;border-color:var(--line-soft);background:transparent; }.item-name { color:var(--ink)!important;font-size:13px;font-weight:650; }.item-sub { color:var(--muted)!important;font-size:11px; }.item-amount,.item-amount.green,.item-amount.yellow { color:var(--ink)!important;font-size:14px;font-variant-numeric:tabular-nums; }.item-actions { display:flex;gap:7px; }
+    .cat-hdr { margin-top:12px;padding:14px 4px 7px;border-color:var(--line-soft);color:var(--muted);font-size:10px; }
+    input,select { min-height:44px;border-color:var(--control-border)!important;border-radius:10px!important;background:var(--card-2)!important;color:var(--ink)!important; }
+    .edit-form { border-color:var(--line)!important;border-radius:12px!important;background:var(--card-2)!important; }
+    .tracker-table td,.ann-table td,.dividend-table td { color:var(--ink);border-color:var(--line-soft); }.tracker-table th,.ann-table th,.dividend-table th { color:var(--muted);border-color:var(--line); }
+    .tracker-table tr.section-header td,.tracker-table tr.section-total td,.tracker-table tr.group-subtotal td { background:var(--card-2)!important;color:var(--ink)!important; }
+    .cell-display,.cell-display.positive,.cell-display.negative,.cell-display.orange-v,.cell-display.blue-v,.cell-display.red-v { color:var(--ink); }
+    .history-entry { border-color:var(--line-soft); }.history-icon { background:var(--tint);color:var(--tint-ink); }
+    .mobile-tab-bar { background:var(--card)!important;border-color:var(--line)!important; }
+    .mobile-tab.active { color:var(--accent)!important; }
+    #save-bar { left:calc(var(--sidebar-width) + 24px);right:24px;bottom:18px;border:1px solid var(--line);border-radius:12px;background:var(--card); }
+    #save-bar:not(.visible) { display:none!important; }
+
+    @media (max-width:1100px) {
+      .feature-stat-grid,.reports-stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .reports-grid { grid-template-columns:1fr; }.reports-grid .reports-wide { grid-column:auto; }
+      .top-search { width:230px; }
+    }
+    @media (max-width:899px) {
+      main { width:100%;margin:0;padding:0 16px calc(92px + env(safe-area-inset-bottom));overflow:hidden; }
+      .page-intro { min-height:74px;margin-bottom:18px;padding:14px 0; }.page-intro h2 { font-size:24px; }.page-kicker { font-size:9px; }#page-description { display:none; }
+      #overview-actions { display:flex!important; }.top-search { width:44px;padding:0;justify-content:center;background:var(--card); }.top-search span,.top-search kbd { display:none; }.page-actions .btn-primary { width:44px;padding:0;font-size:0; }.page-actions .btn-primary .ui-icon { width:19px;height:19px; }
+      .workspace-nav { width:100%;margin-bottom:14px; }.workspace-nav button { flex:1; }
+      .feature-stat-grid,.reports-stats { grid-template-columns:repeat(2,minmax(0,1fr));gap:10px; }.feature-stat { min-height:108px;padding:15px; }.feature-stat strong { font-size:20px; }.feature-stat .stat-icon { margin-bottom:13px; }
+      .section { padding:16px!important;border-radius:14px!important; }.sec-head { align-items:flex-start;gap:10px; }.sec-actions { width:100%;flex-wrap:wrap; }.sec-actions .btn-secondary,.sec-actions .btn-primary { flex:1; }
+      .overview-visual-grid,.reports-grid { grid-template-columns:1fr; }.chart-wrap-lg { min-height:250px;height:250px; }
+      .mobile-tab-bar { height:calc(66px + env(safe-area-inset-bottom));padding:5px 4px env(safe-area-inset-bottom);grid-template-columns:repeat(5,1fr); }
+      .mobile-tab { min-height:56px;font-size:10px; }.mobile-tab.active { background:transparent!important;box-shadow:none!important; }
+      .mobile-more-sheet,.quick-add-sheet,.mobile-cell-sheet { background:var(--card)!important;border-color:var(--line)!important; }
+      .item-row { gap:8px; }.item-actions { width:100%;justify-content:flex-end; }.item-actions .btn-sm { min-height:40px; }
+      #save-bar { left:10px;right:10px;bottom:calc(76px + env(safe-area-inset-bottom)); }
+    }
+    @media (max-width:480px) {
+      .feature-stat-grid,.reports-stats { grid-template-columns:1fr 1fr; }.feature-stat { min-width:0; }.feature-stat strong { font-size:18px; }
+      .workspace-nav button { padding:0 10px;font-size:11px; }.sec-actions { display:grid;grid-template-columns:1fr 1fr; }
+    }
+
     @media print {
       header .print-btn, #save-bar, .page-tabs, .mobile-tab-bar, .mobile-more-overlay, .quick-add-fab, .quick-add-overlay, .mobile-cell-overlay, .btn-add, .btn-sm, .btn-edit, .btn-del, #toast,
       .item-actions, .edit-form, .payoff-sub-head button, .year-tabs { display:none !important; }
@@ -959,6 +1053,11 @@
   <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 15H6L5 6M10 11v6M14 11v6"/></symbol>
   <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 7 4 12l5 5M4 12h9a7 7 0 0 1 7 7"/></symbol>
   <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 5h14a2 2 0 0 1 2 2v12H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M16 11h6v5h-6a2.5 2.5 0 0 1 0-5Z"/></symbol>
+  <symbol id="i-bills" viewBox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v18l-3-2-3 2-3-2-3 2-3-2-3 2V4a2 2 0 0 1 2-2h2"/><path d="M7 7h10M7 11h10M7 15h6"/></symbol>
+  <symbol id="i-income" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h10M7 15h4M16 13v4M14 15h4"/></symbol>
+  <symbol id="i-reports" viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19V3"/><path d="M2 21h20"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></symbol>
+  <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></symbol>
 </svg>
 
 <div id="toast" class="toast"></div>
@@ -967,10 +1066,10 @@
   <div class="sidebar-brand"><div class="brand-mark">CF</div><strong>Chawal Finances</strong></div>
   <nav class="sidebar-nav">
     <button class="side-link active" data-tab="annual" onclick="switchTab('annual')"><svg class="ui-icon"><use href="#i-overview"/></svg><span>Overview</span></button>
-    <button class="side-link" data-tab="tracker" onclick="switchTab('tracker')"><svg class="ui-icon"><use href="#i-tracker"/></svg><span>Tracker</span></button>
-    <button class="side-link" data-tab="debt" onclick="switchTab('debt')"><svg class="ui-icon"><use href="#i-debt"/></svg><span>Debts</span></button>
+    <button class="side-link" data-tab="bills" onclick="switchTab('bills')"><svg class="ui-icon"><use href="#i-bills"/></svg><span>Bills</span></button>
+    <button class="side-link" data-tab="income" onclick="switchTab('income')"><svg class="ui-icon"><use href="#i-income"/></svg><span>Income</span></button>
     <button class="side-link" data-tab="dividends" onclick="switchTab('dividends')"><svg class="ui-icon"><use href="#i-dividends"/></svg><span>Dividends</span></button>
-    <button class="side-link" data-tab="history" onclick="switchTab('history')"><svg class="ui-icon"><use href="#i-history"/></svg><span>History</span></button>
+    <button class="side-link" data-tab="history" onclick="switchTab('history')"><svg class="ui-icon"><use href="#i-reports"/></svg><span>Reports</span></button>
     <button class="side-link" data-tab="settings" onclick="switchTab('settings')"><svg class="ui-icon"><use href="#i-settings"/></svg><span>Settings</span></button>
   </nav>
   <div class="sidebar-status"><span class="status-dot"></span><span id="last-saved">Saved on this device</span></div>
@@ -1013,9 +1112,9 @@
 
 <main>
   <div class="page-intro">
-    <div><div class="page-kicker" id="page-kicker">October 2026</div><h2 id="page-title">Overview</h2></div>
+    <div><div class="page-kicker" id="page-kicker">October 2026</div><h2 id="page-title">Overview</h2><p id="page-description">A clear view of your finances, all in one place.</p></div>
     <div class="page-actions" id="overview-actions">
-      <button class="btn-secondary" onclick="openSearch()"><svg class="ui-icon"><use href="#i-search"/></svg>Search</button>
+      <button class="top-search" onclick="openSearch()"><svg class="ui-icon"><use href="#i-search"/></svg><span>Search your finances</span><kbd>Ctrl K</kbd></button>
       <button class="btn-primary" onclick="openQuickAdd()"><svg class="ui-icon"><use href="#i-plus"/></svg>Quick add</button>
     </div>
     <div class="page-actions" id="debt-actions" hidden>
@@ -1079,6 +1178,7 @@
 
   <!-- ── DEBT BALANCES ── -->
   <div id="tab-debt" class="tab-content">
+    <div class="workspace-nav" aria-label="Bills workspace"><button onclick="switchTab('bills')">Recurring bills</button><button class="active" onclick="switchTab('debt')">Debts</button><button onclick="switchTab('tracker')">Monthly tracker</button></div>
     <div id="debt-summary"></div>
     <div class="section debt-list-shell">
       <div class="edit-form" id="debt-add-form">
@@ -1146,6 +1246,7 @@
 
   <!-- ── MONTHLY TRACKER ── -->
   <div id="tab-tracker" class="tab-content">
+    <div class="workspace-nav" aria-label="Bills workspace"><button onclick="switchTab('bills')">Recurring bills</button><button onclick="switchTab('debt')">Debts</button><button class="active" onclick="switchTab('tracker')">Monthly tracker</button></div>
     <div class="tracker-topbar">
       <div class="year-manager">
         <div class="stepper year-stepper" id="year-tabs"></div>
@@ -1222,8 +1323,10 @@
 
   <!-- ── FIXED BILLS ── -->
   <div id="tab-bills" class="tab-content">
+    <div class="workspace-nav" aria-label="Bills workspace"><button class="active" onclick="switchTab('bills')">Recurring bills</button><button onclick="switchTab('debt')">Debts</button><button onclick="switchTab('tracker')">Monthly tracker</button></div>
+    <div id="bills-summary" class="feature-stat-grid"></div>
     <div class="section">
-      <div class="sec-head"><h2>Monthly Fixed Bills</h2><button class="btn-add" onclick="addBill()">+ Add</button></div>
+      <div class="sec-head"><h2>Recurring bills</h2><button class="btn-primary" onclick="addBill()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add bill</button></div>
       <div class="edit-form" id="bill-add-form">
         <div class="form-row">
           <div class="fg"><label>Name</label><input id="ba-name" placeholder="e.g. Netflix"/></div>
@@ -1242,8 +1345,9 @@
 
   <!-- ── INCOME ── -->
   <div id="tab-income" class="tab-content">
+    <div id="income-summary" class="feature-stat-grid"></div>
     <div class="section">
-      <div class="sec-head"><h2>Income Sources</h2><button class="btn-add" onclick="addIncome()">+ Add</button></div>
+      <div class="sec-head"><h2>Income sources</h2><div class="sec-actions"><button class="btn-secondary" onclick="openIncomeEntry()"><svg class="ui-icon"><use href="#i-calendar"/></svg>Monthly tracker</button><button class="btn-primary" onclick="addIncome()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add income</button></div></div>
       <div class="edit-form" id="income-add-form">
         <div class="form-row">
           <div class="fg"><label>Name</label><input id="ia-name" placeholder="e.g. Side Income"/></div>
@@ -1279,16 +1383,25 @@
   </div>
   <!-- HISTORY -->
   <div id="tab-history" class="tab-content">
-    <div class="history-toolbar">
-      <div class="history-filters" id="history-filters">
-        <button class="active" data-filter="all" onclick="setHistoryFilter('all',this)">All</button>
-        <button data-filter="money" onclick="setHistoryFilter('money',this)">Amounts</button>
-        <button data-filter="structure" onclick="setHistoryFilter('structure',this)">Added or removed</button>
-        <button data-filter="restore" onclick="setHistoryFilter('restore',this)">Restored</button>
-      </div>
-      <span id="history-count" class="history-count"></span>
+    <div id="reports-summary" class="feature-stat-grid reports-stats"></div>
+    <div class="reports-grid">
+      <div class="section"><div class="sec-head"><h2>Income and bills</h2><span class="muted-note">Year by year</span></div><div class="chart-wrap-lg"><canvas id="reports-cashflow-chart"></canvas></div></div>
+      <div class="section"><div class="sec-head"><h2>Debt mix</h2><span class="muted-note">Current balances</span></div><div class="chart-wrap-lg"><canvas id="reports-debt-chart"></canvas></div></div>
+      <div class="section reports-wide"><div class="sec-head"><h2>Dividend growth</h2><span class="muted-note">Annual totals</span></div><div class="chart-wrap-lg"><canvas id="reports-dividend-chart"></canvas></div></div>
     </div>
-    <div id="history-list" class="history-list"></div>
+    <div class="section activity-section">
+      <div class="sec-head"><h2>Activity history</h2><span class="muted-note">Review changes and restore earlier values</span></div>
+      <div class="history-toolbar">
+        <div class="history-filters" id="history-filters">
+          <button class="active" data-filter="all" onclick="setHistoryFilter('all',this)">All</button>
+          <button data-filter="money" onclick="setHistoryFilter('money',this)">Amounts</button>
+          <button data-filter="structure" onclick="setHistoryFilter('structure',this)">Added or removed</button>
+          <button data-filter="restore" onclick="setHistoryFilter('restore',this)">Restored</button>
+        </div>
+        <span id="history-count" class="history-count"></span>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </div>
   </div>
 
   <!-- SETTINGS -->
@@ -1298,7 +1411,7 @@
         <div class="sec-head"><h2>General</h2></div>
         <div class="setting-row"><span><strong>Appearance</strong><small>Choose the visual theme used on this device</small></span><div class="segmented settings-theme-picker"><button data-theme-choice="light" onclick="setTheme('light')">Light mode</button><button data-theme-choice="dark" onclick="setTheme('dark')">Dark mode</button><button data-theme-choice="system" onclick="setTheme('system')">Match device</button></div></div>
         <label class="setting-row"><span><strong>Currency</strong><small>Used for values throughout the app</small></span><select id="setting-currency" onchange="saveAppSetting('currency',this.value)"><option value="CAD">CAD — Canadian Dollar</option><option value="USD">USD — US Dollar</option></select></label>
-        <label class="setting-row"><span><strong>Start screen</strong><small>Where Chawal Finances opens</small></span><select id="setting-default-tab" onchange="saveAppSetting('default_tab',this.value)"><option value="annual">Overview</option><option value="tracker">Tracker</option><option value="debt">Debts</option><option value="dividends">Dividends</option></select></label>
+        <label class="setting-row"><span><strong>Start screen</strong><small>Where Chawal Finances opens</small></span><select id="setting-default-tab" onchange="saveAppSetting('default_tab',this.value)"><option value="annual">Overview</option><option value="bills">Bills</option><option value="income">Income</option><option value="dividends">Dividends</option><option value="history">Reports</option><option value="settings">Settings</option></select></label>
         <label class="setting-row"><span><strong>History retention</strong><small>Older entries are removed automatically</small></span><select id="setting-history-days" onchange="saveAppSetting('history_retention',Number(this.value))"><option value="30">30 days</option><option value="90">90 days</option><option value="180">180 days</option><option value="365">1 year</option></select></label>
       </div>
       <div class="section settings-card pay-schedules-card">
@@ -1370,8 +1483,8 @@
 
 <nav class="mobile-tab-bar" aria-label="Chawal Finances sections">
   <button class="mobile-tab active" data-tab="annual" onclick="mobileSwitchTab('annual')"><svg class="ui-icon"><use href="#i-overview"/></svg><span>Overview</span></button>
-  <button class="mobile-tab" data-tab="tracker" onclick="mobileSwitchTab('tracker')"><svg class="ui-icon"><use href="#i-tracker"/></svg><span>Tracker</span></button>
-  <button class="mobile-tab" data-tab="debt" onclick="mobileSwitchTab('debt')"><svg class="ui-icon"><use href="#i-debt"/></svg><span>Debts</span></button>
+  <button class="mobile-tab" data-tab="bills" onclick="mobileSwitchTab('bills')"><svg class="ui-icon"><use href="#i-bills"/></svg><span>Bills</span></button>
+  <button class="mobile-tab" data-tab="income" onclick="mobileSwitchTab('income')"><svg class="ui-icon"><use href="#i-income"/></svg><span>Income</span></button>
   <button class="mobile-tab" data-tab="dividends" onclick="mobileSwitchTab('dividends')"><svg class="ui-icon"><use href="#i-dividends"/></svg><span>Dividends</span></button>
   <button class="mobile-tab" data-tab="more" onclick="openMobileMore()"><svg class="ui-icon"><use href="#i-more"/></svg><span>More</span></button>
 </nav>
@@ -1381,7 +1494,7 @@
     <div class="mobile-more-grabber"></div>
     <div class="mobile-more-head"><strong>More</strong><button onclick="closeMobileMore()">Done</button></div>
     <div class="mobile-more-grid">
-      <button class="mobile-more-item" onclick="mobileSwitchTab('history')"><svg class="ui-icon"><use href="#i-history"/></svg><span>History</span><svg class="ui-icon mobile-more-chevron"><use href="#i-chevron-right"/></svg></button>
+      <button class="mobile-more-item" onclick="mobileSwitchTab('history')"><svg class="ui-icon"><use href="#i-reports"/></svg><span>Reports</span><svg class="ui-icon mobile-more-chevron"><use href="#i-chevron-right"/></svg></button>
       <button class="mobile-more-item" onclick="mobileSwitchTab('settings')"><svg class="ui-icon"><use href="#i-settings"/></svg><span>Settings</span><svg class="ui-icon mobile-more-chevron"><use href="#i-chevron-right"/></svg></button>
       <button class="mobile-more-item" onclick="closeMobileMore();openQuickAdd()"><svg class="ui-icon"><use href="#i-plus"/></svg><span>Quick add</span><svg class="ui-icon mobile-more-chevron"><use href="#i-chevron-right"/></svg></button>
     </div>
@@ -1397,6 +1510,8 @@
     <h3>Quick add</h3>
     <p class="sheet-subtitle">What would you like to add?</p>
     <div class="quick-add-list">
+      <button class="quick-add-choice" onclick="quickAdd('bill')"><svg class="ui-icon"><use href="#i-bills"/></svg>Recurring bill</button>
+      <button class="quick-add-choice" onclick="quickAdd('income')"><svg class="ui-icon"><use href="#i-income"/></svg>Income source</button>
       <button class="quick-add-choice" onclick="quickAdd('debt')"><svg class="ui-icon"><use href="#i-debt"/></svg>Debt account</button>
       <button class="quick-add-choice" onclick="quickAdd('investment')"><svg class="ui-icon"><use href="#i-tracker"/></svg>Investment line</button>
       <button class="quick-add-choice" onclick="quickAdd('dividend')"><svg class="ui-icon"><use href="#i-dividends"/></svg>Dividend entry</button>
@@ -1461,7 +1576,7 @@ let activeTrackerSection = 'debt_payments';
 let trackerSelectedRow = null;
 let showInactiveTrackerLines = false;
 const paidOffVisible = {};
-let debtChart = null, divChart = null, annualDivChart = null, annIncChart = null, annBillsChart = null, annDebtChart = null, annDivChart = null, projectionChart = null, monthlyPictureChart = null, debtMixChart = null, annualGrowthChart = null;
+let debtChart = null, divChart = null, annualDivChart = null, annIncChart = null, annBillsChart = null, annDebtChart = null, annDivChart = null, projectionChart = null, monthlyPictureChart = null, debtMixChart = null, annualGrowthChart = null, reportsCashflowChart = null, reportsDebtChart = null, reportsDividendChart = null;
 let growthChartMode = 'totals';
 
 // ── Row definitions ──────────────────────────────────────────────────────────
@@ -1763,7 +1878,7 @@ async function load() {
   ORIG = JSON.parse(JSON.stringify(D));
   updateSaveStatus(loadedFromCloud?'Synced':'Saved on this device',loadedFromCloud?'synced':'device');
   renderAll();
-  const firstTab = ['annual','tracker','debt','dividends'].includes(D.settings.default_tab) ? D.settings.default_tab : 'annual';
+  const firstTab = ['annual','bills','tracker','debt','income','dividends','history','settings'].includes(D.settings.default_tab) ? D.settings.default_tab : 'annual';
   if (firstTab !== 'annual') switchTab(firstTab);
 }
 
@@ -1781,7 +1896,7 @@ function ensureDataShape() {
   D.settings = D.settings && typeof D.settings === 'object' ? D.settings : {};
   D.settings.currency = D.settings.currency || 'CAD';
   D.settings.default_tab = D.settings.default_tab || 'annual';
-  if (!['annual','tracker','debt','dividends'].includes(D.settings.default_tab)) D.settings.default_tab='annual';
+  if (!['annual','bills','tracker','debt','income','dividends','history','settings'].includes(D.settings.default_tab)) D.settings.default_tab='annual';
   D.settings.history_retention = Number(D.settings.history_retention) || 90;
   D.investment_goals = D.investment_goals && typeof D.investment_goals === 'object' ? D.investment_goals : {};
   Object.keys(D.monthly_tracker).forEach(year=>{ D.investment_goals[year]=35000; });
@@ -2416,6 +2531,16 @@ function cancelCell(tblId, rowId, idx, orig) {
 
 // ── FIXED BILLS ───────────────────────────────────────────────────────────────
 function renderBillsList() {
+  const total=D.monthly_bills.reduce((sum,bill)=>sum+(Number(bill.amount)||0),0);
+  const categories=new Set(D.monthly_bills.map(bill=>bill.category));
+  const dueDays=D.monthly_bills.map(bill=>Number(bill.due_day)||1).sort((a,b)=>a-b);
+  const nextDay=dueDays.find(day=>day>=new Date().getDate())||dueDays[0];
+  const summary=document.getElementById('bills-summary');
+  if(summary)summary.innerHTML=`
+    <article class="feature-stat danger"><div class="stat-icon">${uiIcon('bills')}</div><div class="stat-label">Monthly bills</div><strong>${fmtF(total)}</strong><small>${D.monthly_bills.length} recurring bill${D.monthly_bills.length===1?'':'s'}</small></article>
+    <article class="feature-stat"><div class="stat-icon">${uiIcon('calendar')}</div><div class="stat-label">Annual total</div><strong>${fmt(total*12)}</strong><small>Based on current recurring bills</small></article>
+    <article class="feature-stat"><div class="stat-icon">${uiIcon('overview')}</div><div class="stat-label">Categories</div><strong>${categories.size}</strong><small>Organized spending groups</small></article>
+    <article class="feature-stat positive"><div class="stat-icon">${uiIcon('arrow-up-right')}</div><div class="stat-label">Next due date</div><strong>${nextDay?ord(nextDay):'Not set'}</strong><small>${nextDay?'Next scheduled bill':'Add a due date to a bill'}</small></article>`;
   const cats=[...new Set(D.monthly_bills.map(b=>b.category))];
   let html='';
   for (const cat of cats) {
@@ -2477,6 +2602,14 @@ function delBill(id){
 
 // ── INCOME ────────────────────────────────────────────────────────────────────
 function renderIncomeList() {
+  const monthly=D.income.reduce((sum,item)=>sum+(Number(item.amount)||0),0);
+  const current=getCurrentTrackerSnapshot();
+  const summary=document.getElementById('income-summary');
+  if(summary)summary.innerHTML=`
+    <article class="feature-stat positive"><div class="stat-icon">${uiIcon('income')}</div><div class="stat-label">Monthly income</div><strong>${fmtF(monthly)}</strong><small>${D.income.length} income source${D.income.length===1?'':'s'}</small></article>
+    <article class="feature-stat"><div class="stat-icon">${uiIcon('calendar')}</div><div class="stat-label">Annual estimate</div><strong>${fmt(monthly*12)}</strong><small>At the current monthly pace</small></article>
+    <article class="feature-stat analytics"><div class="stat-icon">${uiIcon('reports')}</div><div class="stat-label">Entered this month</div><strong>${current.income>0?fmtF(current.income):'Not yet'}</strong><small>From the monthly tracker</small></article>
+    <article class="feature-stat"><div class="stat-icon">${uiIcon('wallet')}</div><div class="stat-label">After debt payments</div><strong>${current.income>0?fmtF(current.income-current.debtPayments):'Not yet'}</strong><small>${current.income>0?'Income less debt payments':'Enter this month’s income'}</small></article>`;
   let html='';
   for (const it of D.income) {
     html+=`<div class="item-row">
@@ -3603,9 +3736,12 @@ function renderAll() {
   renderMonthlyPicture();
   renderDebtOutlook();
   renderDebtList();
+  renderBillsList();
+  renderIncomeList();
   renderTracker(activeYear);
   renderDividends();
   renderDivChart();
+  renderReports();
   renderPayoffProjections();
   renderPaySources();
   renderHistory();
@@ -3618,10 +3754,13 @@ function syncAllViews() {
   renderMonthlyPicture();
   renderDebtOutlook();
   renderDebtList();
+  renderBillsList();
+  renderIncomeList();
   renderPayoffProjections();
   const active=document.querySelector('.tab-content.active')?.id;
   if(active==='tab-annual')renderAnnualSummary();
   if(active==='tab-dividends'){renderDividends();renderDivChart();}
+  if(active==='tab-history')renderReports();
   if(active==='tab-settings')renderPaySources();
 }
 
@@ -3954,6 +4093,7 @@ function setTrackerSection(section,button) {
   if(removeButton)removeButton.disabled=!trackerSelectedRow||trackerSelectedRow.section!==section;
   updateTrackerInactiveToggle(activeYear);
   applyMobileMonthView();
+  syncActiveNavigation();
 }
 
 function trackerRowIsActive(year,section,row) {
@@ -4183,6 +4323,56 @@ function renderDivChart() {
   });
 }
 
+function renderReports() {
+  const summary=document.getElementById('reports-summary');
+  if(!summary||!D||typeof Chart==='undefined')return;
+  const currentYear=String(new Date().getFullYear());
+  const current=annualViewRow(currentYear);
+  const totalDebt=(D.debt_items||[]).filter(item=>categoryInfo(item.category).key!=='housing').reduce((sum,item)=>sum+(Number(item.amount)||0),0);
+  const invested=getYearTotalInv(currentYear);
+  summary.innerHTML=`
+    <article class="feature-stat danger"><div class="stat-icon">${uiIcon('debt')}</div><div class="stat-label">Total debt</div><strong>${fmt(totalDebt)}</strong><small>Current active balances</small></article>
+    <article class="feature-stat positive"><div class="stat-icon">${uiIcon('income')}</div><div class="stat-label">${currentYear} income</div><strong>${fmt(current.income)}</strong><small>Recorded so far</small></article>
+    <article class="feature-stat danger"><div class="stat-icon">${uiIcon('bills')}</div><div class="stat-label">${currentYear} bills paid</div><strong>${fmt(current.billsPaid)}</strong><small>Recorded so far</small></article>
+    <article class="feature-stat analytics"><div class="stat-icon">${uiIcon('dividends')}</div><div class="stat-label">${currentYear} dividends</div><strong>${fmtF(current.dividends)}</strong><small>${fmt(invested)} invested this year</small></article>`;
+
+  const years=[...new Set([...Object.keys(D.annual_summary||{}),...Object.keys(D.monthly_tracker||{}),...Object.keys(D.dividends||{})])]
+    .filter(year=>Number(year)<=Number(currentYear))
+    .filter(year=>{const row=annualViewRow(year);return row.income>0||row.billsPaid>0||row.dividends>0||row.debt>0;})
+    .sort((a,b)=>Number(a)-Number(b));
+  const labels=years.map(year=>year===currentYear?`${year} so far`:year);
+  const rows=years.map(annualViewRow);
+  const cashflowCanvas=document.getElementById('reports-cashflow-chart');
+  if(reportsCashflowChart)reportsCashflowChart.destroy();
+  reportsCashflowChart=new Chart(cashflowCanvas.getContext('2d'),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Income',data:rows.map(row=>row.income||null),backgroundColor:years.map(year=>year===currentYear?colorAlpha('--income',.55):cssValue('--income')),borderRadius:5,borderWidth:0},
+      {label:'Bills paid',data:rows.map(row=>row.billsPaid||null),backgroundColor:years.map(year=>year===currentYear?colorAlpha('--outflow',.55):cssValue('--outflow')),borderRadius:5,borderWidth:0}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',align:'end',labels:{color:cssValue('--muted'),usePointStyle:true,boxWidth:8,boxHeight:8}},tooltip:{callbacks:{label:context=>` ${context.dataset.label}: ${fmtF(context.raw||0)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted'),maxRotation:0}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}
+  });
+
+  const debtGroups={credit:0,loans:0,cars:0};
+  (D.debt_items||[]).forEach(item=>{const key=categoryInfo(item.category).key;if(Object.hasOwn(debtGroups,key))debtGroups[key]+=Math.max(0,Number(item.amount)||0);});
+  const debtCanvas=document.getElementById('reports-debt-chart');
+  if(reportsDebtChart)reportsDebtChart.destroy();
+  reportsDebtChart=new Chart(debtCanvas.getContext('2d'),{
+    type:'doughnut',
+    data:{labels:['Credit cards','Loans and LOC','Car loans'],datasets:[{data:[debtGroups.credit,debtGroups.loans,debtGroups.cars],backgroundColor:[cssValue('--debt-credit'),cssValue('--debt-loans'),cssValue('--debt-cars')],borderColor:cssValue('--card'),borderWidth:4,hoverOffset:4}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'67%',plugins:{legend:{position:'bottom',labels:{color:cssValue('--muted'),usePointStyle:true,boxWidth:8,boxHeight:8,padding:16}},tooltip:{callbacks:{label:context=>` ${context.label}: ${fmtF(context.raw||0)}`}}}}
+  });
+
+  const dividendYears=years.filter(year=>(D.dividends?.[year]||[]).some(value=>Number(value)>0));
+  const dividendCanvas=document.getElementById('reports-dividend-chart');
+  if(reportsDividendChart)reportsDividendChart.destroy();
+  reportsDividendChart=new Chart(dividendCanvas.getContext('2d'),{
+    type:'bar',plugins:[latestValuePlugin],
+    data:{labels:dividendYears.map(year=>year===currentYear?`${year} so far`:year),datasets:[{label:'Dividends',data:dividendYears.map(year=>(D.dividends[year]||[]).reduce((sum,value)=>sum+(Number(value)||0),0)),backgroundColor:dividendYears.map(year=>year===currentYear?colorAlpha('--violet',.55):cssValue('--violet')),borderRadius:5,borderWidth:0,barPercentage:.6,categoryPercentage:.72}]},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:20}},plugins:{legend:{display:false},latestValue:{enabled:true,formatter:value=>axisMoney(value)},tooltip:{callbacks:{label:context=>` Dividends: ${fmtF(context.raw||0)}`}}},scales:{x:{grid:{display:false},ticks:{color:cssValue('--muted'),maxRotation:0}},y:{beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}
+  });
+}
+
 function historyDayLabel(date) {
   const today=new Date();today.setHours(0,0,0,0);const day=new Date(date);day.setHours(0,0,0,0);const diff=Math.round((today-day)/86400000);
   if(diff===0)return'Today';if(diff===1)return'Yesterday';return day.toLocaleDateString('en-CA',{weekday:'long',month:'long',day:'numeric'});
@@ -4274,14 +4464,15 @@ function renderHistory() {
 function renderSettings() {
   if(!D?.settings)return;
   document.getElementById('setting-currency').value=D.settings.currency||'CAD';
-  document.getElementById('setting-default-tab').value=D.settings.default_tab||'annual';
+  const startTab=['tracker','debt'].includes(D.settings.default_tab)?'bills':(D.settings.default_tab||'annual');
+  document.getElementById('setting-default-tab').value=startTab;
   document.getElementById('setting-history-days').value=String(D.settings.history_retention||90);
   syncThemeControls();
 }
 
 function resolvedTheme(preference) { return preference==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):preference; }
-function syncThemeControls() { const preference=localStorage.getItem('chawal_theme')||'system';document.querySelectorAll('[data-theme-choice]').forEach(button=>button.classList.toggle('active',button.dataset.themeChoice===preference));document.querySelector('meta[name="theme-color"]')?.setAttribute('content',resolvedTheme(preference)==='light'?'#f6f7fb':'#0d1020'); }
-function setTheme(preference) { localStorage.setItem('chawal_theme',preference);document.documentElement.dataset.theme=resolvedTheme(preference);syncThemeControls();if(D){renderAnnualSummary();renderDivChart();renderMonthlyPicture();} }
+function syncThemeControls() { const preference=localStorage.getItem('chawal_theme')||'system';document.querySelectorAll('[data-theme-choice]').forEach(button=>button.classList.toggle('active',button.dataset.themeChoice===preference));document.querySelector('meta[name="theme-color"]')?.setAttribute('content',resolvedTheme(preference)==='light'?'#f3f7fc':'#06111f'); }
+function setTheme(preference) { localStorage.setItem('chawal_theme',preference);document.documentElement.dataset.theme=resolvedTheme(preference);syncThemeControls();if(D){renderAnnualSummary();renderDivChart();renderMonthlyPicture();renderReports();} }
 function toggleTheme(){const pref=localStorage.getItem('chawal_theme')||'system';setTheme(pref==='dark'?'light':'dark');}
 
 function payScheduleLabel(ps) {
@@ -4296,19 +4487,21 @@ function renderPaySources() {
 
 function syncActiveNavigation() {
   const name=document.querySelector('.tab-content.active')?.id?.replace('tab-','')||'annual';
-  document.querySelectorAll('.side-link').forEach(link=>link.classList.toggle('active',link.dataset.tab===name));
-  const mobile=['annual','tracker','debt','dividends'].includes(name)?name:'more';
+  const primary=name==='tracker'&&activeTrackerSection==='income'?'income':['tracker','debt','bills'].includes(name)?'bills':name;
+  document.querySelectorAll('.side-link').forEach(link=>link.classList.toggle('active',link.dataset.tab===primary));
+  const mobile=['annual','bills','income','dividends'].includes(primary)?primary:'more';
   document.querySelectorAll('.mobile-tab').forEach(link=>link.classList.toggle('active',link.dataset.tab===mobile));
 }
 function switchTab(name) {
   if(!document.getElementById(`tab-${name}`))name='annual';
   document.querySelectorAll('.tab-content').forEach(element=>element.classList.remove('active'));document.getElementById(`tab-${name}`).classList.add('active');
-  const copy={annual:'Overview',tracker:'Tracker',debt:'Debts',dividends:'Dividends',history:'History',settings:'Settings'};
-  document.getElementById('page-title').textContent=copy[name]||'Overview';
+  const copy={annual:['Overview','A clear view of your finances, all in one place.'],bills:['Bills','Track recurring bills, debts, and monthly payments.'],tracker:['Monthly tracker','Record payments, balances, investments, and cashflow.'],debt:['Debts','Manage balances and understand your payoff timeline.'],income:['Income','Track every income source and monthly cashflow.'],dividends:['Dividends','Review dividend income and long-term growth.'],history:['Reports','Compare yearly performance and review account activity.'],settings:['Settings','Manage appearance, syncing, schedules, and your device.']};
+  document.getElementById('page-title').textContent=(copy[name]||copy.annual)[0];
+  document.getElementById('page-description').textContent=(copy[name]||copy.annual)[1];
   const kicker=document.getElementById('page-kicker');kicker.textContent=name==='annual'?new Intl.DateTimeFormat('en-CA',{month:'long',year:'numeric'}).format(new Date()):'Chawal Finances';
   document.getElementById('summary').style.display=name==='annual'?'grid':'none';
-  document.getElementById('overview-actions').hidden=name!=='annual';document.getElementById('debt-actions').hidden=name!=='debt';
-  if(name==='annual'){renderSummary();renderAnnualSummary();renderMonthlyPicture();}if(name==='tracker')renderTracker(activeYear);if(name==='debt'){renderDebtList();renderPayoffProjections();}if(name==='dividends'){renderDividends();renderDivChart();}if(name==='history')renderHistory();if(name==='settings'){renderSettings();renderPaySources();}
+  document.getElementById('overview-actions').hidden=false;document.getElementById('debt-actions').hidden=name!=='debt';
+  if(name==='annual'){renderSummary();renderAnnualSummary();renderMonthlyPicture();}if(name==='bills')renderBillsList();if(name==='tracker')renderTracker(activeYear);if(name==='debt'){renderDebtList();renderPayoffProjections();}if(name==='income')renderIncomeList();if(name==='dividends'){renderDividends();renderDivChart();}if(name==='history'){renderReports();renderHistory();}if(name==='settings'){renderSettings();renderPaySources();}
   syncActiveNavigation();closeMobileMore();if(window.innerWidth<900)window.scrollTo({top:0,behavior:'auto'});
 }
 function mobileSwitchTab(name){switchTab(name);}
