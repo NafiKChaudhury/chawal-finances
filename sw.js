@@ -1,4 +1,4 @@
-const CACHE_NAME = 'chawal-finances-v37-dividend-totals';
+const CACHE_NAME = 'chawal-finances-v38-dividend-dashboard';
 const APP_SHELL = [
   './',
   './index.html',

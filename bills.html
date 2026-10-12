@@ -1041,7 +1041,7 @@
 
     /* Income, dividends, reports and settings */
     .dashboard-two-col { display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:18px;margin-bottom:18px; }.dashboard-two-col .section { min-width:0;margin:0; }
-    .dividend-stats { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .dividend-stats { grid-template-columns:repeat(3,minmax(0,1fr)); }
     .allocation-chart-layout { min-height:270px;display:grid;grid-template-columns:170px minmax(0,1fr);gap:22px;align-items:center; }.allocation-chart-wrap { position:relative;width:170px;height:170px; }.allocation-chart-wrap canvas { width:100%!important;height:100%!important; }.allocation-chart-wrap>strong { position:absolute;inset:0;display:grid;place-content:center;color:var(--ink);font-size:18px;font-weight:800;text-align:center;pointer-events:none; }
     .data-search { width:min(360px,100%);height:44px;margin:4px 0 14px;padding:0 12px;display:flex;align-items:center;gap:8px;border:1px solid var(--control-border);border-radius:10px;background:var(--card-2); }.data-search input { width:100%;min-height:40px;padding:0!important;border:0!important;background:transparent!important;outline:0; }
     .data-table { width:100%;min-width:780px;border-collapse:collapse;font-size:12px; }.data-table th { padding:11px 12px;border-bottom:1px solid var(--line);color:var(--muted);font-size:10px;font-weight:750;letter-spacing:.07em;text-align:left;text-transform:uppercase; }.data-table td { height:56px;padding:9px 12px;border-bottom:1px solid var(--line-soft);color:var(--ink-2);vertical-align:middle; }.data-table tbody tr:last-child td { border-bottom:0; }.data-table .number { color:var(--ink);font-weight:750;text-align:right;font-variant-numeric:tabular-nums; }.data-table th.number { color:var(--muted); }.data-table .primary-cell { color:var(--ink);font-weight:700; }.data-table .secondary-line { display:block;margin-top:2px;color:var(--muted);font-size:11px;font-weight:500; }.table-actions { display:flex;justify-content:flex-end;gap:6px; }.table-actions button { min-width:40px;min-height:40px;padding:0 10px;border:1px solid var(--control-border);border-radius:9px;background:var(--card);color:var(--ink-2);font:650 11px Manrope,sans-serif;cursor:pointer; }.table-actions button.danger { color:var(--danger); }
@@ -1051,7 +1051,7 @@
 
     @media (max-width:1100px) { .projection-summary-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.projection-detail-grid { grid-template-columns:1fr; } }
     @media (max-width:899px) {
-      .dashboard-two-col { grid-template-columns:1fr;gap:12px; }.dividend-stats { grid-template-columns:repeat(2,minmax(0,1fr)); }.dividend-stat:last-child { grid-column:auto; }.allocation-chart-layout { min-height:220px;grid-template-columns:140px minmax(0,1fr); }.allocation-chart-wrap { width:140px;height:140px; }
+      .dashboard-two-col { grid-template-columns:1fr;gap:12px; }.dividend-stats { grid-template-columns:repeat(2,minmax(0,1fr)); }.dividend-stat:last-child { grid-column:1/-1; }.allocation-chart-layout { min-height:220px;grid-template-columns:140px minmax(0,1fr); }.allocation-chart-wrap { width:140px;height:140px; }
       .projection-controls { align-items:stretch;flex-direction:column; }.extra-payment-presets { width:100%; }.extra-payment-presets button { flex:1; }.projection-controls input { width:100%; }.projection-summary-grid { grid-template-columns:1fr 1fr; }
     }
     @media (max-width:480px) { .allocation-chart-layout { grid-template-columns:1fr;justify-items:center; }.allocation-legend { width:100%; }.data-search { width:100%; }.projection-summary-item strong { font-size:16px; } }
@@ -1436,15 +1436,16 @@
   <div id="tab-dividends" class="tab-content">
     <div class="dividend-stats" id="dividend-stats"></div>
     <div class="section">
-      <div class="sec-head"><div><h2>Monthly dividend income trend</h2><span class="muted-note">Monthly totals entered by you</span></div><div class="sec-actions"><div class="chart-legend"><span><i class="legend-dot chart-dot"></i><b id="div-legend-current"></b></span><span><i class="legend-dot neutral-dot"></i><b id="div-legend-previous"></b></span></div><button class="btn-primary" onclick="showDividendMonthForm()"><svg class="ui-icon"><use href="#i-plus"/></svg>Update monthly total</button></div></div>
-      <div class="edit-form" id="dividend-month-form">
-        <div class="form-row">
-          <div class="fg"><label>Month</label><input id="dividend-month" type="month"/></div>
-          <div class="fg"><label>Dividend total</label><input id="dividend-month-amount" type="number" min="0" step="0.01" placeholder="0.00"/></div>
-        </div>
-        <div class="form-actions"><button class="btn-sm btn-save" onclick="saveDividendMonthTotal()">Save total</button><button class="btn-sm btn-cancel" onclick="cancelDividendMonthForm()">Cancel</button></div>
-      </div>
+      <div class="sec-head"><h2>Month by month</h2><div class="chart-legend"><span><i class="legend-dot chart-dot"></i><b id="div-legend-current"></b></span><span><i class="legend-dot neutral-dot"></i><b id="div-legend-previous"></b></span></div></div>
       <div class="chart-wrap-lg"><canvas id="div-chart"></canvas></div>
+    </div>
+    <div class="section">
+      <div class="sec-head"><h2>Annual totals</h2><span class="muted-note">Dividend growth by year</span></div>
+      <div class="chart-wrap-lg"><canvas id="div-annual-chart"></canvas></div>
+    </div>
+    <div class="section">
+      <div class="sec-head"><h2>By year</h2></div>
+      <div class="table-scroll"><table class="dividend-table" id="dividend-table"></table></div>
     </div>
   </div>
   <!-- HISTORY -->
@@ -3069,7 +3070,7 @@ function quickAdd(type) {
   if (type === 'bill')       { mobileSwitchTab('bills'); addBill(); }
   if (type === 'income')     { mobileSwitchTab('income'); showIncomeTransactionForm(); }
   if (type === 'investment') { mobileSwitchTab('tracker'); showTrackerRowForm('investments'); }
-  if (type === 'dividend')   { mobileSwitchTab('dividends'); showDividendMonthForm(); }
+  if (type === 'dividend')   { mobileSwitchTab('dividends'); requestAnimationFrame(()=>editDiv(String(new Date().getFullYear()),new Date().getMonth())); }
   if (type === 'job')        { mobileSwitchTab('settings'); showPaySourceForm(); }
 }
 
@@ -4406,7 +4407,7 @@ function renderDividends() {
   table.innerHTML=html+'</tbody>';
 }
 
-function editDiv(year,index){const cell=document.getElementById(`mc-${year}-${index}`);if(!cell)return;cell.querySelector('.dividend-cell').hidden=true;const input=cell.querySelector('input');input.hidden=false;input.focus();input.select();}
+function editDiv(year,index){const cell=document.getElementById(`mc-${year}-${index}`);if(!cell)return;cell.querySelector('.dividend-cell').hidden=true;const input=cell.querySelector('input');input.hidden=false;cell.scrollIntoView({behavior:'smooth',block:'center',inline:'center'});input.focus();input.select();}
 function saveDiv(year,index){const cell=document.getElementById(`mc-${year}-${index}`);if(!cell)return;D.dividends??={};D.dividends[year]??=Array(12).fill(0);D.dividends[year][index]=parseFloat(cell.querySelector('input').value)||0;mark();renderDividends();renderDivChart();syncAllViews();}
 
 function renderDivChart() {
@@ -4647,17 +4648,30 @@ function saveIncomeTransaction(){const id=document.getElementById('it-id').value
 function deleteIncomeTransaction(id){if(!confirm('Delete this income transaction?'))return;D.income_transactions=D.income_transactions.filter(item=>item.id!==id);mark();renderIncomeList();syncAllViews();}
 function renderIncomeTransactions(){const table=document.getElementById('income-transactions-table');if(!table)return;const query=(document.getElementById('income-transaction-search')?.value||'').trim().toLowerCase(),rows=[...(D.income_transactions||[])].filter(item=>[item.description,item.source,item.category,item.currency].join(' ').toLowerCase().includes(query)).sort((a,b)=>String(b.date).localeCompare(String(a.date)));table.innerHTML='<thead><tr><th>Date</th><th>Description</th><th>Source</th><th>Type</th><th>Currency</th><th class="number">Amount</th><th></th></tr></thead><tbody>'+(rows.length?rows.map(item=>`<tr><td>${new Date(`${item.date}T12:00:00`).toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'})}</td><td class="primary-cell">${escapeHtml(item.description)}</td><td>${escapeHtml(item.source||'—')}</td><td>${escapeHtml(item.category||'Other')}</td><td>${escapeHtml(item.currency||'CAD')}</td><td class="number">${fmtF(Number(item.amount)||0)}</td><td><div class="table-actions"><button onclick="showIncomeTransactionForm('${item.id}')">Edit</button><button class="danger" onclick="deleteIncomeTransaction('${item.id}')">Delete</button></div></td></tr>`).join(''):'<tr><td colspan="7" class="empty-table-state"><strong>No income transactions yet</strong>Use Add income to record one.</td></tr>')+'</tbody>';}
 
-function dividendProjectionSeries(year){
-  const actual=(D.dividends?.[year]||Array(12).fill(0)).map(value=>Number(value)||0),now=new Date();
-  if(Number(year)!==now.getFullYear())return actual;
-  const entered=actual.slice(0,now.getMonth()+1).filter(value=>value>0),average=entered.length?entered.reduce((sum,value)=>sum+value,0)/entered.length:0;
-  return actual.map((value,index)=>index<=now.getMonth()||value>0?value:average);
+function dividendProjectionSeries(year){return (D.dividends?.[year]||Array(12).fill(0)).map(value=>Number(value)||0);}
+function renderDividends(){
+  const table=document.getElementById('dividend-table');if(!table||!D)return;
+  const now=new Date(),year=String(now.getFullYear()),previous=String(Number(year)-1),currentMonth=now.getMonth();D.dividends??={};D.dividends[year]??=Array(12).fill(0);const values=dividendProjectionSeries(year),previousValues=dividendProjectionSeries(previous);
+  const cutoff=Number(values[currentMonth])>0?currentMonth:Math.max(0,currentMonth-1),total=values.slice(0,cutoff+1).reduce((sum,value)=>sum+value,0),priorYtd=previousValues.slice(0,cutoff+1).reduce((sum,value)=>sum+value,0),ytdChange=priorYtd>0?(total-priorYtd)/priorYtd*100:null;
+  const enteredMonths=values.slice(0,cutoff+1).filter(value=>Number(value)>0),average=enteredMonths.length?total/enteredMonths.length:0;
+  let recentIndex=-1;values.slice(0,cutoff+1).forEach((value,index)=>{if(Number(value)>0)recentIndex=index;});if(recentIndex<0)recentIndex=cutoff;
+  const recent=Number(values[recentIndex])||0,prior=Number(previousValues[recentIndex])||0,change=prior>0?(recent-prior)/prior*100:null;
+  document.getElementById('dividend-stats').innerHTML=`<article class="dividend-stat"><span>${year} received</span><strong>${fmtF(total)}</strong><small class="${ytdChange!=null&&ytdChange>0?'up':''}">${ytdChange==null?'No prior-year comparison':`${ytdChange>=0?'Up':'Down'} ${Math.abs(ytdChange).toFixed(1)}% on ${previous} through ${MONTHS[cutoff]}`}</small></article><article class="dividend-stat"><span>Monthly average</span><strong>${fmtF(average)}</strong><small>${enteredMonths.length} month${enteredMonths.length===1?'':'s'} with dividends entered</small></article><article class="dividend-stat"><span>${MONTHS[recentIndex]} ${year}</span><strong>${fmtF(recent)}</strong><small class="${change!=null&&change>0?'up':''}">${change==null?'No comparison available':`${change>=0?'Up':'Down'} ${Math.abs(change).toFixed(0)}% on ${MONTHS[recentIndex]} ${previous}`}</small></article>`;
+  const years=Object.keys(D.dividends||{}).sort((a,b)=>Number(b)-Number(a));
+  let html='<thead><tr><th>Year</th>'+MONTHS.map(month=>`<th>${month}</th>`).join('')+'<th>Total</th></tr></thead><tbody>';
+  years.forEach(yr=>{const vals=dividendProjectionSeries(yr);html+=`<tr><td>${yr}</td>${vals.map((value,index)=>`<td id="mc-${yr}-${index}"><div class="dividend-cell ${Number(value)===0?'empty':''}" onclick="editDiv('${yr}',${index})">${Number(value)?plainNumber(Number(value)):'—'}</div><input type="number" min="0" step="0.01" value="${Number(value)||0}" onblur="saveDiv('${yr}',${index})" onkeydown="if(event.key==='Enter')saveDiv('${yr}',${index})" hidden/></td>`).join('')}<td><strong>${fmtF(vals.reduce((sum,value)=>sum+(Number(value)||0),0))}</strong></td></tr>`;});
+  table.innerHTML=html+'</tbody>';
 }
-function renderDividends(){if(!D)return;const now=new Date(),year=String(now.getFullYear()),month=now.getMonth(),actual=(D.dividends?.[year]||Array(12).fill(0)).map(Number),projected=dividendProjectionSeries(year),ytd=actual.slice(0,month+1).reduce((sum,value)=>sum+(value||0),0),annual=projected.reduce((sum,value)=>sum+(value||0),0),entered=actual.slice(0,month+1).filter(value=>value>0),average=entered.length?ytd/entered.length:0,totalReceived=Object.values(D.dividends||{}).flat().reduce((sum,value)=>sum+(Number(value)||0),0);document.getElementById('dividend-stats').innerHTML=`<article class="dividend-stat"><span>Projected annual dividends</span><strong>${fmtF(annual)}</strong><small>Recorded totals plus your current monthly average</small></article><article class="dividend-stat"><span>Monthly dividend average</span><strong>${fmtF(average)}</strong><small>${entered.length} month${entered.length===1?'':'s'} with recorded dividends</small></article><article class="dividend-stat"><span>Year-to-date dividends</span><strong>${fmtF(ytd)}</strong><small>${year} received so far</small></article><article class="dividend-stat"><span>Total dividends received</span><strong>${fmtF(totalReceived)}</strong><small>Across all saved years</small></article>`;}
-function renderDivChart(){const canvas=document.getElementById('div-chart');if(!canvas||typeof Chart==='undefined')return;const now=new Date(),year=String(now.getFullYear()),previous=String(Number(year)-1),current=dividendProjectionSeries(year),prior=(D.dividends?.[previous]||Array(12).fill(0)).map(Number),hasData=[...current,...prior].some(value=>value>0);document.getElementById('div-legend-current').textContent=`${year} actual + projection`;document.getElementById('div-legend-previous').textContent=previous;if(divChart)divChart.destroy();divChart=new Chart(canvas.getContext('2d'),{type:'bar',data:{labels:MONTHS,datasets:[{label:`${year} actual + projection`,data:current,backgroundColor:current.map((_,index)=>index>now.getMonth()?colorAlpha('--violet',.55):cssValue('--violet')),borderRadius:4},{label:previous,data:prior,backgroundColor:cssValue('--neutral-bar-soft'),borderRadius:4,barPercentage:.55}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{enabled:hasData,callbacks:{label:context=>` ${context.dataset.label}: ${fmtF(context.raw||0)}`}}},scales:{x:{display:hasData,grid:{display:false},ticks:{color:cssValue('--muted')}},y:{display:hasData,beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}});}
-function showDividendMonthForm(){const now=new Date(),month=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;document.getElementById('dividend-month').value=month;document.getElementById('dividend-month-amount').value=Number(D.dividends?.[String(now.getFullYear())]?.[now.getMonth()])||'';document.getElementById('dividend-month-form').classList.add('open');document.getElementById('dividend-month-amount').focus();}
-function cancelDividendMonthForm(){document.getElementById('dividend-month-form').classList.remove('open');}
-function saveDividendMonthTotal(){const period=document.getElementById('dividend-month').value,amount=Math.max(0,Number(document.getElementById('dividend-month-amount').value)||0);if(!/^\d{4}-\d{2}$/.test(period))return toast('Choose a month.');const [year,month]=period.split('-').map(Number);D.dividends[String(year)]??=Array(12).fill(0);D.dividends[String(year)][month-1]=amount;cancelDividendMonthForm();mark();renderDividends();renderDivChart();syncAllViews();}
+function renderDivChart(){
+  const canvas=document.getElementById('div-chart'),annualCanvas=document.getElementById('div-annual-chart');if(!canvas||!annualCanvas||!D||typeof Chart==='undefined')return;
+  const now=new Date(),year=String(now.getFullYear()),previous=String(Number(year)-1),currentMonth=now.getMonth(),values=dividendProjectionSeries(year),cutoff=Number(values[currentMonth])>0?currentMonth:Math.max(0,currentMonth-1),currentValues=values.map((value,index)=>index<=cutoff?value:null),previousValues=dividendProjectionSeries(previous),hasMonthlyData=[...values,...previousValues].some(value=>Number(value)>0);
+  document.getElementById('div-legend-current').textContent=`${year} so far`;document.getElementById('div-legend-previous').textContent=previous;
+  if(divChart)divChart.destroy();
+  divChart=new Chart(canvas.getContext('2d'),{type:'bar',plugins:[latestValuePlugin],data:{labels:MONTHS,datasets:[{label:`${year} so far`,data:currentValues,backgroundColor:colorAlpha('--income',.72),borderWidth:0,borderRadius:{topLeft:4,topRight:4},barPercentage:.82,categoryPercentage:.78,order:1},{label:previous,data:previousValues,backgroundColor:cssValue('--neutral-bar-soft'),borderWidth:0,borderRadius:{topLeft:4,topRight:4},barPercentage:.48,categoryPercentage:.78,order:2}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},latestValue:{enabled:hasMonthlyData,formatter:value=>axisMoney(value)},tooltip:{enabled:hasMonthlyData,callbacks:{label:context=>context.raw==null?'':` ${context.dataset.label}: ${fmtF(context.raw)}`}}},scales:{x:{display:hasMonthlyData,grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0}},y:{display:hasMonthlyData,beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}});
+  const years=Object.keys(D.dividends||{}).sort((a,b)=>Number(a)-Number(b)).filter(value=>dividendProjectionSeries(value).some(item=>Number(item)>0)),totals=years.map(value=>dividendProjectionSeries(value).reduce((sum,item)=>sum+(Number(item)||0),0)),hasAnnualData=totals.some(value=>value>0);
+  if(annualDivChart)annualDivChart.destroy();
+  annualDivChart=new Chart(annualCanvas.getContext('2d'),{type:'bar',plugins:[latestValuePlugin],data:{labels:years.map(value=>value===year?`'${value.slice(-2)} so far`:`'${value.slice(-2)}`),datasets:[{label:'Dividends',data:totals,backgroundColor:years.map(value=>value===year?colorAlpha('--income',.5):cssValue('--income')),borderWidth:0,borderRadius:4,barPercentage:.62,categoryPercentage:.72}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{legend:{display:false},latestValue:{enabled:hasAnnualData,formatter:value=>axisMoney(value)},tooltip:{enabled:hasAnnualData,callbacks:{label:context=>` Dividends: ${fmtF(context.raw)}`}}},scales:{x:{display:hasAnnualData,grid:{display:false},ticks:{color:cssValue('--muted'),minRotation:0,maxRotation:0}},y:{display:hasAnnualData,beginAtZero:true,grid:{color:cssValue('--line-soft')},ticks:{maxTicksLimit:4,color:cssValue('--muted'),callback:axisMoney}}}}});
+}
 
 // Reports and portfolio-level debt-free projection.
 function simulateDebtPortfolio(extra=0){
