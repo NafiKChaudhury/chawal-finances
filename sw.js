@@ -1,4 +1,4 @@
-const CACHE_NAME = 'chawal-finances-v35-dashboard';
+const CACHE_NAME = 'chawal-finances-v36-bill-schedules';
 const APP_SHELL = [
   './',
   './index.html',
