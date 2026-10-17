@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-10-16T00:09:35.709114+00:00",
+  "updated_at": "2026-10-17T00:13:28.935420+00:00",
   "stocks": {
     "AAPL": {
       "symbol": "AAPL",
       "name": "Apple Inc.",
       "currency": "USD",
-      "price": 342.9599914550781,
-      "price_date": "2026-10-14",
-      "dividend_rate": null,
+      "price": 342.0,
+      "price_date": "2026-10-15",
+      "dividend_rate": 1.08,
       "last_dividend": {
         "date": "2026-08-10",
         "amount": 0.27
@@ -64,14 +64,14 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-16T00:09:34.664466+00:00"
+      "retrieved_at": "2026-10-17T00:13:27.658129+00:00"
     },
     "HYLD.TO": {
       "symbol": "HYLD.TO",
       "name": "HAMILTON ENHANCED US COVERED CA",
       "currency": "CAD",
-      "price": 15.869999885559082,
-      "price_date": "2026-10-15",
+      "price": 15.5600004196167,
+      "price_date": "2026-10-16",
       "dividend_rate": null,
       "last_dividend": {
         "date": "2026-09-29",
@@ -129,15 +129,15 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-16T00:09:35.043724+00:00"
+      "retrieved_at": "2026-10-17T00:13:28.206950+00:00"
     },
     "RY.TO": {
       "symbol": "RY.TO",
       "name": "ROYAL BANK OF CANADA",
       "currency": "CAD",
-      "price": 279.010009765625,
-      "price_date": "2026-10-15",
-      "dividend_rate": null,
+      "price": 280.010009765625,
+      "price_date": "2026-10-16",
+      "dividend_rate": 7.04,
       "last_dividend": {
         "date": "2026-07-27",
         "amount": 1.76
@@ -194,11 +194,11 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-16T00:09:35.587699+00:00"
+      "retrieved_at": "2026-10-17T00:13:28.813899+00:00"
     }
   },
   "usd_cad": {
-    "rate": 1.4192700386047363,
+    "rate": 1.413699984550476,
     "date": "2026-10-16"
   }
 }
