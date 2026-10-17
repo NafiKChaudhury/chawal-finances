@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-10-17T00:13:28.935420+00:00",
+  "updated_at": "2026-10-17T23:53:16.651869+00:00",
   "stocks": {
     "AAPL": {
       "symbol": "AAPL",
       "name": "Apple Inc.",
       "currency": "USD",
-      "price": 342.0,
-      "price_date": "2026-10-15",
+      "price": 343.4599914550781,
+      "price_date": "2026-10-16",
       "dividend_rate": 1.08,
       "last_dividend": {
         "date": "2026-08-10",
@@ -64,7 +64,7 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-17T00:13:27.658129+00:00"
+      "retrieved_at": "2026-10-17T23:53:15.497353+00:00"
     },
     "HYLD.TO": {
       "symbol": "HYLD.TO",
@@ -129,7 +129,7 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-17T00:13:28.206950+00:00"
+      "retrieved_at": "2026-10-17T23:53:15.942808+00:00"
     },
     "RY.TO": {
       "symbol": "RY.TO",
@@ -194,11 +194,11 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-17T00:13:28.813899+00:00"
+      "retrieved_at": "2026-10-17T23:53:16.539463+00:00"
     }
   },
   "usd_cad": {
     "rate": 1.413699984550476,
-    "date": "2026-10-16"
+    "date": "2026-10-18"
   }
 }
