@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-17T23:53:16.651869+00:00",
+  "updated_at": "2026-10-19T00:00:25.938902+00:00",
   "stocks": {
     "AAPL": {
       "symbol": "AAPL",
@@ -64,7 +64,7 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-17T23:53:15.497353+00:00"
+      "retrieved_at": "2026-10-19T00:00:24.736382+00:00"
     },
     "HYLD.TO": {
       "symbol": "HYLD.TO",
@@ -129,7 +129,7 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-17T23:53:15.942808+00:00"
+      "retrieved_at": "2026-10-19T00:00:25.205643+00:00"
     },
     "RY.TO": {
       "symbol": "RY.TO",
@@ -194,11 +194,11 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-17T23:53:16.539463+00:00"
+      "retrieved_at": "2026-10-19T00:00:25.808394+00:00"
     }
   },
   "usd_cad": {
-    "rate": 1.413699984550476,
-    "date": "2026-10-18"
+    "rate": 1.4117000102996826,
+    "date": "2026-10-19"
   }
 }
