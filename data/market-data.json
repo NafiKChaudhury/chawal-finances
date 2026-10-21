@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-10-20T00:58:47.678703+00:00",
+  "updated_at": "2026-10-21T00:27:51.074837+00:00",
   "stocks": {
     "AAPL": {
       "symbol": "AAPL",
       "name": "Apple Inc.",
       "currency": "USD",
-      "price": 343.4599914550781,
-      "price_date": "2026-10-16",
+      "price": 342.94000244140625,
+      "price_date": "2026-10-19",
       "dividend_rate": 1.08,
       "last_dividend": {
         "date": "2026-08-10",
@@ -64,14 +64,14 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-20T00:58:46.125511+00:00"
+      "retrieved_at": "2026-10-21T00:27:49.631478+00:00"
     },
     "HYLD.TO": {
       "symbol": "HYLD.TO",
       "name": "HAMILTON ENHANCED US COVERED CA",
       "currency": "CAD",
-      "price": 15.699999809265137,
-      "price_date": "2026-10-19",
+      "price": 15.6850004196167,
+      "price_date": "2026-10-20",
       "dividend_rate": null,
       "last_dividend": {
         "date": "2026-09-29",
@@ -129,14 +129,14 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-20T00:58:46.968638+00:00"
+      "retrieved_at": "2026-10-21T00:27:50.162083+00:00"
     },
     "RY.TO": {
       "symbol": "RY.TO",
       "name": "ROYAL BANK OF CANADA",
       "currency": "CAD",
-      "price": 277.510009765625,
-      "price_date": "2026-10-19",
+      "price": 280.1700134277344,
+      "price_date": "2026-10-20",
       "dividend_rate": 7.04,
       "last_dividend": {
         "date": "2026-07-27",
@@ -194,11 +194,11 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-10-20T00:58:47.558995+00:00"
+      "retrieved_at": "2026-10-21T00:27:50.756406+00:00"
     }
   },
   "usd_cad": {
-    "rate": 1.4095200300216675,
-    "date": "2026-10-20"
+    "rate": 1.4066599607467651,
+    "date": "2026-10-21"
   }
 }
