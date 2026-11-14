@@ -1158,7 +1158,7 @@
 
 <main>
   <div class="page-intro">
-    <div><div class="page-kicker" id="page-kicker">October 2026</div><h2 id="page-title">Overview</h2><p id="page-description">A clear view of your finances, all in one place.</p></div>
+    <div><div class="page-kicker" id="page-kicker">October 2026</div><h2 id="page-title">Overview</h2><p id="page-description"></p></div>
     <div class="page-actions" id="overview-actions">
       <button class="top-search" onclick="openSearch()"><svg class="ui-icon"><use href="#i-search"/></svg><span>Search your finances</span><kbd>Ctrl K</kbd></button>
       <button class="btn-primary" onclick="openQuickAdd()"><svg class="ui-icon"><use href="#i-plus"/></svg>Quick add</button>
@@ -1182,28 +1182,43 @@
   <div id="tab-annual" class="tab-content active">
     <div class="overview-visual-grid">
       <div class="section overview-chart-card">
-        <div class="sec-head"><div><h2>Net worth trend</h2><span class="muted-note">Recorded assets less saved liabilities</span></div><span class="chart-value" id="net-worth-chart-value"></span></div>
-        <div class="chart-wrap-lg"><canvas id="net-worth-chart"></canvas></div>
+        <div class="sec-head"><h2>Income and bills paid</h2><div class="chart-legend"><span><i class="legend-dot"></i>Income</span><span><i class="legend-dot debt-dot"></i>Bills paid</span></div></div>
+        <div class="overview-comparison-note" id="income-chart-note"></div>
+        <div class="chart-wrap-lg overview-comparison-chart"><canvas id="ann-income-chart"></canvas></div>
       </div>
-      <div class="section overview-allocation-card">
-        <div class="sec-head"><div><h2>Asset allocation</h2><span class="muted-note">Recorded investment contributions</span></div></div>
-        <div class="allocation-layout">
-          <div class="allocation-chart"><canvas id="asset-allocation-chart"></canvas><div class="allocation-center"><strong id="asset-allocation-total">$0</strong><span>recorded</span></div></div>
-          <div id="asset-allocation-legend" class="allocation-legend"></div>
+      <div class="section this-month-card">
+        <div class="sec-head"><h2>This month</h2></div>
+        <div class="debt-mix-block">
+          <div class="debt-mix-chart">
+            <canvas id="debt-mix-chart"></canvas>
+            <div class="debt-mix-center"><strong id="debt-mix-count">$0</strong><span>total debt</span></div>
+          </div>
+          <div><div class="debt-mix-label">Debt mix</div><div class="debt-mix-legend" id="debt-mix-legend"></div></div>
         </div>
+        <div id="this-month-rows"></div>
       </div>
     </div>
-    <div class="overview-widget-grid">
-      <div class="section overview-widget-card">
-        <div class="sec-head"><div><h2>Upcoming bills</h2><span class="muted-note">Saved names, due dates, and amounts</span></div><button class="text-button" onclick="switchTab('bills')">View all</button></div>
-        <div id="overview-upcoming-bills"></div>
+    <div class="section overview-debt-outlook" id="overview-debt-outlook"></div>
+    <div class="section growth-card">
+      <div class="sec-head">
+        <h2>Spending and investment growth</h2>
+        <div class="growth-card-head">
+          <div class="chart-legend"><span><i class="legend-dot debt-dot"></i>Bills paid</span><span><i class="legend-dot investment-dot"></i>Investments</span></div>
+          <div class="chart-mode-toggle" aria-label="Chart view">
+            <button class="active" data-growth-mode="totals" onclick="setGrowthChartMode('totals')">Totals</button>
+            <button data-growth-mode="growth" onclick="setGrowthChartMode('growth')">Year-over-year growth</button>
+          </div>
+        </div>
       </div>
-      <div class="section overview-widget-card" id="overview-dividend-income"></div>
-      <div class="section overview-widget-card">
-        <div class="sec-head"><div><h2>Recent transactions</h2><span class="muted-note">Latest saved amount changes</span></div><button class="text-button" onclick="switchTab('history')">Reports</button></div>
-        <div id="overview-recent-transactions"></div>
+      <div class="growth-insights" id="growth-insights"></div>
+      <div class="chart-wrap-lg"><canvas id="annual-growth-chart"></canvas></div>
+      <p class="growth-note" id="growth-note">Current-year figures include entries recorded so far. Investment totals come from the visible Tracker investment lines.</p>
+    </div>
+    <div class="section">
+      <div class="sec-head"><h2>Year by year</h2></div>
+      <div class="table-scroll">
+        <table class="ann-table" id="ann-table"></table>
       </div>
-      <div class="section overview-debt-outlook" id="overview-debt-outlook"></div>
     </div>
   </div>
 
@@ -4055,7 +4070,7 @@ function annualDelta(value,previous,inverse=false) {
   return`<span class="year-delta ${improved?'delta-good':'delta-bad'}">${change>0?'Up':'Down'} ${amount}</span>`;
 }
 
-function renderSummary() {
+function renderPreview3Summary() {
   const year=String(new Date().getFullYear());
   const previous=String(Number(year)-1);
   const month=new Date().getMonth();
@@ -4109,7 +4124,7 @@ function openIncomeEntry() {
   setTimeout(()=>document.querySelector('.tracker-panel[data-section="income"]')?.scrollIntoView({behavior:'smooth',block:'start'}),50);
 }
 
-function renderAnnualSummary() {
+function renderPreview3AnnualSummary() {
   const currentYear=String(new Date().getFullYear());
   const years=[...new Set([...Object.keys(D.annual_summary||{}),...Object.keys(D.monthly_tracker||{}),...Object.keys(D.dividends||{})])].filter(year=>{
     const row=annualViewRow(year);
@@ -4218,7 +4233,7 @@ function renderSpendingInvestmentChart(years) {
 
 function setGrowthChartMode(mode) {
   growthChartMode=mode==='growth'?'growth':'totals';
-  renderAnnualSummary();
+  renderPreview3AnnualSummary();
 }
 
 function categoryInfo(category) {
@@ -5151,9 +5166,9 @@ function renderOverviewWidgets() {
   const recent=(D.change_history||[]).map(entry=>({entry,presentation:historyEntryPresentation(entry)})).filter(item=>item.presentation.change&&['number','string'].includes(typeof item.presentation.change.after)).slice(0,4),recentWrap=document.getElementById('overview-recent-transactions');
   if(recentWrap)recentWrap.innerHTML=recent.length?recent.map(({entry,presentation})=>`<div class="recent-transaction"><div class="recent-transaction-icon">${uiIcon('history')}</div><div><strong>${escapeHtml(presentation.title)}</strong><small>${escapeHtml(presentation.area)} · ${new Date(entry.timestamp).toLocaleDateString('en-CA',{month:'short',day:'numeric'})}</small></div><span class="recent-transaction-value">${escapeHtml(historyChangeValue(presentation.change,'after'))}</span></div>`).join(''):'<div class="overview-empty"><strong>No recent changes</strong>Saved amount edits will appear here.</div>';
 }
-function renderOverviewDashboard() { renderOverviewSummary();renderNetWorthChart();renderAssetAllocation();renderOverviewWidgets(); }
-function renderSummary() { renderOverviewSummary(); }
-function renderAnnualSummary() { renderOverviewDashboard(); }
+function renderOverviewDashboard() { renderPreview3Summary();renderPreview3AnnualSummary();renderMonthlyPicture(); }
+function renderSummary() { renderPreview3Summary(); }
+function renderAnnualSummary() { renderPreview3AnnualSummary(); }
 
 function syncActiveNavigation() {
   const name=document.querySelector('.tab-content.active')?.id?.replace('tab-','')||'annual';
@@ -5165,7 +5180,7 @@ function syncActiveNavigation() {
 function switchTab(name) {
   if(!document.getElementById(`tab-${name}`))name='annual';
   document.querySelectorAll('.tab-content').forEach(element=>element.classList.remove('active'));document.getElementById(`tab-${name}`).classList.add('active');
-  const copy={annual:['Overview','A clear view of your finances, all in one place.'],bills:['Bills','Track recurring bills, debts, and monthly payments.'],tracker:['Monthly tracker','Record payments, balances, investments, and cashflow.'],debt:['Debts','Manage balances and understand your payoff timeline.'],income:['Income','Track every income source and monthly cashflow.'],dividends:['Dividends','Review dividend income and long-term growth.'],history:['Reports','Compare yearly performance and review account activity.'],settings:['Settings','Manage appearance, syncing, schedules, and your device.']};
+  const copy={annual:['Overview',''],bills:['Bills','Track recurring bills, debts, and monthly payments.'],tracker:['Monthly tracker','Record payments, balances, investments, and cashflow.'],debt:['Debts','Manage balances and understand your payoff timeline.'],income:['Income','Track every income source and monthly cashflow.'],dividends:['Dividends','Review dividend income and long-term growth.'],history:['Reports','Compare yearly performance and review account activity.'],settings:['Settings','Manage appearance, syncing, schedules, and your device.']};
   document.getElementById('page-title').textContent=(copy[name]||copy.annual)[0];
   document.getElementById('page-description').textContent=(copy[name]||copy.annual)[1];
   const kicker=document.getElementById('page-kicker');kicker.textContent=name==='annual'?new Intl.DateTimeFormat('en-CA',{month:'long',year:'numeric'}).format(new Date()):'Chawal Finances';
