@@ -1,22 +1,18 @@
 {
-  "updated_at": "2026-11-13T02:28:55.555805+00:00",
+  "updated_at": "2026-11-14T02:04:23.385363+00:00",
   "stocks": {
     "AAPL": {
       "symbol": "AAPL",
       "name": "Apple Inc.",
       "currency": "USD",
-      "price": 355.6300048828125,
-      "price_date": "2026-11-11",
+      "price": 356.2699890136719,
+      "price_date": "2026-11-13",
       "dividend_rate": 1.08,
       "last_dividend": {
-        "date": "2026-08-10",
+        "date": "2026-11-12",
         "amount": 0.27
       },
       "dividend_history": [
-        {
-          "date": "2023-11-10",
-          "amount": 0.24
-        },
         {
           "date": "2024-02-09",
           "amount": 0.24
@@ -60,18 +56,22 @@
         {
           "date": "2026-08-10",
           "amount": 0.27
+        },
+        {
+          "date": "2026-11-12",
+          "amount": 0.27
         }
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-11-13T02:28:54.188772+00:00"
+      "retrieved_at": "2026-11-14T02:04:22.106993+00:00"
     },
     "HYLD.TO": {
       "symbol": "HYLD.TO",
       "name": "HAMILTON ENHANCED US COVERED CA",
       "currency": "CAD",
-      "price": 15.199999809265137,
-      "price_date": "2026-11-12",
+      "price": 15.079999923706055,
+      "price_date": "2026-11-13",
       "dividend_rate": null,
       "last_dividend": {
         "date": "2026-10-30",
@@ -129,14 +129,14 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-11-13T02:28:54.728141+00:00"
+      "retrieved_at": "2026-11-14T02:04:22.518341+00:00"
     },
     "RY.TO": {
       "symbol": "RY.TO",
       "name": "ROYAL BANK OF CANADA",
       "currency": "CAD",
-      "price": 289.3900146484375,
-      "price_date": "2026-11-12",
+      "price": 288.3699951171875,
+      "price_date": "2026-11-13",
       "dividend_rate": 7.04,
       "last_dividend": {
         "date": "2026-10-26",
@@ -194,11 +194,11 @@
       ],
       "next_dividend_date": null,
       "source": "Yahoo Finance via yfinance",
-      "retrieved_at": "2026-11-13T02:28:55.385077+00:00"
+      "retrieved_at": "2026-11-14T02:04:23.125416+00:00"
     }
   },
   "usd_cad": {
-    "rate": 1.425719976425171,
+    "rate": 1.4261000156402588,
     "date": "2026-11-13"
   }
 }
