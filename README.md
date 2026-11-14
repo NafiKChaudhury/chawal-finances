@@ -1,6 +1,8 @@
 # Chawal Finances
 
-Personal finance, debt, investment and dividend dashboard deployed on Netlify.
+Personal finance, debt, investment and dividend dashboard deployed with GitHub Pages.
+
+Live site: https://nafikchaudhury.github.io/chawal-finances/
 
 ## Dividend tracking
 

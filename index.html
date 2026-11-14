@@ -2,9 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-<!-- This site is hosted on Netlify. Anyone can build and deploy a site
-     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=07e5dea3-43cb-445f-986e-c1978bfdff67
-     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="theme-color" content="#06111f"/>
   <script>{const p=localStorage.getItem('chawal_theme')||'system';document.documentElement.dataset.theme=p==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):p;}</script>
@@ -3232,7 +3229,7 @@ async function saveAll(quiet=false) {
     if (creds) {
       await ghGistSave(creds.token, creds.gistId, D);
     } else {
-      // Netlify is a static host, so device-only data is persisted in localStorage.
+      // Without cloud sync, device-only data is persisted in localStorage.
       localStorage.setItem('bills_local_data',JSON.stringify(D));
     }
     ORIG = JSON.parse(JSON.stringify(D)); dirty = false;
