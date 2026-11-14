@@ -3465,9 +3465,9 @@ function renderPayoffProjections() {
     document.getElementById('payoff-summary').innerHTML = `
       <div class="payoff-sum-card"><div class="ps-l">Active Debts</div><div class="ps-v" style="color:#f87171">${allActive.length}</div></div>
       <div class="payoff-sum-card"><div class="ps-l">Total Balance</div><div class="ps-v" style="color:#f87171">${fmtF(totalDebt)}</div></div>
-      <div class="payoff-sum-card"><div class="ps-l">Total / Month</div><div class="ps-v" style="color:#fb923c">${fmtF(totalMonthly)}</div></div>
-      <div class="payoff-sum-card"><div class="ps-l">Est. Interest</div><div class="ps-v" style="color:#facc15">${totalInt > 0 ? fmtF(totalInt) : '—'}</div></div>
-      <div class="payoff-sum-card"><div class="ps-l">Debt-Free Date</div><div class="ps-v" style="color:#4ade80">${dfDate}</div></div>`;
+      <div class="payoff-sum-card"><div class="ps-l">Total / Month</div><div class="ps-v" id="payoff-scenario-monthly" style="color:#fb923c">${fmtF(totalMonthly)}</div></div>
+      <div class="payoff-sum-card"><div class="ps-l">Est. Interest</div><div class="ps-v" id="payoff-scenario-interest" style="color:#facc15">${totalInt > 0 ? fmtF(totalInt) : '—'}</div></div>
+      <div class="payoff-sum-card"><div class="ps-l">Debt-Free Date</div><div class="ps-v" id="payoff-scenario-date" style="color:#4ade80">${dfDate}</div></div>`;
   } else {
     document.getElementById('payoff-summary').innerHTML = '';
   }
@@ -3507,11 +3507,20 @@ function updatePayoffWhatIf(value) {
   const extra=Math.max(0,Number(value)||0);const label=document.getElementById('payoff-extra-label');if(label)label.textContent=fmtF(extra);
   if(!D)return;const model=debtProjectionModel();const candidates=model.debts.filter(debt=>debt.pay>0).sort((a,b)=>(b.apr-a.apr)||(a.balance-b.balance));
   const hasApr=candidates.some(debt=>debt.apr>0);candidates.sort((a,b)=>hasApr?((b.apr-a.apr)||(a.balance-b.balance)):(b.balance-a.balance));
-  const target=candidates[0];const order=document.getElementById('payoff-order');const effect=document.getElementById('payoff-extra-effect');if(!order||!effect)return;
-  if(!target){order.textContent='Add payments to calculate';effect.textContent='Not available yet';return;}
+  const order=document.getElementById('payoff-order');const effect=document.getElementById('payoff-extra-effect');if(!order||!effect)return;
+  if(!candidates.length){order.textContent='Add payments to calculate';effect.textContent='Not available yet';return;}
   order.textContent=`${hasApr?'Highest APR first':'Largest balance first'}: ${candidates.slice(0,3).map(debt=>debt.label).join(' → ')}`;
-  const base=calcPayoff(target.balance,target.pay,target.apr);const boosted=calcPayoff(target.balance,target.pay+extra,target.apr);
-  effect.textContent=base&&boosted&&extra>0?`${Math.max(0,base.months-boosted.months)} months sooner on ${target.label}`:'Move the slider to compare';
+  const baseline=simulateDebtPortfolio(0);const scenario=simulateDebtPortfolio(extra);
+  const monthsSooner=baseline.months!=null&&scenario.months!=null?Math.max(0,baseline.months-scenario.months):0;
+  const interestSaved=Math.max(0,(baseline.interest||0)-(scenario.interest||0));
+  const monthly=document.getElementById('payoff-scenario-monthly');const interest=document.getElementById('payoff-scenario-interest');const date=document.getElementById('payoff-scenario-date');
+  if(monthly)monthly.textContent=fmtF(scenario.monthlyBudget);
+  if(interest)interest.textContent=scenario.complete?fmtF(scenario.interest):'—';
+  if(date)date.textContent=scenario.complete?projectionDateLabel(scenario.date):'Needs payment data';
+  if(extra<=0){effect.textContent='Move the slider to compare';return;}
+  effect.textContent=baseline.complete&&scenario.complete
+    ?`${monthsSooner} month${monthsSooner===1?'':'s'} sooner · ${fmtF(interestSaved)} less interest`
+    :`${fmtF(extra)} added to the monthly payoff plan`;
 }
 
 function setPayoffRate(id, val) {
