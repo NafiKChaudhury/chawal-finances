@@ -185,6 +185,7 @@
     .payoff-card { background:#12151e;border:1px solid #2d3148;border-radius:10px;padding:16px 18px; }
     .payoff-card.fixed-loan { border-color:#1e3a2f; }
     .payoff-card-title { font-size:13px;font-weight:600;color:#e2e8f0;margin-bottom:12px;display:flex;align-items:center;gap:6px; }
+    .payoff-card-title .btn-del { margin-left:auto; }
     .payoff-cat-dot { width:8px;height:8px;border-radius:50%;flex-shrink:0; }
     .payoff-row { display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:7px; }
     .payoff-lbl { color:#64748b; }
@@ -747,6 +748,11 @@
     .debt-legend { display:grid;grid-template-columns:repeat(3,1fr);gap:12px; }
     .debt-legend div { color:var(--muted);font-size:11px; }.debt-legend strong { display:block;margin-top:3px;color:var(--ink);font-size:13px; }
     .debt-list-shell { padding:0;border:0!important;background:transparent!important; }
+    .debt-controls { margin:16px 0; }
+    .debt-segments { width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;white-space:nowrap; }
+    .debt-segments::-webkit-scrollbar { display:none; }
+    .debt-segments button { flex:1 0 auto; }
+    .debt-panel[hidden] { display:none!important; }
     .debt-category { margin-bottom:16px;padding:0 20px;border:1px solid var(--line);border-radius:14px;background:var(--card); }
     .debt-category-head { min-height:58px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line-soft); }
     .debt-category-head h2 { font-size:14px; }.debt-category-head strong { font-size:14px;font-variant-numeric:tabular-nums; }
@@ -1152,7 +1158,7 @@
 
 <main>
   <div class="page-intro">
-    <div><div class="page-kicker" id="page-kicker">October 2026</div><h2 id="page-title">Overview</h2><p id="page-description">A clear view of your finances, all in one place.</p></div>
+    <div><div class="page-kicker" id="page-kicker">October 2026</div><h2 id="page-title">Overview</h2><p id="page-description"></p></div>
     <div class="page-actions" id="overview-actions">
       <button class="top-search" onclick="openSearch()"><svg class="ui-icon"><use href="#i-search"/></svg><span>Search your finances</span><kbd>Ctrl K</kbd></button>
       <button class="btn-primary" onclick="openQuickAdd()"><svg class="ui-icon"><use href="#i-plus"/></svg>Quick add</button>
@@ -1176,36 +1182,57 @@
   <div id="tab-annual" class="tab-content active">
     <div class="overview-visual-grid">
       <div class="section overview-chart-card">
-        <div class="sec-head"><div><h2>Net worth trend</h2><span class="muted-note">Recorded assets less saved liabilities</span></div><span class="chart-value" id="net-worth-chart-value"></span></div>
-        <div class="chart-wrap-lg"><canvas id="net-worth-chart"></canvas></div>
+        <div class="sec-head"><h2>Income and bills paid</h2><div class="chart-legend"><span><i class="legend-dot"></i>Income</span><span><i class="legend-dot debt-dot"></i>Bills paid</span></div></div>
+        <div class="overview-comparison-note" id="income-chart-note"></div>
+        <div class="chart-wrap-lg overview-comparison-chart"><canvas id="ann-income-chart"></canvas></div>
       </div>
-      <div class="section overview-allocation-card">
-        <div class="sec-head"><div><h2>Asset allocation</h2><span class="muted-note">Recorded investment contributions</span></div></div>
-        <div class="allocation-layout">
-          <div class="allocation-chart"><canvas id="asset-allocation-chart"></canvas><div class="allocation-center"><strong id="asset-allocation-total">$0</strong><span>recorded</span></div></div>
-          <div id="asset-allocation-legend" class="allocation-legend"></div>
+      <div class="section this-month-card">
+        <div class="sec-head"><h2>This month</h2></div>
+        <div class="debt-mix-block">
+          <div class="debt-mix-chart">
+            <canvas id="debt-mix-chart"></canvas>
+            <div class="debt-mix-center"><strong id="debt-mix-count">$0</strong><span>total debt</span></div>
+          </div>
+          <div><div class="debt-mix-label">Debt mix</div><div class="debt-mix-legend" id="debt-mix-legend"></div></div>
         </div>
+        <div id="this-month-rows"></div>
       </div>
     </div>
-    <div class="overview-widget-grid">
-      <div class="section overview-widget-card">
-        <div class="sec-head"><div><h2>Upcoming bills</h2><span class="muted-note">Saved names, due dates, and amounts</span></div><button class="text-button" onclick="switchTab('bills')">View all</button></div>
-        <div id="overview-upcoming-bills"></div>
+    <div class="section overview-debt-outlook" id="overview-debt-outlook"></div>
+    <div class="section growth-card">
+      <div class="sec-head">
+        <h2>Spending and investment growth</h2>
+        <div class="growth-card-head">
+          <div class="chart-legend"><span><i class="legend-dot debt-dot"></i>Bills paid</span><span><i class="legend-dot investment-dot"></i>Investments</span></div>
+          <div class="chart-mode-toggle" aria-label="Chart view">
+            <button class="active" data-growth-mode="totals" onclick="setGrowthChartMode('totals')">Totals</button>
+            <button data-growth-mode="growth" onclick="setGrowthChartMode('growth')">Year-over-year growth</button>
+          </div>
+        </div>
       </div>
-      <div class="section overview-widget-card" id="overview-dividend-income"></div>
-      <div class="section overview-widget-card">
-        <div class="sec-head"><div><h2>Recent transactions</h2><span class="muted-note">Latest saved amount changes</span></div><button class="text-button" onclick="switchTab('history')">Reports</button></div>
-        <div id="overview-recent-transactions"></div>
+      <div class="growth-insights" id="growth-insights"></div>
+      <div class="chart-wrap-lg"><canvas id="annual-growth-chart"></canvas></div>
+      <p class="growth-note" id="growth-note">Current-year figures include entries recorded so far. Investment totals come from the visible Tracker investment lines.</p>
+    </div>
+    <div class="section">
+      <div class="sec-head"><h2>Year by year</h2></div>
+      <div class="table-scroll">
+        <table class="ann-table" id="ann-table"></table>
       </div>
-      <div class="section overview-debt-outlook" id="overview-debt-outlook"></div>
     </div>
   </div>
 
   <!-- ── DEBT BALANCES ── -->
   <div id="tab-debt" class="tab-content">
     <div class="workspace-nav" aria-label="Bills workspace"><button onclick="switchTab('bills')">Recurring bills</button><button class="active" onclick="switchTab('debt')">Debts</button><button onclick="switchTab('tracker')">Monthly tracker</button></div>
-    <div id="debt-summary"></div>
-    <div class="section debt-list-shell">
+    <div class="debt-controls">
+      <div class="segmented debt-segments" id="debt-segments" role="tablist" aria-label="Debt sections">
+        <button class="active" data-section="total" onclick="setDebtSection('total')">Total debt</button>
+        <button data-section="payoff" onclick="setDebtSection('payoff')">Payoff projections</button>
+      </div>
+    </div>
+    <div class="section debt-list-shell debt-panel" id="debt-accounts-panel">
+      <div id="debt-summary"></div>
       <div class="edit-form" id="debt-add-form">
         <div class="form-row">
           <div class="fg"><label>Name</label><input id="da-name" placeholder="e.g. TD Visa"/></div>
@@ -1221,7 +1248,7 @@
       </div>
       <div id="debt-list"></div>
     </div>
-    <div class="section payoff-section">
+    <div class="section payoff-section debt-panel" id="debt-payoff-panel" hidden>
       <div class="sec-head">
         <h2>Payoff projections</h2>
         <span class="muted-note">Updates when tracker balances change</span>
@@ -1236,14 +1263,25 @@
       <!-- Variable debts (credit cards + LOC) -->
       <div class="payoff-sub-head">
         <h3>Credit cards and lines of credit</h3>
-        <span>Edit payment &amp; APR to recalculate</span>
+        <div class="sec-actions"><span>Edit payment &amp; APR to recalculate</span><button class="btn-secondary" onclick="showAddVariableDebt()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add card or LOC</button></div>
       </div>
       <div id="payoff-variable" class="payoff-grid"></div>
 
       <!-- Fixed payment loans (known end dates) -->
       <div class="payoff-sub-head">
         <h3>Fixed payment loans</h3>
-        <span>Structured loans with confirmed payoff dates</span>
+        <div class="sec-actions"><span>Structured loans with confirmed payoff dates</span><button class="btn-secondary" onclick="showAddFixedLoan()"><svg class="ui-icon"><use href="#i-plus"/></svg>Add fixed loan</button></div>
+      </div>
+      <div class="edit-form" id="fixed-loan-form">
+        <div class="form-row">
+          <div class="fg"><label>Name</label><input id="fl-name" placeholder="e.g. Vehicle loan"/></div>
+          <div class="fg"><label>Category</label><select id="fl-category"><option>Car Loans</option><option>Loans &amp; LOC</option></select></div>
+          <div class="fg"><label>Current balance</label><input id="fl-balance" type="number" min="0" step="0.01" placeholder="0.00"/></div>
+          <div class="fg"><label>Payment</label><input id="fl-payment" type="number" min="0" step="0.01" placeholder="0.00"/></div>
+          <div class="fg"><label>Frequency</label><select id="fl-frequency"><option value="monthly">Monthly</option><option value="biweekly">Every 2 weeks</option></select></div>
+          <div class="fg"><label>Contract end</label><input id="fl-date" type="month"/></div>
+        </div>
+        <div class="form-actions"><button class="btn-sm btn-save" onclick="saveFixedLoan()">Save fixed loan</button><button class="btn-sm btn-cancel" onclick="cancelFixedLoan()">Cancel</button></div>
       </div>
       <div id="payoff-fixed" class="payoff-grid"></div>
 
@@ -1667,6 +1705,7 @@ let autoSaveTimer = null;
 let lastHistorySnapshot = null;
 let historyFilter = 'all';
 let activeTrackerSection = 'debt_payments';
+let activeDebtSection = 'total';
 let trackerSelectedRow = null;
 let showInactiveTrackerLines = false;
 const paidOffVisible = {};
@@ -1830,14 +1869,23 @@ function saveTrackerRow() {
   const section = document.getElementById('tracker-row-section').value;
   const name = document.getElementById('tracker-row-name').value.trim();
   if (!name) return;
-  const id = `tr-${section}-${Date.now()}`;
+  const currentYear=String(new Date().getFullYear());
+  const sharedDebt=section.startsWith('debt_')&&activeYear===currentYear;
+  const id = `${sharedDebt?'d':'tr-'+section}-${Date.now()}`;
   D.monthly_tracker??={};
   D.monthly_tracker[activeYear]??={};
-  D.monthly_tracker[activeYear][section]??={};
-  D.monthly_tracker[activeYear][section][id]=Array(12).fill(0);
-  const meta=ensureTrackerYearMeta(activeYear);
   const category=section.startsWith('debt_')?document.getElementById('tracker-row-category').value:'';
-  meta.sections[section].push({id,label:name,category,custom:true});
+  if(sharedDebt){
+    const key=categoryInfo(category).key;
+    const item={id,name,category,type:key==='cars'?'car':key==='credit'?'credit':'loan',amount:0};
+    D.debt_items.push(item);
+    ensureDebtTrackerRow(activeYear,item);
+  }else{
+    D.monthly_tracker[activeYear][section]??={};
+    D.monthly_tracker[activeYear][section][id]=Array(12).fill(0);
+    const meta=ensureTrackerYearMeta(activeYear);
+    meta.sections[section].push({id,label:name,category,custom:true});
+  }
   trackerSelectedRow={section,id};
   cancelTrackerRow(); mark(); renderTracker(activeYear); syncAllViews();
 }
@@ -1920,6 +1968,7 @@ async function cloudConnect() {
     toast('Connected. Loading cloud data…');
     D    = data;
     ensureDataShape(); ensure2027(); ensurePaySources(); ensureTrackerRows(); ensureTrackerYearMetadata();
+    initializeCurrentDebtBalanceSync();
     lastHistorySnapshot = historySnapshot();
     ORIG = JSON.parse(JSON.stringify(D));
     try { localStorage.setItem('bills_local_data',JSON.stringify(D)); } catch(_) {}
@@ -1973,6 +2022,7 @@ async function load() {
   ensurePaySources();
   ensureTrackerRows();
   ensureTrackerYearMetadata();
+  initializeCurrentDebtBalanceSync();
   lastHistorySnapshot = historySnapshot();
   ORIG = JSON.parse(JSON.stringify(D));
   updateSaveStatus(loadedFromCloud?'Synced':'Saved on this device',loadedFromCloud?'synced':'device');
@@ -2193,17 +2243,74 @@ function syncAllViews() {
   if (activeId === 'tab-settings') renderPaySources();
 }
 
-// Write a debt_items balance into the current month's tracker cell
+function currentDebtSyncPeriod() {
+  const now = new Date();
+  return { year:String(now.getFullYear()), month:now.getMonth() };
+}
+
+function ensureDebtTrackerRow(year, item) {
+  const value=String(year);
+  D.monthly_tracker??={};
+  D.monthly_tracker[value]??={};
+  ['debt_payments','debt_balances'].forEach(section=>{
+    D.monthly_tracker[value][section]??={};
+    D.monthly_tracker[value][section][item.id]??=Array(12).fill(0);
+  });
+  const meta=ensureTrackerYearMeta(value);
+  ['debt_payments','debt_balances'].forEach(section=>{
+    const row=meta.sections[section].find(entry=>entry.id===item.id);
+    if(row){row.label=item.name;row.category=item.category;row.custom=false;}
+    else meta.sections[section].push({id:item.id,label:item.name,category:item.category,custom:false});
+  });
+  return D.monthly_tracker[value].debt_balances[item.id];
+}
+
+// Debts is the current balance source; its value is mirrored into this month's tracker cell.
 function syncDebtItemToTracker(id, amount) {
-  const yr = new Date().getFullYear().toString();
-  const mo = new Date().getMonth(); // 0-based
-  if (!D.monthly_tracker)                             D.monthly_tracker = {};
-  if (!D.monthly_tracker[yr])                         D.monthly_tracker[yr] = {};
-  if (!D.monthly_tracker[yr].debt_balances)           D.monthly_tracker[yr].debt_balances = {};
-  if (!D.monthly_tracker[yr].debt_balances[id])       D.monthly_tracker[yr].debt_balances[id] = Array(12).fill(0);
-  D.monthly_tracker[yr].debt_balances[id][mo] = amount;
-  // Refresh the tracker balance table only if we're viewing this year
-  if (activeYear === yr) buildBalancesTable('tbl-debt-bal', yr);
+  const item=(D.debt_items||[]).find(debt=>debt.id===id);
+  if(!item)return false;
+  const {year,month}=currentDebtSyncPeriod();
+  const series=ensureDebtTrackerRow(year,item);
+  const value=Math.max(0,Number(amount)||0);
+  const changed=Number(series[month]||0)!==value;
+  series[month]=value;
+  if(activeYear===year&&document.getElementById('tbl-debt-bal'))buildBalancesTable('tbl-debt-bal',year);
+  return changed;
+}
+
+// Only the real current-month cell controls the live Debts page. Other months remain history.
+function syncTrackerBalanceToDebt(year,id,month,amount) {
+  const current=currentDebtSyncPeriod();
+  if(String(year)!==current.year||Number(month)!==current.month)return false;
+  let item=(D.debt_items||[]).find(debt=>debt.id===id);
+  if(!item){
+    const row=getTrackerRows(String(year),'debt_balances').find(entry=>entry.id===id);
+    if(!row)return false;
+    item={id,name:row.label,category:row.category||'Loans & LOC',type:categoryInfo(row.category).key==='cars'?'car':categoryInfo(row.category).key==='credit'?'credit':'loan',amount:0};
+    D.debt_items.push(item);
+  }
+  item.amount=Math.max(0,Number(amount)||0);
+  ensureDebtTrackerRow(current.year,item);
+  return true;
+}
+
+function initializeCurrentDebtBalanceSync() {
+  let changed=false;
+  (D.debt_items||[]).forEach(item=>{if(syncDebtItemToTracker(item.id,item.amount))changed=true;});
+  return changed;
+}
+
+function removeDebtFromCurrentTracker(id) {
+  const {year}=currentDebtSyncPeriod();
+  ['debt_payments','debt_balances'].forEach(section=>{
+    if(D.monthly_tracker?.[year]?.[section])delete D.monthly_tracker[year][section][id];
+  });
+  const meta=D.tracker_year_meta?.[year];
+  if(meta?.sections){
+    ['debt_payments','debt_balances'].forEach(section=>{
+      if(Array.isArray(meta.sections[section]))meta.sections[section]=meta.sections[section].filter(row=>row.id!==id);
+    });
+  }
 }
 
 // Rebuild both tracker debt tables (payments + balances) with the current debt row list.
@@ -2303,13 +2410,16 @@ function renderDebtList() {
   }
   document.getElementById('debt-list').innerHTML = html;
 }
-function addDebt()   { document.getElementById('debt-add-form').classList.add('open'); document.getElementById('da-name').focus(); }
+function addDebt()   { if(activeDebtSection==='payoff')setDebtSection('total');document.getElementById('debt-add-form').classList.add('open'); document.getElementById('da-name').focus(); }
 function cancelDebt(){ document.getElementById('debt-add-form').classList.remove('open'); }
 function saveDebt()  {
   const n=document.getElementById('da-name').value.trim();
   if(!n) return;
   const id='d-'+Date.now();
-  D.debt_items.push({id,name:n,category:document.getElementById('da-cat').value,type:document.getElementById('da-type').value,amount:parseFloat(document.getElementById('da-amount').value)||0});
+  const item={id,name:n,category:document.getElementById('da-cat').value,type:document.getElementById('da-type').value,amount:parseFloat(document.getElementById('da-amount').value)||0};
+  D.debt_items.push(item);
+  activeDebtSection='total';
+  syncDebtItemToTracker(id,item.amount);
   const limit=parseFloat(document.getElementById('da-limit')?.value)||0;if(limit>0){D.credit_limits??={};D.credit_limits[id]=limit;}
   rebuildTrackerDebtTables();
   cancelDebt(); mark(); renderDebtList(); syncAllViews();
@@ -2322,6 +2432,7 @@ function updateDebt(id){
   it.category=document.getElementById('dec-'+id).value;
   it.type=document.getElementById('det-'+id).value;
   it.amount=parseFloat(document.getElementById('dea-'+id).value)||0;
+  syncDebtItemToTracker(id,it.amount);
   const limit=parseFloat(document.getElementById('del-'+id)?.value)||0;D.credit_limits??={};if(limit>0)D.credit_limits[id]=limit;else delete D.credit_limits[id];
   rebuildTrackerDebtTables();
   closeDebt(id); mark(); renderDebtChart(); syncAllViews();
@@ -2329,6 +2440,7 @@ function updateDebt(id){
 function delDebt(id){
   if(!confirm('Remove?')) return;
   D.debt_items=D.debt_items.filter(d=>d.id!==id);
+  removeDebtFromCurrentTracker(id);
   if(D.credit_limits)delete D.credit_limits[id];
   // Row disappears from Monthly Tracker immediately
   rebuildTrackerDebtTables();
@@ -2607,6 +2719,7 @@ function saveCell(tblId, year, section, rowId, idx) {
   if (!D.monthly_tracker[year][section]) D.monthly_tracker[year][section] = {};
   if (!D.monthly_tracker[year][section][rowId]) D.monthly_tracker[year][section][rowId] = Array(12).fill(0);
   D.monthly_tracker[year][section][rowId][idx] = val;
+  if(section==='debt_balances')syncTrackerBalanceToDebt(year,rowId,idx,val);
   document.getElementById(`cw-${tblId}-${rowId}-${idx}`).classList.remove('editing');
   mark();
   // Re-render the relevant tracker table
@@ -3270,7 +3383,9 @@ function renderPayoffProjections() {
   const overrides = D.payoff_overrides || {};
 
   // ── Variable debts ──────────────────────────────────────────────────────────
-  const varRows = getDebtRows().filter(r => !PAYOFF_EXCLUDED.has(r.id) && !FIXED_LOAN_IDS.has(r.id));
+  const fixedLoans = D.payoff_fixed_loans || [];
+  const fixedIds = new Set([...FIXED_LOAN_IDS,...fixedLoans.map(loan=>loan.id)]);
+  const varRows = getDebtRows().filter(r => !PAYOFF_EXCLUDED.has(r.id) && !fixedIds.has(r.id));
   const varActive = [];
   for (const row of varRows) {
     const balance = getPayoffBalance(row.id);
@@ -3287,13 +3402,12 @@ function renderPayoffProjections() {
   let varHtml = varActive.length === 0
     ? '<p class="payoff-empty">No active credit card or LOC balances.</p>'
     : varActive.map(d => payoffCardHTML(
-        d.id, d.label, d.balance, d.pay, d.auto, d.apr, d.orig, d.result, false, null,
+        d.id, d.label, d.balance, d.pay, d.auto, d.apr, d.orig, d.result, false, `<button class="btn-sm btn-del" onclick="event.stopPropagation();delDebt('${d.id}')">Remove</button>`,
         `setPayoffOverride('${d.id}',`, `setPayoffRate('${d.id}',`, ''
       )).join('');
   document.getElementById('payoff-variable').innerHTML = varHtml;
 
   // ── Fixed loans ─────────────────────────────────────────────────────────────
-  const fixedLoans = D.payoff_fixed_loans || [];
   let fixHtml = '';
   const fixedForSummary = [];
   for (const loan of fixedLoans) {
@@ -3306,7 +3420,7 @@ function renderPayoffProjections() {
     fixedForSummary.push({ balance, months, pay: loan.payment });
     fixHtml += payoffCardHTML(
       loan.id, loan.name, balance, loan.payment, loan.payment, 0, orig, result, true,
-      `<span class="payoff-fixed-badge">FIXED</span>`, null, null,
+      `<span class="payoff-fixed-badge">FIXED</span><button class="btn-sm btn-del" onclick="event.stopPropagation();deleteFixedLoan('${loan.id}')">Remove</button>`, null, null,
       `<div class="payoff-row"><span class="payoff-lbl">Frequency</span><span class="payoff-val">${loan.frequency}</span></div>
        <div class="payoff-row"><span class="payoff-lbl">Contract End</span><span class="payoff-val">${new Date(loan.payoff_date).toLocaleDateString('en-CA',{month:'short',year:'numeric'})}</span></div>`
     );
@@ -3366,9 +3480,9 @@ function renderPayoffProjections() {
     document.getElementById('payoff-summary').innerHTML = `
       <div class="payoff-sum-card"><div class="ps-l">Active Debts</div><div class="ps-v" style="color:#f87171">${allActive.length}</div></div>
       <div class="payoff-sum-card"><div class="ps-l">Total Balance</div><div class="ps-v" style="color:#f87171">${fmtF(totalDebt)}</div></div>
-      <div class="payoff-sum-card"><div class="ps-l">Total / Month</div><div class="ps-v" style="color:#fb923c">${fmtF(totalMonthly)}</div></div>
-      <div class="payoff-sum-card"><div class="ps-l">Est. Interest</div><div class="ps-v" style="color:#facc15">${totalInt > 0 ? fmtF(totalInt) : '—'}</div></div>
-      <div class="payoff-sum-card"><div class="ps-l">Debt-Free Date</div><div class="ps-v" style="color:#4ade80">${dfDate}</div></div>`;
+      <div class="payoff-sum-card"><div class="ps-l">Total / Month</div><div class="ps-v" id="payoff-scenario-monthly" style="color:#fb923c">${fmtF(totalMonthly)}</div></div>
+      <div class="payoff-sum-card"><div class="ps-l">Est. Interest</div><div class="ps-v" id="payoff-scenario-interest" style="color:#facc15">${totalInt > 0 ? fmtF(totalInt) : '—'}</div></div>
+      <div class="payoff-sum-card"><div class="ps-l">Debt-Free Date</div><div class="ps-v" id="payoff-scenario-date" style="color:#4ade80">${dfDate}</div></div>`;
   } else {
     document.getElementById('payoff-summary').innerHTML = '';
   }
@@ -3378,6 +3492,7 @@ function renderPayoffProjections() {
 
 function debtProjectionModel() {
   const rates=D.payoff_rates||{},overrides=D.payoff_overrides||{},fixed=D.payoff_fixed_loans||[];
+  const fixedIds=new Set([...FIXED_LOAN_IDS,...fixed.map(loan=>loan.id)]);
   const debts=(D.debt_items||[]).filter(item=>Number(item.amount)>0&&categoryInfo(item.category).key!=='housing').map(item=>{
     const fixedLoan=fixed.find(loan=>loan.id===item.id);const balance=Number(item.amount)||0;const apr=Number(rates[item.id])||0;
     const pay=Number(overrides[item.id])||getAutoPayment(item.id)||Number(fixedLoan?.payment)||0;
@@ -3388,7 +3503,7 @@ function debtProjectionModel() {
     const result=loan.payoff_date?{months:monthsUntil(`${loan.payoff_date}-01`),totalInterest:0}:calcPayoff(Number(loan.balance),Number(loan.payment),Number(loan.apr)||0);
     debts.push({id:loan.id,label:loan.name,balance:Number(loan.balance),pay:Number(loan.payment)||0,apr:Number(loan.apr)||0,result});
   });
-  const missingApr=debts.filter(debt=>debt.apr<=0&&!FIXED_LOAN_IDS.has(debt.id)).length;
+  const missingApr=debts.filter(debt=>debt.apr<=0&&!fixedIds.has(debt.id)).length;
   const missingPayment=debts.filter(debt=>!debt.result).length;
   const maxMonths=debts.filter(debt=>debt.result?.months>=0).reduce((max,debt)=>Math.max(max,debt.result.months),0);
   const elapsed=(new Date().getMonth()+1)/12;
@@ -3407,11 +3522,20 @@ function updatePayoffWhatIf(value) {
   const extra=Math.max(0,Number(value)||0);const label=document.getElementById('payoff-extra-label');if(label)label.textContent=fmtF(extra);
   if(!D)return;const model=debtProjectionModel();const candidates=model.debts.filter(debt=>debt.pay>0).sort((a,b)=>(b.apr-a.apr)||(a.balance-b.balance));
   const hasApr=candidates.some(debt=>debt.apr>0);candidates.sort((a,b)=>hasApr?((b.apr-a.apr)||(a.balance-b.balance)):(b.balance-a.balance));
-  const target=candidates[0];const order=document.getElementById('payoff-order');const effect=document.getElementById('payoff-extra-effect');if(!order||!effect)return;
-  if(!target){order.textContent='Add payments to calculate';effect.textContent='Not available yet';return;}
+  const order=document.getElementById('payoff-order');const effect=document.getElementById('payoff-extra-effect');if(!order||!effect)return;
+  if(!candidates.length){order.textContent='Add payments to calculate';effect.textContent='Not available yet';return;}
   order.textContent=`${hasApr?'Highest APR first':'Largest balance first'}: ${candidates.slice(0,3).map(debt=>debt.label).join(' → ')}`;
-  const base=calcPayoff(target.balance,target.pay,target.apr);const boosted=calcPayoff(target.balance,target.pay+extra,target.apr);
-  effect.textContent=base&&boosted&&extra>0?`${Math.max(0,base.months-boosted.months)} months sooner on ${target.label}`:'Move the slider to compare';
+  const baseline=simulateDebtPortfolio(0);const scenario=simulateDebtPortfolio(extra);
+  const monthsSooner=baseline.months!=null&&scenario.months!=null?Math.max(0,baseline.months-scenario.months):0;
+  const interestSaved=Math.max(0,(baseline.interest||0)-(scenario.interest||0));
+  const monthly=document.getElementById('payoff-scenario-monthly');const interest=document.getElementById('payoff-scenario-interest');const date=document.getElementById('payoff-scenario-date');
+  if(monthly)monthly.textContent=fmtF(scenario.monthlyBudget);
+  if(interest)interest.textContent=scenario.complete?fmtF(scenario.interest):'—';
+  if(date)date.textContent=scenario.complete?projectionDateLabel(scenario.date):'Needs payment data';
+  if(extra<=0){effect.textContent='Move the slider to compare';return;}
+  effect.textContent=baseline.complete&&scenario.complete
+    ?`${monthsSooner} month${monthsSooner===1?'':'s'} sooner · ${fmtF(interestSaved)} less interest`
+    :`${fmtF(extra)} added to the monthly payoff plan`;
 }
 
 function setPayoffRate(id, val) {
@@ -3425,6 +3549,53 @@ function setPayoffOverride(id, val) {
   const n = parseFloat(val);
   if (!isNaN(n) && n > 0) D.payoff_overrides[id] = n; else delete D.payoff_overrides[id];
   mark(); renderPayoffProjections();
+}
+
+function showAddVariableDebt() {
+  setDebtSection('total');
+  addDebt();
+  document.getElementById('da-cat').value='Credit Cards';
+  document.getElementById('da-type').value='credit';
+}
+
+function showAddFixedLoan() {
+  document.getElementById('fixed-loan-form').classList.add('open');
+  document.getElementById('fl-name').focus();
+}
+
+function cancelFixedLoan() {
+  document.getElementById('fixed-loan-form').classList.remove('open');
+  ['fl-name','fl-balance','fl-payment','fl-date'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fl-category').value='Car Loans';
+  document.getElementById('fl-frequency').value='monthly';
+}
+
+function saveFixedLoan() {
+  const name=document.getElementById('fl-name').value.trim();
+  const category=document.getElementById('fl-category').value;
+  const balance=Math.max(0,Number(document.getElementById('fl-balance').value)||0);
+  const payment=Math.max(0,Number(document.getElementById('fl-payment').value)||0);
+  const frequency=document.getElementById('fl-frequency').value==='biweekly'?'biweekly':'monthly';
+  const endMonth=document.getElementById('fl-date').value;
+  if(!name||balance<=0||payment<=0||!endMonth){toast('Enter the name, balance, payment, and contract end.');return;}
+  const id='d-fixed-'+Date.now();
+  const item={id,name,category,type:categoryInfo(category).key==='cars'?'car':'loan',amount:balance};
+  D.debt_items.push(item);
+  D.payoff_fixed_loans??=[];
+  D.payoff_fixed_loans.push({id,name,payment,frequency,payoff_date:`${endMonth}-01`,current_balance:balance,orig_balance:balance});
+  syncDebtItemToTracker(id,balance);
+  cancelFixedLoan();mark();renderPayoffProjections();syncAllViews();
+}
+
+function deleteFixedLoan(id) {
+  const loan=(D.payoff_fixed_loans||[]).find(item=>item.id===id);
+  if(!confirm(`Remove ${loan?.name||'this fixed loan'}? Its earlier Tracker history will be kept.`))return;
+  D.payoff_fixed_loans=(D.payoff_fixed_loans||[]).filter(item=>item.id!==id);
+  D.debt_items=(D.debt_items||[]).filter(item=>item.id!==id);
+  if(D.payoff_rates)delete D.payoff_rates[id];
+  if(D.payoff_overrides)delete D.payoff_overrides[id];
+  removeDebtFromCurrentTracker(id);
+  mark();renderPayoffProjections();syncAllViews();
 }
 
 // ── Custom Loan CRUD ──────────────────────────────────────────────────────────
@@ -3899,7 +4070,7 @@ function annualDelta(value,previous,inverse=false) {
   return`<span class="year-delta ${improved?'delta-good':'delta-bad'}">${change>0?'Up':'Down'} ${amount}</span>`;
 }
 
-function renderSummary() {
+function renderPreview3Summary() {
   const year=String(new Date().getFullYear());
   const previous=String(Number(year)-1);
   const month=new Date().getMonth();
@@ -3953,7 +4124,7 @@ function openIncomeEntry() {
   setTimeout(()=>document.querySelector('.tracker-panel[data-section="income"]')?.scrollIntoView({behavior:'smooth',block:'start'}),50);
 }
 
-function renderAnnualSummary() {
+function renderPreview3AnnualSummary() {
   const currentYear=String(new Date().getFullYear());
   const years=[...new Set([...Object.keys(D.annual_summary||{}),...Object.keys(D.monthly_tracker||{}),...Object.keys(D.dividends||{})])].filter(year=>{
     const row=annualViewRow(year);
@@ -4062,7 +4233,7 @@ function renderSpendingInvestmentChart(years) {
 
 function setGrowthChartMode(mode) {
   growthChartMode=mode==='growth'?'growth':'totals';
-  renderAnnualSummary();
+  renderPreview3AnnualSummary();
 }
 
 function categoryInfo(category) {
@@ -4105,7 +4276,8 @@ function renderDebtList() {
   const housingRows=getTrackerRows(year,'debt_payments').filter(row=>trackerGroup(row,'debt_payments')==='Housing').map(row=>({...row,amount:Number(trackerValues[row.id]?.[month])||0}));
   const housingTotal=housingRows.reduce((sum,row)=>sum+row.amount,0);
   document.getElementById('debt-summary').innerHTML=`<article class="section debt-summary-card"><div class="debt-summary-top"><div><span>Total debt</span><strong>${fmtF(total)}</strong></div><span>${debtItems.filter(item=>Number(item.amount)>0).length} active accounts</span></div><div class="debt-stack">${['credit','loans','cars'].map(key=>`<i class="${key==='credit'?'cat-credit':key==='cars'?'cat-cars':'cat-loans'}" style="width:${total?totals[key]/total*100:0}%"></i>`).join('')}</div><div class="debt-legend">${['credit','loans','cars'].map(key=>{const info=categoryInfo(key==='credit'?'Credit Cards':key==='cars'?'Car Loans':'Loans & LOC');return `<div>${info.label}<strong>${fmtF(totals[key])}</strong></div>`}).join('')}</div></article>`;
-  list.innerHTML=ordered.filter(key=>grouped[key].length||(key==='housing'&&housingRows.length)).map(key=>{
+  const visibleKeys=activeDebtSection==='payoff'?[]:ordered;
+  list.innerHTML=visibleKeys.filter(key=>grouped[key]?.length||(key==='housing'&&housingRows.length)).map(key=>{
     const info=categoryInfo(key==='credit'?'Credit Cards':key==='cars'?'Car Loans':key==='housing'?'Housing':'Loans & LOC');
     if(key==='housing')return `<section class="debt-category"><div class="debt-category-head"><h2>Housing</h2><strong>${fmtF(housingTotal)} / month</strong></div>${housingRows.map(row=>`<div class="debt-account"><div class="debt-account-name">${escapeHtml(row.label)}</div><div class="debt-account-bar"><i class="cat-loans" style="width:${housingTotal?row.amount/housingTotal*100:0}%"></i></div><div class="debt-account-share">${MONTHS[month]} ${year} obligation</div><div class="debt-account-balance">${fmtF(row.amount)}</div><div class="row-menu-wrap"><button class="icon-button" aria-label="Options for ${escapeHtml(row.label)}" onclick="toggleRowMenu('housing-menu-${row.id}',event)">${uiIcon('more')}</button><div class="row-menu" id="housing-menu-${row.id}" hidden><button onclick="renameTrackerRow('debt_payments','${row.id}')">${uiIcon('edit')}Rename</button><button class="danger" onclick="removeTrackerRow('debt_payments','${row.id}',true)">${uiIcon('trash')}Delete</button></div></div></div>`).join('')}<button class="btn-secondary" onclick="addHousingLine()">${uiIcon('plus')}Add rent or mortgage</button></section>`;
     const visible=grouped[key].filter(item=>paidOffVisible[key]||Number(item.amount)>0);
@@ -4117,6 +4289,16 @@ function renderDebtList() {
       return `<div class="debt-account"><div class="debt-account-name">${escapeHtml(item.name)}</div><div class="debt-account-bar"><i class="${info.className}" style="width:${width}%"></i></div><div class="debt-account-share">${utilization}</div><div class="debt-account-balance">${fmtF(Number(item.amount)||0)}</div><div class="row-menu-wrap"><button class="icon-button" aria-label="Options for ${escapeHtml(item.name)}" onclick="toggleRowMenu('debt-menu-${item.id}',event)">${uiIcon('more')}</button><div class="row-menu" id="debt-menu-${item.id}" hidden><button onclick="editDebt('${item.id}')">${uiIcon('edit')}Edit</button><button class="danger" onclick="delDebt('${item.id}')">${uiIcon('trash')}Delete</button></div></div></div>${debtEditForm(item)}`;
     }).join('')}${paidCount?`<label class="paid-toggle"><input type="checkbox" ${paidOffVisible[key]?'checked':''} onchange="paidOffVisible['${key}']=this.checked;renderDebtList()"/>Show ${paidCount} paid off account${paidCount===1?'':'s'}</label>`:''}</section>`;
   }).join('');
+}
+
+function setDebtSection(section) {
+  const allowed=['total','payoff'];
+  activeDebtSection=allowed.includes(section)?section:'total';
+  document.querySelectorAll('#debt-segments button').forEach(button=>button.classList.toggle('active',button.dataset.section===activeDebtSection));
+  const accounts=document.getElementById('debt-accounts-panel'),payoff=document.getElementById('debt-payoff-panel');
+  if(accounts)accounts.hidden=activeDebtSection==='payoff';
+  if(payoff)payoff.hidden=activeDebtSection!=='payoff';
+  if(activeDebtSection==='payoff')renderPayoffProjections();else renderDebtList();
 }
 
 function addHousingLine(){switchTab('tracker');setTrackerSection('debt_payments',document.querySelector('[data-section="debt_payments"]'));showTrackerRowForm('debt_payments');document.getElementById('tracker-row-category').value='Housing';}
@@ -4313,6 +4495,18 @@ function renameTrackerRow(section,id) {
   if (!name?.trim()) return;
   if (!target) return;
   target.label=name.trim();
+  const currentYear=String(new Date().getFullYear());
+  if(activeYear===currentYear&&section.startsWith('debt_')){
+    const debt=(D.debt_items||[]).find(item=>item.id===id);
+    if(debt){
+      debt.name=target.label;
+      const meta=ensureTrackerYearMeta(activeYear);
+      ['debt_payments','debt_balances'].forEach(key=>{
+        const paired=meta.sections[key].find(row=>row.id===id);
+        if(paired)paired.label=target.label;
+      });
+    }
+  }
   mark();renderTracker(activeYear);
 }
 
@@ -4972,9 +5166,9 @@ function renderOverviewWidgets() {
   const recent=(D.change_history||[]).map(entry=>({entry,presentation:historyEntryPresentation(entry)})).filter(item=>item.presentation.change&&['number','string'].includes(typeof item.presentation.change.after)).slice(0,4),recentWrap=document.getElementById('overview-recent-transactions');
   if(recentWrap)recentWrap.innerHTML=recent.length?recent.map(({entry,presentation})=>`<div class="recent-transaction"><div class="recent-transaction-icon">${uiIcon('history')}</div><div><strong>${escapeHtml(presentation.title)}</strong><small>${escapeHtml(presentation.area)} · ${new Date(entry.timestamp).toLocaleDateString('en-CA',{month:'short',day:'numeric'})}</small></div><span class="recent-transaction-value">${escapeHtml(historyChangeValue(presentation.change,'after'))}</span></div>`).join(''):'<div class="overview-empty"><strong>No recent changes</strong>Saved amount edits will appear here.</div>';
 }
-function renderOverviewDashboard() { renderOverviewSummary();renderNetWorthChart();renderAssetAllocation();renderOverviewWidgets(); }
-function renderSummary() { renderOverviewSummary(); }
-function renderAnnualSummary() { renderOverviewDashboard(); }
+function renderOverviewDashboard() { renderPreview3Summary();renderPreview3AnnualSummary();renderMonthlyPicture(); }
+function renderSummary() { renderPreview3Summary(); }
+function renderAnnualSummary() { renderPreview3AnnualSummary(); }
 
 function syncActiveNavigation() {
   const name=document.querySelector('.tab-content.active')?.id?.replace('tab-','')||'annual';
@@ -4986,13 +5180,13 @@ function syncActiveNavigation() {
 function switchTab(name) {
   if(!document.getElementById(`tab-${name}`))name='annual';
   document.querySelectorAll('.tab-content').forEach(element=>element.classList.remove('active'));document.getElementById(`tab-${name}`).classList.add('active');
-  const copy={annual:['Overview','A clear view of your finances, all in one place.'],bills:['Bills','Track recurring bills, debts, and monthly payments.'],tracker:['Monthly tracker','Record payments, balances, investments, and cashflow.'],debt:['Debts','Manage balances and understand your payoff timeline.'],income:['Income','Track every income source and monthly cashflow.'],dividends:['Dividends','Review dividend income and long-term growth.'],history:['Reports','Compare yearly performance and review account activity.'],settings:['Settings','Manage appearance, syncing, schedules, and your device.']};
+  const copy={annual:['Overview',''],bills:['Bills','Track recurring bills, debts, and monthly payments.'],tracker:['Monthly tracker','Record payments, balances, investments, and cashflow.'],debt:['Debts','Manage balances and understand your payoff timeline.'],income:['Income','Track every income source and monthly cashflow.'],dividends:['Dividends','Review dividend income and long-term growth.'],history:['Reports','Compare yearly performance and review account activity.'],settings:['Settings','Manage appearance, syncing, schedules, and your device.']};
   document.getElementById('page-title').textContent=(copy[name]||copy.annual)[0];
   document.getElementById('page-description').textContent=(copy[name]||copy.annual)[1];
   const kicker=document.getElementById('page-kicker');kicker.textContent=name==='annual'?new Intl.DateTimeFormat('en-CA',{month:'long',year:'numeric'}).format(new Date()):'Chawal Finances';
   document.getElementById('summary').style.display=name==='annual'?'grid':'none';
   document.getElementById('overview-actions').hidden=name!=='annual';document.getElementById('debt-actions').hidden=name!=='debt';
-  if(name==='annual'){renderOverviewDashboard();renderDebtOutlook();}if(name==='bills')renderBillsList();if(name==='tracker')renderTracker(activeYear);if(name==='debt'){renderDebtList();renderPayoffProjections();}if(name==='income')renderIncomeList();if(name==='dividends'){renderDividends();renderDivChart();}if(name==='history'){renderReports();renderHistory();}if(name==='settings'){renderSettings();renderPaySources();}
+  if(name==='annual'){renderOverviewDashboard();renderDebtOutlook();}if(name==='bills')renderBillsList();if(name==='tracker')renderTracker(activeYear);if(name==='debt')setDebtSection(activeDebtSection);if(name==='income')renderIncomeList();if(name==='dividends'){renderDividends();renderDivChart();}if(name==='history'){renderReports();renderHistory();}if(name==='settings'){renderSettings();renderPaySources();}
   syncActiveNavigation();closeMobileMore();if(window.innerWidth<900)window.scrollTo({top:0,behavior:'auto'});
 }
 function mobileSwitchTab(name){switchTab(name);}
