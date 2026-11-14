@@ -4919,10 +4919,14 @@ const PREFERRED_BILL_ALIASES = new Map([
   ['affirmtvdesk','Affirm (Parents Phone)'],['rent','Rent'],['genesisg70','Genesis G70'],
   ['hyundaitucson','Hyundai Tucson'],['mortgage','Mortgage']
 ]);
+const BILL_DEDUP_KEYS = new Map([
+  ['genesisg70','g70payment'],['g70payment','g70payment'],
+  ['hyundaitucson','tucsonpayment'],['tucsonpayment','tucsonpayment']
+]);
 
 function normalizeBillName(value) { return String(value||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
 function preferredBillLabel(name,id='') { const normalized=normalizeBillName(name);return PREFERRED_BILL_ALIASES.get(normalized)||(!normalized?PREFERRED_BILL_LABELS_BY_ID[id]:'')||String(name||'Unnamed bill'); }
-function billStatusKey(name) { return normalizeBillName(name)||`bill${Date.now()}`; }
+function billStatusKey(name) { const normalized=normalizeBillName(name);return BILL_DEDUP_KEYS.get(normalized)||normalized||`bill${Date.now()}`; }
 function billDomKey(value) { return String(value||'bill').replace(/[^a-zA-Z0-9_-]/g,'-'); }
 function validDueDay(value) { const day=Number(value);return Number.isInteger(day)&&day>=1&&day<=31?day:null; }
 function validBillFrequency(value) { return value==='biweekly'?'biweekly':'monthly'; }
