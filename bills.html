@@ -1616,14 +1616,23 @@ function saveTrackerRow() {
   const section = document.getElementById('tracker-row-section').value;
   const name = document.getElementById('tracker-row-name').value.trim();
   if (!name) return;
-  const id = `tr-${section}-${Date.now()}`;
+  const currentYear=String(new Date().getFullYear());
+  const sharedDebt=section.startsWith('debt_')&&activeYear===currentYear;
+  const id = `${sharedDebt?'d':'tr-'+section}-${Date.now()}`;
   D.monthly_tracker??={};
   D.monthly_tracker[activeYear]??={};
-  D.monthly_tracker[activeYear][section]??={};
-  D.monthly_tracker[activeYear][section][id]=Array(12).fill(0);
-  const meta=ensureTrackerYearMeta(activeYear);
   const category=section.startsWith('debt_')?document.getElementById('tracker-row-category').value:'';
-  meta.sections[section].push({id,label:name,category,custom:true});
+  if(sharedDebt){
+    const key=categoryInfo(category).key;
+    const item={id,name,category,type:key==='cars'?'car':key==='credit'?'credit':'loan',amount:0};
+    D.debt_items.push(item);
+    ensureDebtTrackerRow(activeYear,item);
+  }else{
+    D.monthly_tracker[activeYear][section]??={};
+    D.monthly_tracker[activeYear][section][id]=Array(12).fill(0);
+    const meta=ensureTrackerYearMeta(activeYear);
+    meta.sections[section].push({id,label:name,category,custom:true});
+  }
   trackerSelectedRow={section,id};
   cancelTrackerRow(); mark(); renderTracker(activeYear); syncAllViews();
 }
@@ -1706,6 +1715,7 @@ async function cloudConnect() {
     toast('Connected. Loading cloud data…');
     D    = data;
     ensureDataShape(); ensure2027(); ensurePaySources(); ensureTrackerRows(); ensureTrackerYearMetadata();
+    initializeCurrentDebtBalanceSync();
     lastHistorySnapshot = historySnapshot();
     ORIG = JSON.parse(JSON.stringify(D));
     try { localStorage.setItem('bills_local_data',JSON.stringify(D)); } catch(_) {}
@@ -1759,6 +1769,7 @@ async function load() {
   ensurePaySources();
   ensureTrackerRows();
   ensureTrackerYearMetadata();
+  initializeCurrentDebtBalanceSync();
   lastHistorySnapshot = historySnapshot();
   ORIG = JSON.parse(JSON.stringify(D));
   updateSaveStatus(loadedFromCloud?'Synced':'Saved on this device',loadedFromCloud?'synced':'device');
@@ -1968,17 +1979,74 @@ function syncAllViews() {
   if (activeId === 'tab-settings') renderPaySources();
 }
 
-// Write a debt_items balance into the current month's tracker cell
+function currentDebtSyncPeriod() {
+  const now = new Date();
+  return { year:String(now.getFullYear()), month:now.getMonth() };
+}
+
+function ensureDebtTrackerRow(year, item) {
+  const value=String(year);
+  D.monthly_tracker??={};
+  D.monthly_tracker[value]??={};
+  ['debt_payments','debt_balances'].forEach(section=>{
+    D.monthly_tracker[value][section]??={};
+    D.monthly_tracker[value][section][item.id]??=Array(12).fill(0);
+  });
+  const meta=ensureTrackerYearMeta(value);
+  ['debt_payments','debt_balances'].forEach(section=>{
+    const row=meta.sections[section].find(entry=>entry.id===item.id);
+    if(row){row.label=item.name;row.category=item.category;row.custom=false;}
+    else meta.sections[section].push({id:item.id,label:item.name,category:item.category,custom:false});
+  });
+  return D.monthly_tracker[value].debt_balances[item.id];
+}
+
+// Debts is the current balance source; its value is mirrored into this month's tracker cell.
 function syncDebtItemToTracker(id, amount) {
-  const yr = new Date().getFullYear().toString();
-  const mo = new Date().getMonth(); // 0-based
-  if (!D.monthly_tracker)                             D.monthly_tracker = {};
-  if (!D.monthly_tracker[yr])                         D.monthly_tracker[yr] = {};
-  if (!D.monthly_tracker[yr].debt_balances)           D.monthly_tracker[yr].debt_balances = {};
-  if (!D.monthly_tracker[yr].debt_balances[id])       D.monthly_tracker[yr].debt_balances[id] = Array(12).fill(0);
-  D.monthly_tracker[yr].debt_balances[id][mo] = amount;
-  // Refresh the tracker balance table only if we're viewing this year
-  if (activeYear === yr) buildBalancesTable('tbl-debt-bal', yr);
+  const item=(D.debt_items||[]).find(debt=>debt.id===id);
+  if(!item)return false;
+  const {year,month}=currentDebtSyncPeriod();
+  const series=ensureDebtTrackerRow(year,item);
+  const value=Math.max(0,Number(amount)||0);
+  const changed=Number(series[month]||0)!==value;
+  series[month]=value;
+  if(activeYear===year&&document.getElementById('tbl-debt-bal'))buildBalancesTable('tbl-debt-bal',year);
+  return changed;
+}
+
+// Only the real current-month cell controls the live Debts page. Other months remain history.
+function syncTrackerBalanceToDebt(year,id,month,amount) {
+  const current=currentDebtSyncPeriod();
+  if(String(year)!==current.year||Number(month)!==current.month)return false;
+  let item=(D.debt_items||[]).find(debt=>debt.id===id);
+  if(!item){
+    const row=getTrackerRows(String(year),'debt_balances').find(entry=>entry.id===id);
+    if(!row)return false;
+    item={id,name:row.label,category:row.category||'Loans & LOC',type:categoryInfo(row.category).key==='cars'?'car':categoryInfo(row.category).key==='credit'?'credit':'loan',amount:0};
+    D.debt_items.push(item);
+  }
+  item.amount=Math.max(0,Number(amount)||0);
+  ensureDebtTrackerRow(current.year,item);
+  return true;
+}
+
+function initializeCurrentDebtBalanceSync() {
+  let changed=false;
+  (D.debt_items||[]).forEach(item=>{if(syncDebtItemToTracker(item.id,item.amount))changed=true;});
+  return changed;
+}
+
+function removeDebtFromCurrentTracker(id) {
+  const {year}=currentDebtSyncPeriod();
+  ['debt_payments','debt_balances'].forEach(section=>{
+    if(D.monthly_tracker?.[year]?.[section])delete D.monthly_tracker[year][section][id];
+  });
+  const meta=D.tracker_year_meta?.[year];
+  if(meta?.sections){
+    ['debt_payments','debt_balances'].forEach(section=>{
+      if(Array.isArray(meta.sections[section]))meta.sections[section]=meta.sections[section].filter(row=>row.id!==id);
+    });
+  }
 }
 
 // Rebuild both tracker debt tables (payments + balances) with the current debt row list.
@@ -2084,7 +2152,9 @@ function saveDebt()  {
   const n=document.getElementById('da-name').value.trim();
   if(!n) return;
   const id='d-'+Date.now();
-  D.debt_items.push({id,name:n,category:document.getElementById('da-cat').value,type:document.getElementById('da-type').value,amount:parseFloat(document.getElementById('da-amount').value)||0});
+  const item={id,name:n,category:document.getElementById('da-cat').value,type:document.getElementById('da-type').value,amount:parseFloat(document.getElementById('da-amount').value)||0};
+  D.debt_items.push(item);
+  syncDebtItemToTracker(id,item.amount);
   const limit=parseFloat(document.getElementById('da-limit')?.value)||0;if(limit>0){D.credit_limits??={};D.credit_limits[id]=limit;}
   rebuildTrackerDebtTables();
   cancelDebt(); mark(); renderDebtList(); syncAllViews();
@@ -2097,6 +2167,7 @@ function updateDebt(id){
   it.category=document.getElementById('dec-'+id).value;
   it.type=document.getElementById('det-'+id).value;
   it.amount=parseFloat(document.getElementById('dea-'+id).value)||0;
+  syncDebtItemToTracker(id,it.amount);
   const limit=parseFloat(document.getElementById('del-'+id)?.value)||0;D.credit_limits??={};if(limit>0)D.credit_limits[id]=limit;else delete D.credit_limits[id];
   rebuildTrackerDebtTables();
   closeDebt(id); mark(); renderDebtChart(); syncAllViews();
@@ -2104,6 +2175,7 @@ function updateDebt(id){
 function delDebt(id){
   if(!confirm('Remove?')) return;
   D.debt_items=D.debt_items.filter(d=>d.id!==id);
+  removeDebtFromCurrentTracker(id);
   if(D.credit_limits)delete D.credit_limits[id];
   // Row disappears from Monthly Tracker immediately
   rebuildTrackerDebtTables();
@@ -2382,6 +2454,7 @@ function saveCell(tblId, year, section, rowId, idx) {
   if (!D.monthly_tracker[year][section]) D.monthly_tracker[year][section] = {};
   if (!D.monthly_tracker[year][section][rowId]) D.monthly_tracker[year][section][rowId] = Array(12).fill(0);
   D.monthly_tracker[year][section][rowId][idx] = val;
+  if(section==='debt_balances')syncTrackerBalanceToDebt(year,rowId,idx,val);
   document.getElementById(`cw-${tblId}-${rowId}-${idx}`).classList.remove('editing');
   mark();
   // Re-render the relevant tracker table
@@ -4062,6 +4135,18 @@ function renameTrackerRow(section,id) {
   if (!name?.trim()) return;
   if (!target) return;
   target.label=name.trim();
+  const currentYear=String(new Date().getFullYear());
+  if(activeYear===currentYear&&section.startsWith('debt_')){
+    const debt=(D.debt_items||[]).find(item=>item.id===id);
+    if(debt){
+      debt.name=target.label;
+      const meta=ensureTrackerYearMeta(activeYear);
+      ['debt_payments','debt_balances'].forEach(key=>{
+        const paired=meta.sections[key].find(row=>row.id===id);
+        if(paired)paired.label=target.label;
+      });
+    }
+  }
   mark();renderTracker(activeYear);
 }
 
